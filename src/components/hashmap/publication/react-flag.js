@@ -1,12 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AiFillLike, AiFillDislike } from 'react-icons/ai';
-import { TiHeartFullOutline } from 'react-icons/ti';
-import {
-  MdSentimentDissatisfied,
-  MdSentimentVerySatisfied,
-} from 'react-icons/md';
-import { IoIosRocket } from 'react-icons/io';
 import PropTypes from 'prop-types';
 
 const ContainerDiv = styled.div`
@@ -19,19 +12,64 @@ const ContainerDiv = styled.div`
   }
 `;
 
+const Icon = styled.img`
+  max-width: 100%;
+  height: auto;
+`;
+
+const Div = styled.div`
+  float: left;
+  width: 15px;
+  height: 20px;
+  margin-right: 4px;
+`;
+
 const ReactFlags = ({ type, value }) => (
   <>
     {value > 0 && (
       <ContainerDiv>
         <a href="/">
-          {type === 'like' && <AiFillLike />}
-          {type === 'heart' && <TiHeartFullOutline />}
-          {type === 'unlike' && <AiFillDislike />}
-          {type === 'smiley' && <MdSentimentVerySatisfied />}
-          {type === 'dissatisfied' && <MdSentimentDissatisfied />}
-          {type === 'rocket' && <IoIosRocket />}
-          {/* {type === 'heart' && <TiHeartFullOutline />} */}
-          {/* {type === 'heart' && <TiHeartFullOutline />} */} {value}
+          {type === 'like' && (
+            <Div>
+              <Icon src="icons/like.png" />
+            </Div>
+          )}
+          {type === 'heart' && (
+            <Div>
+              <Icon src="icons/heart.png" />
+            </Div>
+          )}
+          {type === 'unlike' && (
+            <Div>
+              <Icon src="icons/unlike.png" />
+            </Div>
+          )}
+          {type === 'smiley' && (
+            <Div>
+              <Icon src="icons/smiley.png" />
+            </Div>
+          )}
+          {type === 'dissatisfied' && (
+            <Div>
+              <Icon src="icons/dissatisfied.png" />
+            </Div>
+          )}
+          {type === 'rocket' && (
+            <Div>
+              <Icon src="icons/rocket.png" />
+            </Div>
+          )}
+          {type === 'hooray' && (
+            <Div>
+              <Icon src="icons/hooray.png" />
+            </Div>
+          )}
+          {type === 'eyes' && (
+            <Div>
+              <Icon src="icons/eyes.png" />
+            </Div>
+          )}
+          {value}
         </a>
       </ContainerDiv>
     )}

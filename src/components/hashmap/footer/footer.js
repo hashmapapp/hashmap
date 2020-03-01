@@ -1,15 +1,42 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Author = styled.h6``;
 
 const Bio = styled.p``;
 
-const footer = () => (
-  <footer>
-    <Author>Fulano de Tal</Author>
-    <Bio>Alguma Biografia Aqui</Bio>
-  </footer>
+const Span = styled.span`
+  color: #444;
+`;
+
+const Avatar = styled.img`
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+`;
+
+const footer = ({ data }) => (
+  <>
+    <hr />
+    <footer className="p-2">
+      <div className="row">
+        <div className="col col-lg-2 text-right">
+          <Avatar src="imgs/avatar/pp.jpg" alt="avatar" />
+        </div>
+        <div className="col-md-auto text-left">
+          <Span>Criado Por</Span>
+          <Author>{data.name}</Author>
+          <Bio>{data.bio}</Bio>
+        </div>
+      </div>
+    </footer>
+    <hr />
+  </>
 );
+
+footer.propTypes = {
+  data: PropTypes.shape().isRequired,
+};
 
 export default footer;

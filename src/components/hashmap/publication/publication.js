@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FiMoreHorizontal } from 'react-icons/fi';
+import PropTypes from 'prop-types';
 import ReactFlags from './react-flag';
 
 const ArticleCardBox = styled.article`
@@ -22,43 +23,43 @@ const LinkPreviewCard = styled.div`
   margin: 5% 0%;
 `;
 
-const Publication = () => (
+const Publication = ({ data }) => (
   <ArticleCardBox className="p-2">
     <header className="row justify-content-between">
       <div className="col-4">
-        <h6>Título</h6>
+        <h6>{data.title}</h6>
       </div>
       <div className="col-4 text-right">
         <FiMoreHorizontal />
       </div>
     </header>
     <hr />
-    <p>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industrys standard dummy text ever since the
-      1500s, when an unknown printer took a galley of type and scrambled it to
-      make a type specimen book. It has survived not only five centuries, but
-      also the leap into electronic typesetting, remaining essentially
-      unchanged. It was popularised in the 1960s with the release of Letraset
-      sheets containing Lorem Ipsum passages, and more recently with desktop
-      publishing software like Aldus PageMaker including versions of Lorem
-      Ipsum.
-    </p>
+    <p>{data.description}</p>
     <LinkPreviewCard>
-      <p>Link com Pré-Visualização</p>
+      <a target="_blank" rel="noopener noreferrer" href={data.link}>
+        Link com Pré-Visualização
+      </a>
     </LinkPreviewCard>
-    <hr />
+    {/* <hr /> */}
     <footer className="row m-1">
-      <ReactFlags className="col" value={1} type="like" />
-      <ReactFlags className="col" value={112} type="heart" />
-      <ReactFlags className="col" value={32} type="unlike" />
-      <ReactFlags className="col" value={4} type="smiley" />
-      <ReactFlags className="col" value={94} type="dissatisfied" />
-      <ReactFlags className="col" value={11} type="rocket" />
-      {/* <ReactFlags className="col" value={51} type="like" /> */}
-      {/* <ReactFlags className="col" value={19} type="like" /> */}
+      <ReactFlags className="col" value={data.react.like} type="like" />
+      <ReactFlags className="col" value={data.react.heart} type="heart" />
+      <ReactFlags className="col" value={data.react.unlike} type="unlike" />
+      <ReactFlags className="col" value={data.react.smiley} type="smiley" />
+      <ReactFlags
+        className="col"
+        value={data.react.dissatisfied}
+        type="dissatisfied"
+      />
+      <ReactFlags className="col" value={data.react.rocket} type="rocket" />
+      <ReactFlags className="col" value={data.react.hooray} type="hooray" />
+      <ReactFlags className="col" value={data.react.eyes} type="eyes" />
     </footer>
   </ArticleCardBox>
 );
+
+Publication.propTypes = {
+  data: PropTypes.shape().isRequired,
+};
 
 export default Publication;
