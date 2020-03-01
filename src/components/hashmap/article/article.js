@@ -1,5 +1,6 @@
 import React from 'react';
-import Value from 'app/components/hashmap/value/value';
+import Publication from 'app/components/hashmap/publication/publication';
+import NewPublication from 'app/components/hashmap/publication/new';
 
 const article = () => (
   <article>
@@ -14,10 +15,13 @@ const article = () => (
       publishing software like Aldus PageMaker including versions of Lorem
       Ipsum.
     </p>
-    <Value />
-    <Value />
-    <Value />
-    <Value />
+    <Publication />
+    <Publication />
+    <Publication />
+    <Publication />
+    <Publication />
+    <Publication />
+    <NewPublication />
   </article>
 );
 
