@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import UINavBar from 'app/components/UI/navbar/navbar';
 import UIFooter from 'app/components/UI/footer/footer';
-import SectionHashmap from 'app/components/hashmap/hashmap';
+import SectionHashmapView from 'app/components/hashmap/view';
 import UISectionComments from 'app/components/UI/comments/comments';
 import UISectionMoreHashMaps from 'app/components/UI/more-hashmaps/more-hashmaps';
 import axios from 'axios';
 
-class hashmap extends Component {
+class View extends Component {
   state = {
     data: undefined,
   };
@@ -28,7 +28,7 @@ class hashmap extends Component {
     return (
       <>
         <UINavBar />
-        {data && <SectionHashmap data={data} />}
+        {data && <SectionHashmapView data={data} />}
         <UISectionComments />
         <UISectionMoreHashMaps />
         <UIFooter />
@@ -37,4 +37,4 @@ class hashmap extends Component {
   }
 }
 
-export default hashmap;
+export default View;

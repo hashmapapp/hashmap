@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
-import Header from 'app/components/hashmap/header/header';
-import Article from 'app/components/hashmap/article/article';
+import HeaderView from 'app/components/hashmap/header/view';
+import ArticleView from 'app/components/hashmap/article/view';
 import Footer from 'app/components/hashmap/footer/footer';
 import PropTypes from 'prop-types';
 
@@ -10,7 +10,7 @@ const Section = styled.section`
   margin: 2% 25%;
 `;
 
-const SectionHashmap = ({ data }) => {
+const SectionHashmapView = ({ data }) => {
   const headerData = {
     title: data.title,
     subtitle: data.subtitle,
@@ -23,16 +23,16 @@ const SectionHashmap = ({ data }) => {
   return (
     <Container>
       <Section>
-        <Header data={headerData} />
-        <Article data={articleData} />
+        <HeaderView data={headerData} />
+        <ArticleView data={articleData} />
         <Footer data={data.author} />
       </Section>
     </Container>
   );
 };
 
-SectionHashmap.propTypes = {
+SectionHashmapView.propTypes = {
   data: PropTypes.shape().isRequired,
 };
 
-export default SectionHashmap;
+export default SectionHashmapView;

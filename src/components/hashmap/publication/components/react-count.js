@@ -24,7 +24,7 @@ const Div = styled.div`
   margin-right: 4px;
 `;
 
-const ReactFlags = ({ type, value }) => (
+const ReactCount = ({ type, value }) => (
   <>
     {value > 0 && (
       <ContainerDiv>
@@ -76,13 +76,13 @@ const ReactFlags = ({ type, value }) => (
   </>
 );
 
-ReactFlags.propTypes = {
+ReactCount.propTypes = {
   type: PropTypes.string.isRequired,
   value: PropTypes.number,
 };
 
-ReactFlags.defaultProps = {
+ReactCount.defaultProps = {
   value: 0,
 };
 
-export default ReactFlags;
+export default ReactCount;

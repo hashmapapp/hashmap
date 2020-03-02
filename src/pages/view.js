@@ -1,10 +1,10 @@
 import React from 'react';
-import ScreenHashmap from 'app/screens/hashmap/hashmap';
+import ScreenHashmapView from 'app/screens/hashmap/view';
 import GlobalStyles from 'app/styles/global';
 
 export default () => (
   <>
     <GlobalStyles />
-    <ScreenHashmap />
+    <ScreenHashmapView />
   </>
 );

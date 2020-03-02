@@ -1,15 +1,15 @@
 import React from 'react';
-import Publication from 'app/components/hashmap/publication/publication';
-import NewPublication from 'app/components/hashmap/publication/new';
+import PublicationView from 'app/components/hashmap/publication/view';
+import NewPublicationButton from 'app/components/hashmap/publication/components/new-button';
 import PropTypes from 'prop-types';
 
 const article = ({ data }) => (
   <article>
     <p>{data.description}</p>
     {data.posts.map(post => (
-      <Publication key={post.id} data={post} />
+      <PublicationView key={post.id} data={post} />
     ))}
-    <NewPublication />
+    <NewPublicationButton />
   </article>
 );
 
