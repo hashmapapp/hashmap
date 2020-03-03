@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 const NavBarDiv = styled.div`
   overflow: hidden;
@@ -10,31 +11,14 @@ const NavBarDiv = styled.div`
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
   /* transition: transform 300ms ease; */
   /* transform: translateY(-100%); */
+
+  position: ${prop => (prop.fixed ? 'fixed;' : '')};
+  top: ${prop => (prop.fixed ? '0' : '')};
+  width: ${prop => (prop.fixed ? '100%;' : '')};
 `;
 
-const ItemLi = styled.li`
-  display: inline;
-  list-style-type: none;
-  padding: 10px 40px;
-
-  a {
-    color: rgba(0, 0, 0, 0.84);
-    display: block;
-    padding: 10px 30px;
-    float: right;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
-
-  a:hover {
-    color: #4caf50;
-  }
-
-  a.active {
-    color: #4caf50;
-  }
+const Space = styled.div`
+  height: 10vh;
 `;
 
 const LogoDiv = styled.div`
@@ -49,25 +33,30 @@ const LogoDiv = styled.div`
   }
 `;
 
-const NavBar = () => (
-  <NavBarDiv>
-    <Container>
-      <LogoDiv>
-        <a href="/">HashMap</a>
-      </LogoDiv>
-      <ul>
-        <ItemLi>
-          <a href="/">Item 1</a>
-        </ItemLi>
-        <ItemLi>
-          <a href="/">Item 2</a>
-        </ItemLi>
-        <ItemLi>
-          <a href="/">Item 3</a>
-        </ItemLi>
-      </ul>
-    </Container>
-  </NavBarDiv>
-);
+const NavBar = props => {
+  const { fixed, children } = props;
+  return (
+    <>
+      <NavBarDiv fixed={fixed}>
+        <Container>
+          <LogoDiv>
+            <a href="/"> {'{ hashmap }'}</a>
+          </LogoDiv>
+          <ul>{children}</ul>
+        </Container>
+      </NavBarDiv>
+      <Space />
+    </>
+  );
+};
+
+NavBar.propTypes = {
+  fixed: PropTypes.bool,
+  children: PropTypes.element.isRequired,
+};
+
+NavBar.defaultProps = {
+  fixed: false,
+};
 
 export default NavBar;

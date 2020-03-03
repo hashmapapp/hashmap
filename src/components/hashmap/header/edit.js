@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const Title = styled.h1``;
-const InputTitle = styled.textarea`
+const TitleTextArea = styled.textarea`
   width: 100%;
   margin: 4px 0;
   box-sizing: border-box;
@@ -12,8 +11,7 @@ const InputTitle = styled.textarea`
   resize: none;
 `;
 
-const SubTitle = styled.h6``;
-const InputSubTitle = styled.textarea`
+const SubTitleTextArea = styled.textarea`
   width: 100%;
   margin: 4px 0;
   box-sizing: border-box;
@@ -22,33 +20,35 @@ const InputSubTitle = styled.textarea`
   resize: none;
 `;
 
-const header = ({ data }) => (
-  <header>
-    {data ? (
-      <>
-        <Title>{data.title}</Title>
-        <SubTitle>{data.subtitle}</SubTitle>
-      </>
-    ) : (
-      <>
-        <InputTitle
-          rows="2"
-          type="text"
-          id="title"
-          name="title"
-          placeholder="Título"
-        />
-        <InputSubTitle
-          rows="3"
-          type="text"
-          id="subtitle"
-          name="subtitle"
-          placeholder="Subtítulo"
-        />
-      </>
-    )}
-  </header>
-);
+const header = ({ data }) => {
+  const [title, setTitle] = useState();
+  const [subTitle, setSubTitle] = useState();
+  return (
+    <header>
+      <TitleTextArea
+        rows="2"
+        id="title"
+        name="title"
+        placeholder="Título"
+        onChange={e => {
+          setTitle(e.target.value);
+        }}
+        value={title}
+      />
+      <SubTitleTextArea
+        rows="3"
+        type="text"
+        id="subtitle"
+        name="subtitle"
+        placeholder="Subtítulo"
+        onChange={e => {
+          setSubTitle(e.target.value);
+        }}
+        value={subTitle}
+      />
+    </header>
+  );
+};
 
 header.propTypes = {
   data: PropTypes.shape(),
