@@ -1,10 +1,9 @@
 import React from 'react';
 import UINavBar from 'app/components/UI/navbar/navbar';
 import { ItemLi } from 'app/components/UI/styles/styles';
-import ModalAuth from 'app/components/UI/modal/auth';
 import Link from 'next/link';
 
-const home = () => (
+const about = () => (
   <>
     <UINavBar>
       <ul>
@@ -25,8 +24,7 @@ const home = () => (
         </ItemLi>
       </ul>
     </UINavBar>
-    <ModalAuth />
   </>
 );
 
-export default home;
+export default about;

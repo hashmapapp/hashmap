@@ -6,6 +6,7 @@ import UISectionComments from 'app/components/UI/comments/comments';
 import UISectionMoreHashMaps from 'app/components/UI/more-hashmaps/more-hashmaps';
 import axios from 'axios';
 import { ItemLi } from 'app/components/UI/styles/styles';
+import Link from 'next/link';
 
 class View extends Component {
   state = {
@@ -29,15 +30,23 @@ class View extends Component {
     return (
       <>
         <UINavBar>
-          <ItemLi>
-            <a href="/">Item 1</a>
-          </ItemLi>
-          <ItemLi>
-            <a href="/">Item 2</a>
-          </ItemLi>
-          <ItemLi>
-            <a href="/">Item 3</a>
-          </ItemLi>
+          <ul>
+            <ItemLi>
+              <Link href="/edit">
+                <a>Criar HashMap</a>
+              </Link>
+            </ItemLi>
+            <ItemLi>
+              <Link href="/about">
+                <a>Sobre</a>
+              </Link>
+            </ItemLi>
+            <ItemLi>
+              <Link href="/view">
+                <a>Ler</a>
+              </Link>
+            </ItemLi>
+          </ul>
         </UINavBar>
         {data && <SectionHashmapView data={data} />}
         <UISectionComments />

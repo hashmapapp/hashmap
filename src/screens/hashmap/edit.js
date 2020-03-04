@@ -28,9 +28,11 @@ export default class Edit extends Component {
     return (
       <>
         <UINavBar fixed>
-          <ItemLi>
-            <a href="/">Salvar</a>
-          </ItemLi>
+          <ul>
+            <ItemLi>
+              <a href="/">Salvar</a>
+            </ItemLi>
+          </ul>
         </UINavBar>
         <SectionHashmapEdit data={data} />
       </>

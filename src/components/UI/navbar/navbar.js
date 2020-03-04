@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 
 const NavBarDiv = styled.div`
   overflow: hidden;
@@ -40,9 +41,11 @@ const NavBar = props => {
       <NavBarDiv fixed={fixed}>
         <Container>
           <LogoDiv>
-            <a href="/"> {'{ hashmap }'}</a>
+            <Link href="/">
+              <a> {'{ hashmap }'}</a>
+            </Link>
           </LogoDiv>
-          <ul>{children}</ul>
+          {children}
         </Container>
       </NavBarDiv>
       <Space />
