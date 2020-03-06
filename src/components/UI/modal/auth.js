@@ -1,8 +1,29 @@
 import React, { useState } from 'react';
-import { Button, Modal, Container, Row, Col } from 'react-bootstrap';
+import {
+  Button,
+  Modal,
+  Container,
+  Row,
+  Col,
+  InputGroup,
+  FormControl,
+} from 'react-bootstrap';
+import styled from 'styled-components';
+
+const Title = styled.h6`
+  width: 100%;
+`;
+
+const SubTitle = styled.p`
+  width: 100%;
+`;
+
+const TextInput = styled.input`
+  width: 100%;
+`;
 
 const auth = () => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [loginOrSignUp, setLoginOrSignUp] = useState('log-in');
 
   return (
@@ -17,36 +38,38 @@ const auth = () => {
         dialogClassName="modal-90w"
         aria-labelledby="example-custom-modal-styling-title"
       >
-        {/* <Modal.Header closeButton>
-          <Modal.Title id="example-custom-modal-styling-title">
-            Autenticação
-          </Modal.Title>
-        </Modal.Header> */}
         <Modal.Body>
-          <Container>
+          <Container className="text-center">
             {loginOrSignUp === 'log-in' && (
               <>
                 <Row>
-                  <h6>Fazer Login</h6>
+                  <Title>Fazer Login</Title>
                 </Row>
                 <Row>
-                  <p>Obrigado por isso</p>
+                  <SubTitle>Obrigado por isso</SubTitle>
                 </Row>
                 <Row>
-                  <input
-                    type="text"
-                    name="username"
-                    id="username"
-                    placeholder="Usuário"
-                  />
+                  <InputGroup className="mb-3">
+                    <FormControl
+                      aria-label="Small"
+                      name="username"
+                      id="username"
+                      placeholder="Usuário"
+                      aria-describedby="inputGroup-sizing-sm"
+                    />
+                  </InputGroup>
                 </Row>
                 <Row>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Senha"
-                  />
+                  <InputGroup className="mb-3">
+                    <FormControl
+                      type="password"
+                      aria-label="Small"
+                      name="password"
+                      id="password"
+                      placeholder="Senha"
+                      aria-describedby="inputGroup-sizing-sm"
+                    />
+                  </InputGroup>
                 </Row>
                 <Row className="show-grid">
                   <Col xs={6} md={4}>
@@ -61,10 +84,10 @@ const auth = () => {
                 </Row>
                 <Row className="show-grid">
                   <Col>
-                    <button type="button">Facebook</button>
+                    <Button variant="outline-info">Facebook</Button>
                   </Col>
                   <Col>
-                    <button type="button">Google</button>
+                    <Button variant="outline-info">Google</Button>
                   </Col>
                 </Row>
               </>
@@ -72,26 +95,33 @@ const auth = () => {
             {loginOrSignUp === 'sign-up' && (
               <>
                 <Row>
-                  <h6>Criar Conta</h6>
+                  <Title>Criar Conta</Title>
                 </Row>
                 <Row>
-                  <p>Obrigado por isso</p>
+                  <SubTitle>Obrigado por isso</SubTitle>
                 </Row>
                 <Row>
-                  <input
-                    type="text"
-                    name="username"
-                    id="username"
-                    placeholder="Usuário"
-                  />
+                  <InputGroup className="mb-3">
+                    <FormControl
+                      aria-label="Small"
+                      name="username"
+                      id="username"
+                      placeholder="Usuário"
+                      aria-describedby="inputGroup-sizing-sm"
+                    />
+                  </InputGroup>
                 </Row>
                 <Row>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Senha"
-                  />
+                  <InputGroup className="mb-3">
+                    <FormControl
+                      type="password"
+                      aria-label="Small"
+                      name="password"
+                      id="password"
+                      placeholder="Senha"
+                      aria-describedby="inputGroup-sizing-sm"
+                    />
+                  </InputGroup>
                 </Row>
                 <Row className="show-grid">
                   <Col xs={6} md={4}>
@@ -106,34 +136,46 @@ const auth = () => {
                 </Row>
                 <Row className="show-grid">
                   <Col>
-                    <button type="button">Facebook</button>
+                    <Button variant="outline-info">Facebook</Button>
                   </Col>
                   <Col>
-                    <button type="button">Google</button>
+                    <Button variant="outline-info">Google</Button>
                   </Col>
                 </Row>
                 <Row>
-                  <p>Ao enviar você</p>
+                  <SubTitle className="m-2">
+                    Ao enviar você concorda com os Termos de Uso
+                  </SubTitle>
                 </Row>
               </>
             )}
           </Container>
         </Modal.Body>
         <Modal.Footer>
-          <Row>
-            {loginOrSignUp === 'sign-up' && (
-              <>
-                <p>Ainda tem uma conta?</p>
-                <a onClick={() => setLoginOrSignUp('log-in')}>Entrar</a>
-              </>
-            )}
-            {loginOrSignUp === 'log-in' && (
-              <>
-                <p>Já tem uma conta?</p>
-                <a onClick={() => setLoginOrSignUp('sign-up')}>Criar Conta</a>
-              </>
-            )}
-          </Row>
+          {loginOrSignUp === 'sign-up' && (
+            <>
+              <p>Ainda não tem uma conta?</p>
+              <Button
+                size="sm"
+                variant="link"
+                onClick={() => setLoginOrSignUp('log-in')}
+              >
+                Entrar
+              </Button>
+            </>
+          )}
+          {loginOrSignUp === 'log-in' && (
+            <>
+              <p>Já tem uma conta?</p>
+              <Button
+                size="sm"
+                variant="link"
+                onClick={() => setLoginOrSignUp('sign-up')}
+              >
+                Criar Conta
+              </Button>
+            </>
+          )}
         </Modal.Footer>
       </Modal>
     </>
