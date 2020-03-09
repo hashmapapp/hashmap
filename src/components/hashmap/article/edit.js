@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PublicationEdit from 'app/components/hashmap/publication/edit';
 import NewPublicationButton from 'app/components/hashmap/publication/components/new-button';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import {
+  postCreate,
+  descriptionUpdate,
+} from 'app/redux/actions/hashmapActions';
 
 const DescriptionTextArea = styled.textarea`
   width: 100%;
@@ -13,8 +19,17 @@ const DescriptionTextArea = styled.textarea`
   resize: none;
 `;
 
-const article = ({ data }) => {
-  const [description, setDescription] = useState();
+const article = ({
+  data,
+  posts,
+  descriptionUpdate,
+  description,
+  postCreate,
+}) => {
+  const handlerNewPost = evt => {
+    evt.preventDefault();
+    postCreate();
+  };
   return (
     <article>
       <DescriptionTextArea
@@ -24,12 +39,14 @@ const article = ({ data }) => {
         name="description"
         placeholder="Descrição"
         onChange={e => {
-          setDescription(e.target.value);
+          descriptionUpdate(e.target.value);
         }}
         value={description}
       />
-      <PublicationEdit />
-      <NewPublicationButton />
+      {posts.map((post, index) => (
+        <PublicationEdit data={post} index={index} key={index} />
+      ))}
+      <NewPublicationButton onAction={handlerNewPost} />
     </article>
   );
 };
@@ -42,4 +59,12 @@ article.defaultProps = {
   data: undefined,
 };
 
-export default article;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ postCreate, descriptionUpdate }, dispatch);
+
+const mapStateToProps = state => ({
+  description: state.hashmap.description,
+  posts: state.hashmap.posts,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(article);

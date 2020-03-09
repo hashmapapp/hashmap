@@ -18,10 +18,6 @@ const SubTitle = styled.p`
   width: 100%;
 `;
 
-const TextInput = styled.input`
-  width: 100%;
-`;
-
 const auth = () => {
   const [show, setShow] = useState(true);
   const [loginOrSignUp, setLoginOrSignUp] = useState('log-in');

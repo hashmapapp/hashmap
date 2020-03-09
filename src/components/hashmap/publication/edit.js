@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {
+  titlePostUpdate,
+  subtitlePostUpdate,
+} from 'app/redux/actions/hashmapActions';
 
 const ArticleCardBox = styled.article`
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
@@ -33,33 +39,29 @@ const DescriptionTextArea = styled.textarea`
   resize: none;
 `;
 
-const LinkBar = styled.div`
-  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
-  border-radius: 15px;
-  transition: 0.3s;
-  width: 100%;
-  margin: 1% 0%;
-`;
+// const LinkBar = styled.div`
+//   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+//   border-radius: 15px;
+//   transition: 0.3s;
+//   width: 100%;
+//   margin: 1% 0%;
+// `;
 
-const InputLink = styled.input`
-  padding-left: 15px;
-  border-radius: 15px;
-  width: 100%;
-  margin: 4px 0;
-  box-sizing: border-box;
-  border: none;
-  font-size: 1rem;
-  resize: none;
-`;
+// const InputLink = styled.input`
+//   padding-left: 15px;
+//   border-radius: 15px;
+//   width: 100%;
+//   margin: 4px 0;
+//   box-sizing: border-box;
+//   border: none;
+//   font-size: 1rem;
+//   resize: none;
+// `;
 
-const Publication = ({ data }) => {
-  const [link, setLink] = useState();
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
-
+const Publication = ({ data, index, titlePostUpdate, subtitlePostUpdate }) => {
   return (
     <>
-      <LinkBar>
+      {/* <LinkBar>
         <InputLink
           type="text"
           id="link"
@@ -70,7 +72,7 @@ const Publication = ({ data }) => {
           }}
           value={link || ''}
         />
-      </LinkBar>
+      </LinkBar> */}
       <ArticleCardBox className="p-2">
         <TitleTextArea
           rows="1"
@@ -79,9 +81,9 @@ const Publication = ({ data }) => {
           name="title"
           placeholder="Título"
           onChange={e => {
-            setTitle(e.target.value);
+            titlePostUpdate(e.target.value, index);
           }}
-          value={title}
+          value={data.title}
         />
         <hr />
         <DescriptionTextArea
@@ -91,17 +93,10 @@ const Publication = ({ data }) => {
           name="description"
           placeholder="Descrição"
           onChange={e => {
-            setDescription(e.target.value);
+            subtitlePostUpdate(e.target.value, index);
           }}
-          value={description}
+          value={data.description}
         />
-        {/* {data && (
-      <LinkPreviewCard>
-        <a target="_blank" rel="noopener noreferrer" href={data.link}>
-          Link com Pré-Visualização
-        </a>
-      </LinkPreviewCard>
-    )} */}
       </ArticleCardBox>
     </>
   );
@@ -115,4 +110,7 @@ Publication.defaultProps = {
   data: undefined,
 };
 
-export default Publication;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ titlePostUpdate, subtitlePostUpdate }, dispatch);
+
+export default connect(null, mapDispatchToProps)(Publication);

@@ -23,7 +23,8 @@ const Space = styled.div`
 `;
 
 const LogoDiv = styled.div`
-  a {
+  a,
+  span {
     font-weight: bold;
     padding: 10px 30px;
     float: left;

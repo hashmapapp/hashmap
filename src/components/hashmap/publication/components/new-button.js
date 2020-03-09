@@ -18,10 +18,12 @@ const CardBox = styled.div`
   }
 `;
 
-const NewPublication = () => (
+const NewPublication = ({ onAction }) => (
   <div className="row justify-content-md-center">
     <CardBox className="col-md-auto text-center">
-      <a href="/">Adicionar Publicação</a>
+      <a href="/" onClick={onAction}>
+        Adicionar Publicação
+      </a>
     </CardBox>
   </div>
 );

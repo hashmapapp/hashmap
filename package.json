@@ -8,14 +8,18 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "immer": "^6.0.1",
     "next": "^9.2.2",
+    "next-redux-wrapper": "^5.0.0",
     "nextjs-fonts": "^0.22.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.13.0",
     "react-icons": "^3.9.0",
+    "react-redux": "^7.2.0",
     "react-scripts": "3.4.0",
+    "redux": "^4.0.5",
     "styled-components": "^5.0.1"
   },
   "devDependencies": {

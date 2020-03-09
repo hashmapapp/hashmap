@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { titleUpdate, subtitleUpdate } from 'app/redux/actions/hashmapActions';
 
 const TitleTextArea = styled.textarea`
   width: 100%;
@@ -20,9 +23,7 @@ const SubTitleTextArea = styled.textarea`
   resize: none;
 `;
 
-const header = ({ data }) => {
-  const [title, setTitle] = useState();
-  const [subTitle, setSubTitle] = useState();
+const header = ({ data, title, subtitle, titleUpdate, subtitleUpdate }) => {
   return (
     <header>
       <TitleTextArea
@@ -30,8 +31,8 @@ const header = ({ data }) => {
         id="title"
         name="title"
         placeholder="Título"
-        onChange={e => {
-          setTitle(e.target.value);
+        onChange={evt => {
+          titleUpdate(evt.target.value);
         }}
         value={title}
       />
@@ -41,10 +42,10 @@ const header = ({ data }) => {
         id="subtitle"
         name="subtitle"
         placeholder="Subtítulo"
-        onChange={e => {
-          setSubTitle(e.target.value);
+        onChange={evt => {
+          subtitleUpdate(evt.target.value);
         }}
-        value={subTitle}
+        value={subtitle}
       />
     </header>
   );
@@ -58,4 +59,12 @@ header.defaultProps = {
   data: undefined,
 };
 
-export default header;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ titleUpdate, subtitleUpdate }, dispatch);
+
+const mapStateToProps = state => ({
+  title: state.hashmap.title,
+  subtitle: state.hashmap.subtitle,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(header);
