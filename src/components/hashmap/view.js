@@ -1,14 +1,10 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import styled from 'styled-components';
 import HeaderView from 'app/components/hashmap/header/view';
 import ArticleView from 'app/components/hashmap/article/view';
 import Footer from 'app/components/hashmap/footer/footer';
 import PropTypes from 'prop-types';
-
-const Section = styled.section`
-  margin: 2% 25%;
-`;
+import { Section } from 'app/components/UI/styles/styles';
 
 const SectionHashmapView = ({ data }) => {
   const headerData = {

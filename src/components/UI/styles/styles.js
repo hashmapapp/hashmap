@@ -24,3 +24,7 @@ export const ItemLi = styled.li`
     color: #4caf50;
   }
 `;
+
+export const Section = styled.section`
+  margin: 2% ${prop => (prop.marginColum ? prop.marginColum : 25)}%;
+`;

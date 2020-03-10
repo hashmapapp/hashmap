@@ -19,7 +19,7 @@ const SubTitle = styled.p`
 `;
 
 const auth = () => {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [loginOrSignUp, setLoginOrSignUp] = useState('log-in');
 
   return (

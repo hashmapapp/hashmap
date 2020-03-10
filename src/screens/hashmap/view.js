@@ -14,14 +14,10 @@ class View extends Component {
   };
 
   componentDidMount() {
-    axios.get(`http://localhost:3000/hashmaps/${1}`).then(hashmaps => {
+    const { param } = this.props;
+    axios.get(`http://localhost:3000/hashmaps/${param.id}`).then(hashmaps => {
       const data = { ...hashmaps.data };
-      axios
-        .get(`http://localhost:3000/posts`, { params: { hashmapId: 1 } })
-        .then(posts => {
-          data.posts = posts.data;
-          this.setState({ data });
-        });
+      this.setState({ data });
     });
   }
 
