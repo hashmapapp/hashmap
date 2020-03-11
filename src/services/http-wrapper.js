@@ -13,4 +13,15 @@ export class HttpWrapper {
         console.log(error);
       });
   };
+
+  static updateItem = (item, url, id) => {
+    return axios
+      .patch(`${url}/${id}`, item)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 }

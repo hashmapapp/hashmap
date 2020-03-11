@@ -6,6 +6,8 @@ const HashmapReducer = (
   action
 ) => {
   switch (action.type) {
+    case ACTIONS.HASHMAP_UPDATE:
+      return action.hashmap;
     case ACTIONS.HASHMAP_TITLE_UPDATE:
       return produce(state, draft => {
         draft.title = action.text;

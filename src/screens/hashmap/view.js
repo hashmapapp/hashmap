@@ -23,13 +23,14 @@ class View extends Component {
 
   render() {
     const { data } = this.state;
+    const { param } = this.props;
     return (
       <>
         <UINavBar>
           <ul>
             <ItemLi>
-              <Link href="/edit">
-                <a>Criar HashMap</a>
+              <Link href={`/edit?id=${param.id}`}>
+                <a>Editar HashMap</a>
               </Link>
             </ItemLi>
             <ItemLi>

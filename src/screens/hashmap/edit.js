@@ -4,6 +4,9 @@ import UINavBar from 'app/components/UI/navbar/navbar';
 import SectionHashmapEdit from 'app/components/hashmap/edit';
 import { ItemLi } from 'app/components/UI/styles/styles';
 import { HashmapService } from 'app/services/hashmap.service';
+import axios from 'axios';
+import { bindActionCreators } from 'redux';
+import { hashmapUpdate } from 'app/redux/actions/hashmapActions';
 
 class Edit extends Component {
   state = {
@@ -11,21 +14,17 @@ class Edit extends Component {
   };
 
   componentDidMount() {
-    // axios.get(`http://localhost:3000/hashmaps/${1}`).then(hashmaps => {
-    //   const data = { ...hashmaps.data };
-    //   axios
-    //     .get(`http://localhost:3000/posts`, { params: { hashmapId: 1 } })
-    //     .then(posts => {
-    //       data.posts = posts.data;
-    //       this.setState({ data });
-    //     });
-    // });
+    const { param, hashmapUpdate } = this.props;
+    axios.get(`http://localhost:3000/hashmaps/${param.id}`).then(hashmaps => {
+      const data = { ...hashmaps.data };
+      this.setState({ data });
+      hashmapUpdate(data);
+    });
   }
 
   handlerSave = evt => {
     evt.preventDefault();
     const { hashmap } = this.props;
-    console.log(hashmap);
     HashmapService.createHashmap(hashmap);
   };
 
@@ -57,4 +56,7 @@ const mapStateToProps = state => ({
   hashmap: state.hashmap,
 });
 
-export default connect(mapStateToProps)(Edit);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ hashmapUpdate }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Edit);

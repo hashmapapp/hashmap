@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { titleUpdate, subtitleUpdate } from 'app/redux/actions/hashmapActions';
@@ -23,7 +22,7 @@ const SubTitleTextArea = styled.textarea`
   resize: none;
 `;
 
-const header = ({ data, title, subtitle, titleUpdate, subtitleUpdate }) => {
+const header = ({ title, subtitle, titleUpdate, subtitleUpdate }) => {
   return (
     <header>
       <TitleTextArea
@@ -49,14 +48,6 @@ const header = ({ data, title, subtitle, titleUpdate, subtitleUpdate }) => {
       />
     </header>
   );
-};
-
-header.propTypes = {
-  data: PropTypes.shape(),
-};
-
-header.defaultProps = {
-  data: undefined,
 };
 
 const mapDispatchToProps = dispatch =>

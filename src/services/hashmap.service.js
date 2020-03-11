@@ -2,10 +2,10 @@ import { HttpWrapper } from './http-wrapper';
 
 export class HashmapService extends HttpWrapper {
   static createHashmap = async hashmap => {
+    console.log(hashmap);
+
     const newHashmap = {
-      title: hashmap.title,
-      subtitle: hashmap.subtitle,
-      description: hashmap.description,
+      ...hashmap,
       info: new Date().toDateString(),
       author: {
         name: 'Kleyson Morais',
@@ -26,7 +26,18 @@ export class HashmapService extends HttpWrapper {
         return post;
       }),
     };
+    console.log(newHashmap);
+    if (newHashmap.id) {
+      console.log('Update Item');
 
-    super.createItem(newHashmap, 'http://localhost:3000/hashmaps');
+      super.updateItem(
+        newHashmap,
+        'http://localhost:3000/hashmaps',
+        newHashmap.id
+      );
+    } else {
+      console.log('Create Item');
+      super.createItem(newHashmap, 'http://localhost:3000/hashmaps');
+    }
   };
 }

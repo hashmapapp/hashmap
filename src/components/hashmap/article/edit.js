@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PublicationEdit from 'app/components/hashmap/publication/edit';
 import NewPublicationButton from 'app/components/hashmap/publication/components/new-button';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   postCreate,
@@ -19,13 +18,7 @@ const DescriptionTextArea = styled.textarea`
   resize: none;
 `;
 
-const article = ({
-  data,
-  posts,
-  descriptionUpdate,
-  description,
-  postCreate,
-}) => {
+const article = ({ posts, descriptionUpdate, description, postCreate }) => {
   const handlerNewPost = evt => {
     evt.preventDefault();
     postCreate();
@@ -49,14 +42,6 @@ const article = ({
       <NewPublicationButton onAction={handlerNewPost} />
     </article>
   );
-};
-
-article.propTypes = {
-  data: PropTypes.shape(),
-};
-
-article.defaultProps = {
-  data: undefined,
 };
 
 const mapDispatchToProps = dispatch =>
