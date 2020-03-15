@@ -7,6 +7,7 @@ const WrapLinkPreview = styled.div`
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
   margin: 15px;
   padding: 0px;
+  cursor: pointer;
 `;
 
 const WrapImage = styled(Image)`
@@ -27,9 +28,14 @@ const WrapInfo = styled.div`
 const LinkPreview = () => {
   return (
     <div className="row justify-content-md-center">
-      <WrapLinkPreview className="col-8 text-center">
+      <WrapLinkPreview
+        className="col-8 text-center"
+        onClick={() => {
+          alert('Redirecionar para Site');
+        }}
+      >
         <WrapImage
-          src="https://media-exp1.licdn.com/dms/image/sync/C4D27AQEJe3NFEI55YA/articleshare-shrink_1280_800/0?e=1584320400&v=beta&t=vULgBma57hdVkVaMCb5LyTntvylPQ2BWp2n4LxahUJk"
+          src="https://popseries.com.br/wp-content/uploads/2019/11/capitao-america-.jpg"
           alt="text"
         />
         <WrapInfo className="p-2 text-left">

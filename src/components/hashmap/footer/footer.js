@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Avatar } from '../publication/components/style';
 
 const Author = styled.h6``;
 
@@ -8,12 +9,6 @@ const Bio = styled.p``;
 
 const Span = styled.span`
   color: #444;
-`;
-
-const Avatar = styled.img`
-  max-width: 100%;
-  height: auto;
-  border-radius: 50%;
 `;
 
 const footer = ({ data }) => (

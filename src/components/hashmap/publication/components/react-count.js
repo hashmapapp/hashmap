@@ -1,79 +1,70 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Icon, Div } from './style';
 
 const ContainerDiv = styled.div`
-  a {
-    padding: 0px;
-    padding-right: 15px;
-    margin: 0px;
-    text-decoration: none;
-    color: black;
-  }
+  padding: 0px;
+  margin: 0px;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
 `;
 
-const Icon = styled.img`
-  max-width: 100%;
-  height: auto;
-`;
-
-const Div = styled.div`
-  float: left;
-  width: 15px;
-  height: 20px;
-  margin-right: 4px;
+const WrapDiv = styled.div`
+  padding-right: 15px;
 `;
 
 const ReactCount = ({ type, value }) => (
-  <>
-    {value > 0 && (
-      <ContainerDiv>
-        <a href="/">
-          {type === 'like' && (
-            <Div>
-              <Icon src="icons/like.png" />
-            </Div>
-          )}
-          {type === 'heart' && (
-            <Div>
-              <Icon src="icons/heart.png" />
-            </Div>
-          )}
-          {type === 'unlike' && (
-            <Div>
-              <Icon src="icons/unlike.png" />
-            </Div>
-          )}
-          {type === 'smiley' && (
-            <Div>
-              <Icon src="icons/smiley.png" />
-            </Div>
-          )}
-          {type === 'dissatisfied' && (
-            <Div>
-              <Icon src="icons/dissatisfied.png" />
-            </Div>
-          )}
-          {type === 'rocket' && (
-            <Div>
-              <Icon src="icons/rocket.png" />
-            </Div>
-          )}
-          {type === 'hooray' && (
-            <Div>
-              <Icon src="icons/hooray.png" />
-            </Div>
-          )}
-          {type === 'eyes' && (
-            <Div>
-              <Icon src="icons/eyes.png" />
-            </Div>
-          )}
-          {value}
-        </a>
-      </ContainerDiv>
-    )}
-  </>
+  <WrapDiv>
+    <ContainerDiv
+      onClick={() => {
+        alert(`React ${type}`);
+      }}
+    >
+      {type === 'like' && (
+        <Div>
+          <Icon src="icons/like.png" />
+        </Div>
+      )}
+      {type === 'heart' && (
+        <Div>
+          <Icon src="icons/heart.png" />
+        </Div>
+      )}
+      {type === 'unlike' && (
+        <Div>
+          <Icon src="icons/unlike.png" />
+        </Div>
+      )}
+      {type === 'smiley' && (
+        <Div>
+          <Icon src="icons/smiley.png" />
+        </Div>
+      )}
+      {type === 'dissatisfied' && (
+        <Div>
+          <Icon src="icons/dissatisfied.png" />
+        </Div>
+      )}
+      {type === 'rocket' && (
+        <Div>
+          <Icon src="icons/rocket.png" />
+        </Div>
+      )}
+      {type === 'hooray' && (
+        <Div>
+          <Icon src="icons/hooray.png" />
+        </Div>
+      )}
+      {type === 'eyes' && (
+        <Div>
+          <Icon src="icons/eyes.png" />
+        </Div>
+      )}
+      {value}
+    </ContainerDiv>
+  </WrapDiv>
 );
 
 ReactCount.propTypes = {
