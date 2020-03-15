@@ -1,10 +1,8 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
 import HeaderView from 'app/components/hashmap/header/view';
 import ArticleView from 'app/components/hashmap/article/view';
 import Footer from 'app/components/hashmap/footer/footer';
 import PropTypes from 'prop-types';
-import { Section } from 'app/components/UI/styles/styles';
 
 const SectionHashmapView = ({ data }) => {
   const headerData = {
@@ -17,13 +15,22 @@ const SectionHashmapView = ({ data }) => {
     posts: data.posts,
   };
   return (
-    <Container>
-      <Section>
-        <HeaderView data={headerData} />
-        <ArticleView data={articleData} />
-        <Footer data={data.author} />
-      </Section>
-    </Container>
+    <>
+      <div className="container">
+        <div className="row justify-content-md-center">
+          <div className="col col-lg-8">
+            <HeaderView data={headerData} />
+            <hr />
+          </div>
+        </div>
+        <div className="row justify-content-md-center">
+          <div className="col col-lg-6">
+            <ArticleView data={articleData} />
+            <Footer data={data.author} />
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

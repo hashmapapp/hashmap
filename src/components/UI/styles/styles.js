@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { DARK_GRAY } from 'app/styles/colors';
 
 export const ItemLi = styled.li`
   display: inline;
@@ -6,7 +7,7 @@ export const ItemLi = styled.li`
   padding: 10px 40px;
 
   a {
-    color: rgba(0, 0, 0, 0.84);
+    color: ${DARK_GRAY};
     display: block;
     padding: 10px 30px;
     float: right;
@@ -27,4 +28,9 @@ export const ItemLi = styled.li`
 
 export const Section = styled.section`
   margin: 2% ${prop => (prop.marginColum ? prop.marginColum : 25)}%;
+`;
+
+export const Image = styled.img`
+  max-width: 100%;
+  max-height: 100%;
 `;

@@ -5,6 +5,7 @@ import SectionHashmapEdit from 'app/components/hashmap/edit';
 import { ItemLi } from 'app/components/UI/styles/styles';
 import { HashmapService } from 'app/services/hashmap.service';
 import axios from 'axios';
+import Router from 'next/router';
 import { bindActionCreators } from 'redux';
 import { hashmapUpdate } from 'app/redux/actions/hashmapActions';
 
@@ -25,7 +26,13 @@ class Edit extends Component {
   handlerSave = evt => {
     evt.preventDefault();
     const { hashmap } = this.props;
-    HashmapService.createHashmap(hashmap);
+    HashmapService.createHashmap(hashmap).then(
+      resolve => {
+        console.log(resolve);
+        Router.push('/');
+      },
+      error => console.error(error)
+    );
   };
 
   render() {

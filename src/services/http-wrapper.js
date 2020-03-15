@@ -4,24 +4,10 @@ export class HttpWrapper {
   baseUrl = '';
 
   static createItem = (item, url) => {
-    return axios
-      .post(url, item)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    return axios.post(url, item);
   };
 
   static updateItem = (item, url, id) => {
-    return axios
-      .patch(`${url}/${id}`, item)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    return axios.patch(`${url}/${id}`, item);
   };
 }
