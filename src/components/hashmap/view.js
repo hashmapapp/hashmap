@@ -21,10 +21,6 @@ const SectionHashmapView = ({ data }) => {
           <div className="col col-lg-8">
             <HeaderView data={headerData} />
             <hr />
-          </div>
-        </div>
-        <div className="row justify-content-md-center">
-          <div className="col col-lg-6">
             <ArticleView data={articleData} />
             <Footer data={data.author} />
           </div>

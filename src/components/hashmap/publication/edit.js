@@ -26,8 +26,13 @@ const TitleTextArea = styled.textarea`
   margin: 4px 0;
   box-sizing: border-box;
   border: none;
-  font-size: 1rem;
+  font-size: 1.2rem;
   resize: none;
+  font-family: 'Open Sans Bold', sans-serif;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const DescriptionTextArea = styled.textarea`
@@ -37,6 +42,11 @@ const DescriptionTextArea = styled.textarea`
   border: none;
   font-size: 1rem;
   resize: none;
+  font-family: 'Open Sans Regular', sans-serif;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 // const LinkBar = styled.div`

@@ -22,7 +22,7 @@ const Wrap = styled.div`
 `;
 
 const WrapImage = styled(Image)`
-  height: 150px;
+  /* height: 150px; */
   padding: 15px 0px;
 `;
 

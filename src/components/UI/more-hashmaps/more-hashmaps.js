@@ -14,7 +14,7 @@ const SectionMoreHashMaps = () => (
   <Section>
     <div className="container pt-4">
       <div className="row justify-content-md-center">
-        <div className="col col-lg-8">
+        <div>
           <h6>Mais Hashmaps</h6>
           <hr />
           <div className="row">

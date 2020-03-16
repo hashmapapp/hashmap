@@ -11,6 +11,11 @@ const TitleTextArea = styled.textarea`
   border: none;
   font-size: 2.5rem;
   resize: none;
+  font-family: 'Open Sans Bold', sans-serif;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SubTitleTextArea = styled.textarea`
@@ -20,6 +25,11 @@ const SubTitleTextArea = styled.textarea`
   border: none;
   font-size: 1rem;
   resize: none;
+  font-family: 'Open Sans Regular', sans-serif;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const header = ({ title, subtitle, titleUpdate, subtitleUpdate }) => {

@@ -50,6 +50,7 @@ export default createGlobalStyle`
   p, span, li {
     font-family: 'Open Sans Regular', sans-serif;
     font-size: 1.2em;
+    white-space: pre-line;
   }
 
   h1, h2, h3, h4, h5, h6 {

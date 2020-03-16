@@ -16,6 +16,7 @@ const NavBarDiv = styled.div`
   position: ${prop => (prop.fixed ? 'fixed;' : '')};
   top: ${prop => (prop.fixed ? '0' : '')};
   width: ${prop => (prop.fixed ? '100%;' : '')};
+  z-index: 10;
 `;
 
 const Space = styled.div`
