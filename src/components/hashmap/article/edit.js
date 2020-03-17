@@ -24,36 +24,25 @@ const DescriptionTextArea = styled.textarea`
 `;
 
 const article = ({ posts, descriptionUpdate, description, postCreate }) => {
-  const refContainer = useRef(null);
   const handlerNewPost = evt => {
     evt.preventDefault();
     postCreate();
   };
-  const getNumberRows = value => {
-    const numberCaracteres = value.length;
-    const numberParagraphs = value.split('\n').length;
-    return Math.ceil(numberCaracteres / 97) + numberParagraphs + 1;
-  };
-  const [rows, setRows] = useState(getNumberRows(description));
-  console.log(rows);
-
   return (
     <article>
       <DescriptionTextArea
-        rows={rows}
+        rows="5"
         type="text"
         id="description"
         name="description"
         placeholder="Descrição"
         onChange={e => {
           descriptionUpdate(e.target.value);
-          setRows(getNumberRows(e.target.value));
         }}
         value={description}
-        ref={refContainer}
       />
-      {posts.map((post, index) => (
-        <PublicationEdit data={post} index={index} key={index} />
+      {posts.map(post => (
+        <PublicationEdit data={post} index={post.id} key={post.id} />
       ))}
       <NewPublicationButton onAction={handlerNewPost} />
     </article>

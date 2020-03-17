@@ -20,18 +20,21 @@ class HomeComponent extends Component {
   render() {
     const { hashmaps } = this.state;
     return (
-      <Container>
-        <Section marginColum={12} className="row">
-          <div className="col">
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-9">
             {hashmaps.map(hashmap => (
-              <ListHashmaps key={hashmap.id} data={hashmap} />
+              <>
+                <ListHashmaps key={hashmap.id} data={hashmap} />
+                <hr />
+              </>
             ))}
           </div>
-          <div className="col col-4">
+          <div className="col-lg-3">
             <TopHashmaps />
           </div>
-        </Section>
-      </Container>
+        </div>
+      </div>
     );
   }
 }

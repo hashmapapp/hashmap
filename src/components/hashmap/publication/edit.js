@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import {
   titlePostUpdate,
   subtitlePostUpdate,
+  postDelete,
 } from 'app/redux/actions/hashmapActions';
+import Button from '@material-ui/core/Button';
 
 const ArticleCardBox = styled.article`
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
@@ -68,7 +70,13 @@ const DescriptionTextArea = styled.textarea`
 //   resize: none;
 // `;
 
-const Publication = ({ data, index, titlePostUpdate, subtitlePostUpdate }) => {
+const Publication = ({
+  data,
+  index,
+  titlePostUpdate,
+  subtitlePostUpdate,
+  postDelete,
+}) => {
   return (
     <>
       {/* <LinkBar>
@@ -84,17 +92,31 @@ const Publication = ({ data, index, titlePostUpdate, subtitlePostUpdate }) => {
         />
       </LinkBar> */}
       <ArticleCardBox className="p-2">
-        <TitleTextArea
-          rows="1"
-          type="text"
-          id="title"
-          name="title"
-          placeholder="Título"
-          onChange={e => {
-            titlePostUpdate(e.target.value, index);
-          }}
-          value={data.title}
-        />
+        <header className="row justify-content-between">
+          <div className="col-10">
+            <TitleTextArea
+              rows="1"
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Título"
+              onChange={e => {
+                titlePostUpdate(e.target.value, index);
+              }}
+              value={data.title}
+            />
+          </div>
+          <div className="col-2 text-right">
+            <Button
+              color="secondary"
+              onClick={() => {
+                postDelete(index);
+              }}
+            >
+              Remover
+            </Button>
+          </div>
+        </header>
         <hr />
         <DescriptionTextArea
           rows="10"
@@ -121,6 +143,9 @@ Publication.defaultProps = {
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ titlePostUpdate, subtitlePostUpdate }, dispatch);
+  bindActionCreators(
+    { titlePostUpdate, subtitlePostUpdate, postDelete },
+    dispatch
+  );
 
 export default connect(null, mapDispatchToProps)(Publication);

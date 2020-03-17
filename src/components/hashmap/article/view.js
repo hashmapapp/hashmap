@@ -7,7 +7,7 @@ import WrapImage from 'app/components/UI/image/wrapper';
 const article = ({ data }) => (
   <article>
     <WrapImage
-      src="https://miro.medium.com/max/6480/1*PU20rbKCMm3C2BLEM24dgg.jpeg"
+      src={data.urlImage}
       alt="Livros"
       description="Photo by John Schnobrich on Unsplash"
     />

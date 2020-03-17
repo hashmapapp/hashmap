@@ -3,6 +3,7 @@ export const HASHMAP_TITLE_UPDATE = '@hashmap/title/UPDATE';
 export const HASHMAP_SUBTITLE_UPDATE = '@hashmap/subtitle/UPDATE';
 export const HASHMAP_DESCRIPTION_UPDATE = '@hashmap/description/UPDATE';
 export const HASHMAP_CREATE_POST = '@hashmap/post/CREATE';
+export const HASHMAP_DELETE_POST = '@hashmap/post/DELETE';
 export const HASHMAP_POST_TITLE_UPDATE = '@hashmap/post/title/UPDATE';
 export const HASHMAP_POST_SUBTITLE_UPDATE = '@hashmap/post/subtitle/UPDATE';
 
@@ -29,6 +30,11 @@ export const descriptionUpdate = text => ({
 export const postCreate = () => ({
   type: HASHMAP_CREATE_POST,
   post: { title: '', description: '' },
+});
+
+export const postDelete = index => ({
+  type: HASHMAP_DELETE_POST,
+  index,
 });
 
 export const titlePostUpdate = (text, idPost) => ({

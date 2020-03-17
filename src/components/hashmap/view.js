@@ -13,7 +13,10 @@ const SectionHashmapView = ({ data }) => {
   const articleData = {
     description: data.description,
     posts: data.posts,
+    urlImage: data.urlImage,
   };
+  console.log(headerData);
+
   return (
     <>
       <div className="container">

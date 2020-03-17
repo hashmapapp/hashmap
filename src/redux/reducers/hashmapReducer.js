@@ -26,6 +26,15 @@ const HashmapReducer = (
         draft.posts.push(action.post);
       });
     }
+    case ACTIONS.HASHMAP_DELETE_POST: {
+      return produce(state, draft => {
+        const post = draft.posts.find(p => p.id === action.index);
+        if (post) {
+          const index = draft.posts.indexOf(post);
+          draft.posts.splice(index, 1);
+        }
+      });
+    }
     case ACTIONS.HASHMAP_POST_TITLE_UPDATE: {
       return produce(state, draft => {
         draft.posts[action.idPost].title = action.text;
