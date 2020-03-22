@@ -5,10 +5,13 @@ import Footer from 'app/components/UI/footer/footer';
 import HomeComponent from 'app/components/home/home';
 import Link from 'next/link';
 import loadFirebaseStore from 'app/lib/db';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { hashmapReset } from 'app/redux/actions/hashmapActions';
 
 class home extends Component {
   state = {
-    hashmaps: undefined,
+    hashmaps: [],
   };
 
   constructor(props) {
@@ -18,8 +21,8 @@ class home extends Component {
 
   async componentDidMount() {
     const FirebaseStore = await loadFirebaseStore();
-    this.ref = FirebaseStore.collection('hashmaps');
-    this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
+    this.hashmapsRef = FirebaseStore.collection('hashmaps');
+    this.unsubscribe = this.hashmapsRef.onSnapshot(this.onCollectionUpdate);
   }
 
   onCollectionUpdate = querySnapshot => {
@@ -37,11 +40,12 @@ class home extends Component {
 
   render() {
     const { hashmaps } = this.state;
+    const { hashmapReset } = this.props;
     return (
       <>
         <UINavBar>
           <ul>
-            <ItemLi>
+            <ItemLi onClick={hashmapReset}>
               <Link href="/edit">
                 <a>Criar HashMap</a>
               </Link>
@@ -66,4 +70,7 @@ class home extends Component {
   }
 }
 
-export default home;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ hashmapReset }, dispatch);
+
+export default connect(null, mapDispatchToProps)(home);

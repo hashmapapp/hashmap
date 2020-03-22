@@ -13,7 +13,7 @@ const article = ({ data }) => (
     />
     <p>{data.description}</p>
     {data.posts.map(post => (
-      <PublicationView key={post.id} data={post} />
+      <PublicationView key={post.key} data={post} />
     ))}
     <NewPublicationButton />
   </article>

@@ -32,7 +32,7 @@ const SubTitleTextArea = styled.textarea`
   }
 `;
 
-const header = ({ title, subtitle, titleUpdate, subtitleUpdate }) => {
+const header = ({ title, subtitle, titleUpdate, subtitleUpdate, hashmap }) => {
   return (
     <header>
       <TitleTextArea
@@ -64,6 +64,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators({ titleUpdate, subtitleUpdate }, dispatch);
 
 const mapStateToProps = state => ({
+  hashmap: state.hashmap,
   title: state.hashmap.title,
   subtitle: state.hashmap.subtitle,
 });

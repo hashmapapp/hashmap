@@ -1,13 +1,19 @@
 import * as ACTIONS from 'app/redux/actions/hashmapActions';
 import produce from 'immer';
 
-const HashmapReducer = (
-  state = { title: '', subtitle: '', description: '', posts: [] },
-  action
-) => {
+const STATE_CLEAN = { title: '', subtitle: '', description: '', posts: [] };
+
+const HashmapReducer = (state = STATE_CLEAN, action) => {
   switch (action.type) {
     case ACTIONS.HASHMAP_UPDATE:
-      return action.hashmap;
+      return produce(state, draft => {
+        draft.title = action.data.hashmap.title;
+        draft.subtitle = action.data.hashmap.subtitle;
+        draft.description = action.data.hashmap.description;
+        draft.posts = action.data.posts;
+      });
+    case ACTIONS.HASHMAP_RESET:
+      return STATE_CLEAN;
     case ACTIONS.HASHMAP_TITLE_UPDATE:
       return produce(state, draft => {
         draft.title = action.text;
@@ -46,7 +52,7 @@ const HashmapReducer = (
       });
     }
     default:
-      return { ...state };
+      return { ...STATE_CLEAN };
   }
 };
 

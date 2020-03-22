@@ -36,21 +36,21 @@ const WrapAvatar = styled.div`
   padding: 0px;
 `;
 
-const ListHashmaps = ({ data }) => {
+const ListHashmaps = ({ hashmap }) => {
   return (
     <Wrapper className="row">
       <div className="col">
         <div className="row">
-          <Link href={`/view?id=${data.id}`}>
+          <Link href={`/view?key=${hashmap.key}`}>
             <a>
-              <h4>{data.title}</h4>
+              <h4>{hashmap.title}</h4>
             </a>
           </Link>
         </div>
         <div className="row">
-          <Link href={`/view?id=${data.id}`}>
+          <Link href={`/view?key=${hashmap.key}`}>
             <a>
-              <h6>{data.subtitle}</h6>
+              <h6>{hashmap.subtitle}</h6>
             </a>
           </Link>
         </div>
@@ -65,9 +65,9 @@ const ListHashmaps = ({ data }) => {
         </div>
       </div>
       <div className="col col-lg-3">
-        <Link href={`/view?id=${data.id}`}>
+        <Link href={`/view?key=${hashmap.key}`}>
           <a>
-            <WrapImage src={data.image} alt="img" />
+            <WrapImage src={hashmap.image} alt="img" />
           </a>
         </Link>
       </div>

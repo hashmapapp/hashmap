@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PublicationEdit from 'app/components/hashmap/publication/edit';
@@ -42,7 +42,7 @@ const article = ({ posts, descriptionUpdate, description, postCreate }) => {
         value={description}
       />
       {posts.map(post => (
-        <PublicationEdit data={post} index={post.id} key={post.id} />
+        <PublicationEdit data={post} index={post.id} key={post.key} />
       ))}
       <NewPublicationButton onAction={handlerNewPost} />
     </article>

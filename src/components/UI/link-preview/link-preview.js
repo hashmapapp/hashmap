@@ -25,7 +25,7 @@ const WrapInfo = styled.div`
   }
 `;
 
-const LinkPreview = () => {
+const LinkPreview = ({ data }) => {
   return (
     <div className="row justify-content-md-center">
       <WrapLinkPreview
@@ -34,13 +34,10 @@ const LinkPreview = () => {
           alert('Redirecionar para Site');
         }}
       >
-        <WrapImage
-          src="https://popseries.com.br/wp-content/uploads/2019/11/capitao-america-.jpg"
-          alt="text"
-        />
+        <WrapImage src={data.image} alt="text" />
         <WrapInfo className="p-2 text-left">
-          <span>link.com.br</span>
-          <h6>As extraordinárias mulheres que reinventam o futuro no Nubank</h6>
+          <span>{data.url}</span>
+          <h6>{data.title}</h6>
         </WrapInfo>
       </WrapLinkPreview>
     </div>

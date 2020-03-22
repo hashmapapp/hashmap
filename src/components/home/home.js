@@ -7,12 +7,9 @@ const HomeComponent = ({ hashmaps }) => {
     <div className="container">
       <div className="row">
         <div className="col-lg-9">
-          {hashmaps &&
+          {hashmaps.length > 0 &&
             hashmaps.map(hashmap => (
-              <>
-                <ListHashmaps key={hashmap.id} data={hashmap} />
-                <hr />
-              </>
+              <ListHashmaps key={hashmap.key} hashmap={hashmap} />
             ))}
         </div>
         <div className="col-lg-3">

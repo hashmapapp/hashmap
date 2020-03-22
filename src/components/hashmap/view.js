@@ -4,19 +4,17 @@ import ArticleView from 'app/components/hashmap/article/view';
 import Footer from 'app/components/hashmap/footer/footer';
 import PropTypes from 'prop-types';
 
-const SectionHashmapView = ({ data }) => {
+const SectionHashmapView = ({ hashmap, posts }) => {
   const headerData = {
-    title: data.title,
-    subtitle: data.subtitle,
-    info: data.info,
+    title: hashmap.title,
+    subtitle: hashmap.subtitle,
+    // info: hashmap.info,
   };
   const articleData = {
-    description: data.description,
-    posts: data.posts,
-    urlImage: data.urlImage,
+    description: hashmap.description,
+    posts,
+    urlImage: hashmap.image,
   };
-  console.log(headerData);
-
   return (
     <>
       <div className="container">
@@ -25,7 +23,7 @@ const SectionHashmapView = ({ data }) => {
             <HeaderView data={headerData} />
             <hr />
             <ArticleView data={articleData} />
-            <Footer data={data.author} />
+            {/* <Footer data={data.author} /> */}
           </div>
         </div>
       </div>
@@ -34,7 +32,7 @@ const SectionHashmapView = ({ data }) => {
 };
 
 SectionHashmapView.propTypes = {
-  data: PropTypes.shape().isRequired,
+  // data: PropTypes.shape().isRequired,
 };
 
 export default SectionHashmapView;

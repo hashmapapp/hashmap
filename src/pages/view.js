@@ -8,7 +8,7 @@ export default () => {
   return (
     <>
       <GlobalStyles />
-      <ScreenHashmapView param={router.query} />
+      <ScreenHashmapView params={router.query} />
     </>
   );
 };

@@ -1,4 +1,5 @@
 export const HASHMAP_UPDATE = '@hashmap/UPDATE';
+export const HASHMAP_RESET = '@hashmap/RESET';
 export const HASHMAP_TITLE_UPDATE = '@hashmap/title/UPDATE';
 export const HASHMAP_SUBTITLE_UPDATE = '@hashmap/subtitle/UPDATE';
 export const HASHMAP_DESCRIPTION_UPDATE = '@hashmap/description/UPDATE';
@@ -7,9 +8,13 @@ export const HASHMAP_DELETE_POST = '@hashmap/post/DELETE';
 export const HASHMAP_POST_TITLE_UPDATE = '@hashmap/post/title/UPDATE';
 export const HASHMAP_POST_SUBTITLE_UPDATE = '@hashmap/post/subtitle/UPDATE';
 
-export const hashmapUpdate = hashmap => ({
+export const hashmapUpdate = data => ({
   type: HASHMAP_UPDATE,
-  hashmap,
+  data,
+});
+
+export const hashmapReset = () => ({
+  type: HASHMAP_RESET,
 });
 
 export const titleUpdate = text => ({
