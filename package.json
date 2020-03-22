@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.9.5",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "dotenv": "^8.2.0",
+    "firebase": "^7.12.0",
     "immer": "^6.0.1",
     "next": "^9.2.2",
     "next-redux-wrapper": "^5.0.0",
@@ -21,6 +22,8 @@
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",
+    "rxfire": "^3.10.1",
+    "rxjs": "^6.5.4",
     "styled-components": "^5.0.1"
   },
   "devDependencies": {

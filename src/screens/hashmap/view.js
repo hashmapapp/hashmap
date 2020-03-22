@@ -4,7 +4,6 @@ import UIFooter from 'app/components/UI/footer/footer';
 import SectionHashmapView from 'app/components/hashmap/view';
 import UISectionComments from 'app/components/UI/comments/comments';
 import UISectionMoreHashMaps from 'app/components/UI/more-hashmaps/more-hashmaps';
-import axios from 'axios';
 import { ItemLi } from 'app/components/UI/styles/styles';
 import Link from 'next/link';
 
@@ -13,12 +12,31 @@ class View extends Component {
     data: undefined,
   };
 
+  constructor(props) {
+    super(props);
+    // this.ref = firebase.firestore().collection('hashmaps');
+    this.unsubscribe = null;
+  }
+
+  // onCollectionUpdate = querySnapshot => {
+  //   const boards = [];
+  //   querySnapshot.forEach(doc => {
+  //     const { title, description, author } = doc.data();
+  //     boards.push({
+  //       key: doc.id,
+  //       doc, // DocumentSnapshot
+  //       title,
+  //       description,
+  //       author,
+  //     });
+  //   });
+  //   this.setState({
+  //     boards,
+  //   });
+  // };
+
   componentDidMount() {
-    const { param } = this.props;
-    axios.get(`http://localhost:3000/hashmaps/${param.id}`).then(hashmaps => {
-      const data = { ...hashmaps.data };
-      this.setState({ data });
-    });
+    // this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
   }
 
   render() {

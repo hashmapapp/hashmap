@@ -67,7 +67,7 @@ const ListHashmaps = ({ data }) => {
       <div className="col col-lg-3">
         <Link href={`/view?id=${data.id}`}>
           <a>
-            <WrapImage src={data.urlImage} alt="img" />
+            <WrapImage src={data.image} alt="img" />
           </a>
         </Link>
       </div>

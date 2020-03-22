@@ -36,7 +36,7 @@ module.exports = {
         aspects: ['invalidHref', 'preferButton'],
       },
     ],
-    'no-console': ['error', { allow: ['tron', 'log'] }],
+    'no-console': ['error', { allow: ['tron', 'log', 'error'] }],
     'no-param-reassign': 'off',
   },
 };
