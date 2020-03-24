@@ -76,6 +76,7 @@ const Publication = ({
   titlePostUpdate,
   subtitlePostUpdate,
   postDelete,
+  temporaryKey,
 }) => {
   return (
     <>
@@ -110,7 +111,7 @@ const Publication = ({
             <Button
               color="secondary"
               onClick={() => {
-                postDelete(index);
+                postDelete(temporaryKey);
               }}
             >
               Remover

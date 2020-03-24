@@ -1,13 +1,42 @@
-import axios from 'axios';
+import loadFirebaseStore from 'app/lib/db';
 
-export class HttpWrapper {
-  baseUrl = '';
+export class HttpWrapperFirebase {
+  constructor() {
+    this.db = loadFirebaseStore();
+  }
 
-  static createItem = (item, url) => {
-    return axios.post(url, item);
+  createItem = (path, item) => {
+    return this.db()
+      .collection(path)
+      .add(item);
   };
 
-  static updateItem = (item, url, id) => {
-    return axios.patch(`${url}/${id}`, item);
+  createItems = (path, items) => {
+    const batch = this.db().batch();
+    items.forEach(item => {
+      const ref = this.db()
+        .collection(path)
+        .doc();
+      batch.set(ref, item);
+    });
+    return batch.commit();
+  };
+
+  updateItem = (path, key, item) => {
+    const ref = this.db()
+      .collection(path)
+      .doc(key);
+    return ref.update(item);
+  };
+
+  updateItems = (path, keys, items) => {
+    const batch = this.db().batch();
+    items.forEach((item, index) => {
+      const ref = this.db()
+        .collection(path)
+        .doc(keys[index]);
+      batch.update(ref, item);
+    });
+    return batch.commit();
   };
 }

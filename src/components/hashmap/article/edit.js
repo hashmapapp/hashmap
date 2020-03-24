@@ -41,8 +41,13 @@ const article = ({ posts, descriptionUpdate, description, postCreate }) => {
         }}
         value={description}
       />
-      {posts.map(post => (
-        <PublicationEdit data={post} index={post.id} key={post.key} />
+      {posts.map((post, index) => (
+        <PublicationEdit
+          data={post}
+          index={index}
+          key={post.key || post.temporaryKey}
+          temporaryKey={post.key || post.temporaryKey}
+        />
       ))}
       <NewPublicationButton onAction={handlerNewPost} />
     </article>

@@ -19,7 +19,7 @@ const loadFirebaseStore = () => {
   } catch (msg) {
     console.error('Error Firebase Initializer\n', msg);
   }
-  return firebase.firestore();
+  return firebase.firestore;
 };
 
 export default loadFirebaseStore;

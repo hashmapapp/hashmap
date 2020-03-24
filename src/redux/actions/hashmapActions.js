@@ -34,12 +34,12 @@ export const descriptionUpdate = text => ({
 
 export const postCreate = () => ({
   type: HASHMAP_CREATE_POST,
-  post: { title: '', description: '' },
+  post: { title: '', description: '', temporaryKey: '' },
 });
 
-export const postDelete = index => ({
+export const postDelete = temporaryKey => ({
   type: HASHMAP_DELETE_POST,
-  index,
+  temporaryKey,
 });
 
 export const titlePostUpdate = (text, idPost) => ({

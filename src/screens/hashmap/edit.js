@@ -7,6 +7,7 @@ import Router from 'next/router';
 import { bindActionCreators, compose } from 'redux';
 import { hashmapUpdate as handlerHashmapUpdate } from 'app/redux/actions/hashmapActions';
 import withSubscriptionHashmapData from 'app/screens/lib/withSubscriptionHashmapData';
+import { HashmapService } from 'app/services/hashmap.service';
 
 const Edit = ({
   postsLength,
@@ -21,7 +22,7 @@ const Edit = ({
   }, [hashmap, posts]);
   const handlerSave = evt => {
     evt.preventDefault();
-    console.log(hashmapRedux);
+    HashmapService.saveHashmap(hashmapRedux);
   };
 
   return (

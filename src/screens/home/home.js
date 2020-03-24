@@ -20,8 +20,8 @@ class home extends Component {
   }
 
   async componentDidMount() {
-    const FirebaseStore = await loadFirebaseStore();
-    this.hashmapsRef = FirebaseStore.collection('hashmaps');
+    const FirebaseStore = loadFirebaseStore();
+    this.hashmapsRef = FirebaseStore().collection('hashmaps');
     this.unsubscribe = this.hashmapsRef.onSnapshot(this.onCollectionUpdate);
   }
 
