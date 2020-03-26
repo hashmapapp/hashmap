@@ -25,6 +25,10 @@ class home extends Component {
     this.unsubscribe = this.hashmapsRef.onSnapshot(this.onCollectionUpdate);
   }
 
+  componentWillUnmount() {
+    this.unsubscribe = null;
+  }
+
   onCollectionUpdate = querySnapshot => {
     const hashmaps = [];
     querySnapshot.forEach(doc => {

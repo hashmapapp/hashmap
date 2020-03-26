@@ -41,14 +41,18 @@ const article = ({ posts, descriptionUpdate, description, postCreate }) => {
         }}
         value={description}
       />
-      {posts.map((post, index) => (
-        <PublicationEdit
-          data={post}
-          index={index}
-          key={post.key || post.temporaryKey}
-          temporaryKey={post.key || post.temporaryKey}
-        />
-      ))}
+      {posts.map((post, index) => {
+        if (!post.key.startsWith('DELETE')) {
+          return (
+            <PublicationEdit
+              data={post}
+              index={index}
+              key={post.key}
+              fakeKey={post.key}
+            />
+          );
+        }
+      })}
       <NewPublicationButton onAction={handlerNewPost} />
     </article>
   );

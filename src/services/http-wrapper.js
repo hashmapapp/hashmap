@@ -11,9 +11,9 @@ export class HttpWrapperFirebase {
       .add(item);
   };
 
-  createItems = (path, items) => {
+  createItems = (path, dataCreate = { items: [] }) => {
     const batch = this.db().batch();
-    items.forEach(item => {
+    dataCreate.items.forEach(item => {
       const ref = this.db()
         .collection(path)
         .doc();
@@ -29,13 +29,30 @@ export class HttpWrapperFirebase {
     return ref.update(item);
   };
 
-  updateItems = (path, keys, items) => {
+  updateItems = (
+    path,
+    dataUpdate = { items: [], keys: [] },
+    dataCreate = { items: [] },
+    dataDelete = { keys: [] }
+  ) => {
     const batch = this.db().batch();
-    items.forEach((item, index) => {
+    dataUpdate.items.forEach((item, index) => {
       const ref = this.db()
         .collection(path)
-        .doc(keys[index]);
+        .doc(dataUpdate.keys[index]);
       batch.update(ref, item);
+    });
+    dataCreate.items.forEach(item => {
+      const ref = this.db()
+        .collection(path)
+        .doc();
+      batch.set(ref, item);
+    });
+    dataDelete.keys.forEach(key => {
+      const ref = this.db()
+        .collection(path)
+        .doc(key);
+      batch.delete(ref);
     });
     return batch.commit();
   };

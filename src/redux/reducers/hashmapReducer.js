@@ -47,7 +47,7 @@ const HashmapReducer = (state = STATE_CLEAN, action) => {
     }
     case ACTIONS.HASHMAP_CREATE_POST: {
       return produce(state, draft => {
-        action.post.temporaryKey = '_'.concat(
+        action.post.key = '_'.concat(
           Math.random()
             .toString(36)
             .substr(2, 9)
@@ -57,12 +57,10 @@ const HashmapReducer = (state = STATE_CLEAN, action) => {
     }
     case ACTIONS.HASHMAP_DELETE_POST: {
       return produce(state, draft => {
-        const post = draft.posts.find(
-          p => p.temporaryKey === action.temporaryKey
-        );
+        const post = draft.posts.find(p => p.key === action.key);
         if (post) {
           const index = draft.posts.indexOf(post);
-          draft.posts.splice(index, 1);
+          draft.posts[index].key = `DELETE?key=${post.key}`;
         }
       });
     }

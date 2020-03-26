@@ -31,10 +31,24 @@ const withSubscriptionHashmapData = WrappedComponent => {
     };
 
     getPosts = async (fs, key) => {
+      const posts = [];
       const postsRef = fs().collection(`hashmaps/${key}/posts`);
-      collectionData(postsRef, 'key').subscribe(posts => {
-        this.setState({ posts });
-      });
+      postsRef
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            posts.push({
+              ...doc.data(),
+              key: doc.id,
+            });
+          });
+          this.setState({
+            posts,
+          });
+        })
+        .catch(err => {
+          console.log('Error getting documents', err);
+        });
     };
 
     render() {
