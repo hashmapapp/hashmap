@@ -29,6 +29,13 @@ export class HttpWrapperFirebase {
     return ref.update(item);
   };
 
+  deleteItem = (path, key) => {
+    const ref = this.db()
+      .collection(path)
+      .doc(key);
+    return ref.delete();
+  };
+
   updateItems = (
     path,
     dataUpdate = { items: [], keys: [] },

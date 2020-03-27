@@ -20,15 +20,29 @@ const Edit = ({
   useEffect(() => {
     if (hashmap && posts.length > 0) handlerHashmapUpdate({ hashmap, posts });
   }, [hashmap, posts]);
+
+  const callback = () => {
+    Router.push('/');
+  };
   const handlerSave = evt => {
     evt.preventDefault();
-    HashmapService.saveHashmap(hashmapRedux);
+    HashmapService.saveHashmap(hashmapRedux, callback);
+  };
+
+  const handlerDelete = evt => {
+    evt.preventDefault();
+    HashmapService.deleteHashmap(hashmapKey, callback);
   };
 
   return (
     <>
       <UINavBar fixed>
         <ul>
+          <ItemLi>
+            <a href="/" onClick={handlerDelete}>
+              Apagar
+            </a>
+          </ItemLi>
           <ItemLi>
             <a href="/" onClick={handlerSave}>
               Salvar

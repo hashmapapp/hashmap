@@ -1,5 +1,4 @@
 import React from 'react';
-import { collectionData } from 'rxfire/firestore';
 import loadFirebaseStore from 'app/lib/db';
 
 const withSubscriptionHashmapData = WrappedComponent => {

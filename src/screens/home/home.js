@@ -19,14 +19,14 @@ class home extends Component {
     this.unsubscribe = null;
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const FirebaseStore = loadFirebaseStore();
     this.hashmapsRef = FirebaseStore().collection('hashmaps');
     this.unsubscribe = this.hashmapsRef.onSnapshot(this.onCollectionUpdate);
   }
 
   componentWillUnmount() {
-    this.unsubscribe = null;
+    this.unsubscribe();
   }
 
   onCollectionUpdate = querySnapshot => {
