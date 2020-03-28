@@ -73,12 +73,11 @@ const DescriptionTextArea = styled.textarea`
 
 const Publication = ({
   data,
-  index,
-  titlePostUpdate,
-  subtitlePostUpdate,
-  postDelete,
-  fakeKey,
-  imgPostUpdate,
+  temporaryKey,
+  handlerTitle,
+  handlerSubtitle,
+  handlerDelete,
+  handlerImage,
 }) => {
   return (
     <>
@@ -104,7 +103,7 @@ const Publication = ({
               name="title"
               placeholder="Título"
               onChange={e => {
-                titlePostUpdate(e.target.value, index);
+                handlerTitle(e.target.value, temporaryKey);
               }}
               value={data.title}
             />
@@ -113,7 +112,7 @@ const Publication = ({
             <button
               type="button"
               onClick={() => {
-                postDelete(fakeKey);
+                handlerDelete(temporaryKey);
               }}
             >
               Remover
@@ -128,13 +127,13 @@ const Publication = ({
           name="description"
           placeholder="Descrição"
           onChange={e => {
-            subtitlePostUpdate(e.target.value, index);
+            handlerSubtitle(e.target.value, temporaryKey);
           }}
           value={data.description}
         />
         <ImageUpload
           onRequestSave={(path, url) => {
-            imgPostUpdate(path, url, index);
+            handlerImage(path, url, temporaryKey);
           }}
           onRequestClear={() => console.log('Clear')}
           storageName="posts"
@@ -154,6 +153,11 @@ const Publication = ({
 
 Publication.propTypes = {
   data: PropTypes.shape(),
+  temporaryKey: PropTypes.string.isRequired,
+  handlerTitle: PropTypes.func.isRequired,
+  handlerSubtitle: PropTypes.func.isRequired,
+  handlerDelete: PropTypes.func.isRequired,
+  handlerImage: PropTypes.func.isRequired,
 };
 
 Publication.defaultProps = {
@@ -162,7 +166,12 @@ Publication.defaultProps = {
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { titlePostUpdate, subtitlePostUpdate, postDelete, imgPostUpdate },
+    {
+      handlerTitle: titlePostUpdate,
+      handlerSubtitle: subtitlePostUpdate,
+      handlerDelete: postDelete,
+      handlerImage: imgPostUpdate,
+    },
     dispatch
   );
 

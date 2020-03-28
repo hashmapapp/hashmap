@@ -4,10 +4,13 @@ import { loadFirebaseStore } from 'app/lib/db';
 const withSubscriptionHashmapData = WrappedComponent => {
   return class extends React.Component {
     state = {
-      hashmap: undefined,
       posts: [],
-      param: undefined,
     };
+
+    constructor(props) {
+      super(props);
+      this.postsRef = undefined;
+    }
 
     componentDidMount() {
       const { params } = this.props;
@@ -30,9 +33,9 @@ const withSubscriptionHashmapData = WrappedComponent => {
     };
 
     getPosts = async (fs, key) => {
+      const ref = fs().collection(`hashmaps/${key}/posts`);
       const posts = [];
-      const postsRef = fs().collection(`hashmaps/${key}/posts`);
-      postsRef
+      this.postsRef = ref
         .get()
         .then(snapshot => {
           snapshot.forEach(doc => {
@@ -46,7 +49,7 @@ const withSubscriptionHashmapData = WrappedComponent => {
           });
         })
         .catch(err => {
-          console.log('Error getting documents', err);
+          console.log('Error getting posts', err);
         });
     };
 

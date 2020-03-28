@@ -1,7 +1,7 @@
 import React from 'react';
 import HeaderView from 'app/components/hashmap/header/view';
 import ArticleView from 'app/components/hashmap/article/view';
-import Footer from 'app/components/hashmap/footer/footer';
+// import Footer from 'app/components/hashmap/footer/footer';
 import PropTypes from 'prop-types';
 
 const SectionHashmapView = ({ hashmap, posts }) => {
@@ -32,7 +32,13 @@ const SectionHashmapView = ({ hashmap, posts }) => {
 };
 
 SectionHashmapView.propTypes = {
-  // data: PropTypes.shape().isRequired,
+  hashmap: PropTypes.shape().isRequired,
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string,
+    })
+  ).isRequired,
 };
 
 export default SectionHashmapView;

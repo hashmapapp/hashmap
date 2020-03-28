@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -32,7 +33,7 @@ const SubTitleTextArea = styled.textarea`
   }
 `;
 
-const header = ({ title, subtitle, titleUpdate, subtitleUpdate, hashmap }) => {
+const header = ({ title, subtitle, handlerTitle, handlerSubtitle }) => {
   return (
     <header>
       <TitleTextArea
@@ -41,7 +42,7 @@ const header = ({ title, subtitle, titleUpdate, subtitleUpdate, hashmap }) => {
         name="title"
         placeholder="Título"
         onChange={evt => {
-          titleUpdate(evt.target.value);
+          handlerTitle(evt.target.value);
         }}
         value={title}
       />
@@ -52,7 +53,7 @@ const header = ({ title, subtitle, titleUpdate, subtitleUpdate, hashmap }) => {
         name="subtitle"
         placeholder="Subtítulo"
         onChange={evt => {
-          subtitleUpdate(evt.target.value);
+          handlerSubtitle(evt.target.value);
         }}
         value={subtitle}
       />
@@ -60,11 +61,24 @@ const header = ({ title, subtitle, titleUpdate, subtitleUpdate, hashmap }) => {
   );
 };
 
+header.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+  handlerTitle: PropTypes.func.isRequired,
+  handlerSubtitle: PropTypes.func.isRequired,
+};
+
+header.defaultProps = {
+  subtitle: '',
+};
+
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ titleUpdate, subtitleUpdate }, dispatch);
+  bindActionCreators(
+    { handlerTitle: titleUpdate, handlerSubtitle: subtitleUpdate },
+    dispatch
+  );
 
 const mapStateToProps = state => ({
-  hashmap: state.hashmap,
   title: state.hashmap.title,
   subtitle: state.hashmap.subtitle,
 });

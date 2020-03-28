@@ -11,13 +11,12 @@ const MyApp = ({ Component, pageProps, store }) => {
   // eslint-disable-next-line
   return (
     <Provider store={store}>
+      {/* eslint-disable-next-line */}
       <Component {...pageProps} />
     </Provider>
   );
 };
 
-// makeStore function that returns a new store for every request
 const makeStore = () => store;
 
-// withRedux wrapper that passes the store to the App Component
 export default withRedux(makeStore)(MyApp);

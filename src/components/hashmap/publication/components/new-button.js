@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const CardBox = styled.div`
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.05);
@@ -27,5 +28,9 @@ const NewPublication = ({ onAction }) => (
     </CardBox>
   </div>
 );
+
+NewPublication.propTypes = {
+  onAction: PropTypes.func.isRequired,
+};
 
 export default NewPublication;

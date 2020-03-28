@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Image } from 'app/components/UI/styles/styles';
 import { DARK, DARK_GRAY } from 'app/styles/colors';
 import { Avatar } from 'app/components/hashmap/publication/components/style';
+import PropTypes from 'prop-types';
 
 const Wrapper = styled.div`
   a {
@@ -73,6 +74,10 @@ const ListHashmaps = ({ hashmap }) => {
       </div>
     </Wrapper>
   );
+};
+
+ListHashmaps.propTypes = {
+  hashmap: PropTypes.shape().isRequired,
 };
 
 export default ListHashmaps;

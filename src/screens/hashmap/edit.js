@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import UINavBar from 'app/components/UI/navbar/navbar';
 import SectionHashmapEdit from 'app/components/hashmap/edit';
 import { ItemLi } from 'app/components/UI/styles/styles';
@@ -14,11 +15,11 @@ const Edit = ({
   hashmap,
   posts,
   hashmapKey,
-  handlerHashmapUpdate,
+  handlerHashmap,
   hashmapRedux,
 }) => {
   useEffect(() => {
-    if (hashmap && posts.length > 0) handlerHashmapUpdate({ hashmap, posts });
+    if (hashmap && posts.length > 0) handlerHashmap({ hashmap, posts });
   }, [hashmap, posts]);
 
   const callback = () => {
@@ -26,7 +27,6 @@ const Edit = ({
   };
   const handlerSave = evt => {
     evt.preventDefault();
-    // console.log(hashmapRedux);
     HashmapService.saveHashmap(hashmapRedux, callback);
   };
 
@@ -59,13 +59,31 @@ const Edit = ({
   );
 };
 
+Edit.propTypes = {
+  postsLength: PropTypes.number.isRequired,
+  hashmap: PropTypes.shape().isRequired,
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string,
+    })
+  ).isRequired,
+  hashmapKey: PropTypes.string,
+  handlerHashmap: PropTypes.func.isRequired,
+  hashmapRedux: PropTypes.shape().isRequired,
+};
+
+Edit.defaultProps = {
+  hashmapKey: undefined,
+};
+
 const mapStateToProps = state => ({
   postsLength: state.hashmap.posts.length,
   hashmapRedux: state.hashmap,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ handlerHashmapUpdate }, dispatch);
+  bindActionCreators({ handlerHashmap: handlerHashmapUpdate }, dispatch);
 
 const enhance = compose(
   withSubscriptionHashmapData,

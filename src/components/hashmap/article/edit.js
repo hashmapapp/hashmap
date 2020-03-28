@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PublicationEdit from 'app/components/hashmap/publication/edit';
@@ -27,27 +28,27 @@ const DescriptionTextArea = styled.textarea`
 
 const article = ({
   posts,
-  descriptionUpdate,
   description,
-  postCreate,
-  imgHashmapUpdate,
-  // image,
+  handlerDescription,
+  handlerCrete,
+  handlerImage,
+  // imagePath,
 }) => {
   const handlerNewPost = evt => {
     evt.preventDefault();
-    postCreate();
+    handlerCrete();
   };
   return (
     <article>
       <ImageUpload
         onRequestSave={(path, url) => {
-          imgHashmapUpdate(path, url);
+          handlerImage(path, url);
         }}
         onRequestClear={() => console.log('Clear')}
         storageName="hashmaps"
         // defaultFiles={[
         //   {
-        //     source: 'hashmaps/f0xudwabp',
+        //     source: imagePath,
         //     options: {
         //       type: 'local',
         //     },
@@ -61,30 +62,44 @@ const article = ({
         name="description"
         placeholder="Descrição"
         onChange={e => {
-          descriptionUpdate(e.target.value);
+          handlerDescription(e.target.value);
         }}
         value={description}
       />
-      {posts.map((post, index) => {
-        if (!post.key.startsWith('DELETE')) {
-          return (
-            <PublicationEdit
-              data={post}
-              index={index}
-              key={post.key}
-              fakeKey={post.key}
-            />
-          );
-        }
-      })}
+      {posts
+        .filter(post => !post.key.startsWith('DELETE'))
+        .map(post => (
+          <PublicationEdit data={post} key={post.key} temporaryKey={post.key} />
+        ))}
       <NewPublicationButton onAction={handlerNewPost} />
     </article>
   );
 };
 
+article.propTypes = {
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string,
+    })
+  ).isRequired,
+  handlerDescription: PropTypes.func.isRequired,
+  handlerCrete: PropTypes.func.isRequired,
+  handlerImage: PropTypes.func.isRequired,
+  description: PropTypes.string,
+};
+
+article.defaultProps = {
+  description: '',
+};
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { postCreate, descriptionUpdate, imgHashmapUpdate },
+    {
+      handlerCrete: postCreate,
+      handlerDescription: descriptionUpdate,
+      handlerImage: imgHashmapUpdate,
+    },
     dispatch
   );
 

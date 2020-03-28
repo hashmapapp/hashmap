@@ -1,6 +1,6 @@
 import React from 'react';
 import PublicationView from 'app/components/hashmap/publication/view';
-import NewPublicationButton from 'app/components/hashmap/publication/components/new-button';
+// import NewPublicationButton from 'app/components/hashmap/publication/components/new-button';
 import PropTypes from 'prop-types';
 import WrapImage from 'app/components/UI/image/wrapper';
 
@@ -8,14 +8,14 @@ const article = ({ data }) => (
   <article>
     <WrapImage
       src={data.urlImage}
-      alt="Livros"
-      description="Photo by John Schnobrich on Unsplash"
+      alt={data.textImage}
+      description={data.textImage}
     />
     <p>{data.description}</p>
     {data.posts.map(post => (
       <PublicationView key={post.key} data={post} />
     ))}
-    <NewPublicationButton />
+    {/* <NewPublicationButton /> */}
   </article>
 );
 

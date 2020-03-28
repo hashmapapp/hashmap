@@ -50,21 +50,21 @@ export const postDelete = key => ({
   key,
 });
 
-export const titlePostUpdate = (text, idPost) => ({
+export const titlePostUpdate = (text, key) => ({
   type: HASHMAP_POST_TITLE_UPDATE,
   text,
-  idPost,
+  key,
 });
 
-export const subtitlePostUpdate = (text, idPost) => ({
+export const subtitlePostUpdate = (text, key) => ({
   type: HASHMAP_POST_SUBTITLE_UPDATE,
   text,
-  idPost,
+  key,
 });
 
-export const imgPostUpdate = (path, url, idPost) => ({
+export const imgPostUpdate = (path, url, key) => ({
   type: HASHMAP_POST_IMAGE_UPDATE,
   path,
   url,
-  idPost,
+  key,
 });

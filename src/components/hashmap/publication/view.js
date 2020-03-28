@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-// import { FiMoreHorizontal } from 'react-icons/fi';
 import PropTypes from 'prop-types';
 import ReactCount from 'app/components/hashmap/publication/components/react-count';
 import WrapImage from 'app/components/UI/image/wrapper';
-import LinkPreview from 'app/components/UI/link-preview/link-preview';
+// import LinkPreview from 'app/components/UI/link-preview/link-preview';
 import AddReact from './components/add-react';
 
 const ArticleCardBox = styled.article`
