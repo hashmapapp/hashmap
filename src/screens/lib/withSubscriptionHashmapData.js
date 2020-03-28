@@ -1,5 +1,5 @@
 import React from 'react';
-import loadFirebaseStore from 'app/lib/db';
+import { loadFirebaseStore } from 'app/lib/db';
 
 const withSubscriptionHashmapData = WrappedComponent => {
   return class extends React.Component {

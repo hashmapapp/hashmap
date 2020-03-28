@@ -3,10 +3,12 @@ export const HASHMAP_RESET = '@hashmap/RESET';
 export const HASHMAP_TITLE_UPDATE = '@hashmap/title/UPDATE';
 export const HASHMAP_SUBTITLE_UPDATE = '@hashmap/subtitle/UPDATE';
 export const HASHMAP_DESCRIPTION_UPDATE = '@hashmap/description/UPDATE';
+export const HASHMAP_IMAGE_UPDATE = '@hashmap/image/UPDATE';
 export const HASHMAP_CREATE_POST = '@hashmap/post/CREATE';
 export const HASHMAP_DELETE_POST = '@hashmap/post/DELETE';
 export const HASHMAP_POST_TITLE_UPDATE = '@hashmap/post/title/UPDATE';
 export const HASHMAP_POST_SUBTITLE_UPDATE = '@hashmap/post/subtitle/UPDATE';
+export const HASHMAP_POST_IMAGE_UPDATE = '@hashmap/post/image/UPDATE';
 
 export const hashmapUpdate = data => ({
   type: HASHMAP_UPDATE,
@@ -32,9 +34,15 @@ export const descriptionUpdate = text => ({
   text,
 });
 
+export const imgHashmapUpdate = (path, url) => ({
+  type: HASHMAP_IMAGE_UPDATE,
+  path,
+  url,
+});
+
 export const postCreate = () => ({
   type: HASHMAP_CREATE_POST,
-  post: { title: '', description: '', key: '' },
+  post: { title: '', description: '', key: '', imagePath: '', imageUrl: '' },
 });
 
 export const postDelete = key => ({
@@ -51,5 +59,12 @@ export const titlePostUpdate = (text, idPost) => ({
 export const subtitlePostUpdate = (text, idPost) => ({
   type: HASHMAP_POST_SUBTITLE_UPDATE,
   text,
+  idPost,
+});
+
+export const imgPostUpdate = (path, url, idPost) => ({
+  type: HASHMAP_POST_IMAGE_UPDATE,
+  path,
+  url,
   idPost,
 });

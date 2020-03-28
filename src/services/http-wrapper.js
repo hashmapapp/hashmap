@@ -1,4 +1,4 @@
-import loadFirebaseStore from 'app/lib/db';
+import { loadFirebaseStore } from 'app/lib/db';
 
 export class HttpWrapperFirebase {
   constructor() {

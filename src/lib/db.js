@@ -12,6 +12,17 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
 };
 
+export const loadFirebaseApp = () => {
+  try {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+  } catch (msg) {
+    console.error('Error Firebase App Initializer\n', msg);
+  }
+  return firebase;
+};
+
 export const loadFirebaseStore = () => {
   try {
     if (!firebase.apps.length) {
@@ -31,5 +42,5 @@ export const loadFirebaseStorage = () => {
   } catch (msg) {
     console.error('Error Firebase Storage Initializer\n', msg);
   }
-  return firebase.storage();
+  return firebase.storage().ref();
 };

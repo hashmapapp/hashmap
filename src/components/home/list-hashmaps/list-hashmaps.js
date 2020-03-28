@@ -67,7 +67,7 @@ const ListHashmaps = ({ hashmap }) => {
       <div className="col col-lg-3">
         <Link href={`/view?key=${hashmap.key}`}>
           <a>
-            <WrapImage src={hashmap.image} alt="img" />
+            <WrapImage src={hashmap.imageUrl} alt="img" />
           </a>
         </Link>
       </div>

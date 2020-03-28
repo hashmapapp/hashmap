@@ -4,7 +4,7 @@ import { ItemLi } from 'app/components/UI/styles/styles';
 import Footer from 'app/components/UI/footer/footer';
 import HomeComponent from 'app/components/home/home';
 import Link from 'next/link';
-import loadFirebaseStore from 'app/lib/db';
+import { loadFirebaseStore } from 'app/lib/db';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { hashmapReset } from 'app/redux/actions/hashmapActions';

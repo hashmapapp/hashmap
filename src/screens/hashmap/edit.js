@@ -26,6 +26,7 @@ const Edit = ({
   };
   const handlerSave = evt => {
     evt.preventDefault();
+    // console.log(hashmapRedux);
     HashmapService.saveHashmap(hashmapRedux, callback);
   };
 

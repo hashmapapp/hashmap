@@ -1,5 +1,6 @@
 import * as ACTIONS from 'app/redux/actions/hashmapActions';
 import produce from 'immer';
+import shortid from 'shortid';
 
 const STATE_CLEAN = {
   key: '',
@@ -7,7 +8,8 @@ const STATE_CLEAN = {
   title: '',
   subtitle: '',
   description: '',
-  image: '',
+  imagePath: '',
+  imageUrl: '',
   textImage: '',
   createIn: '',
   updateIn: '',
@@ -23,7 +25,8 @@ const HashmapReducer = (state = STATE_CLEAN, action) => {
         draft.title = action.data.hashmap.title;
         draft.subtitle = action.data.hashmap.subtitle;
         draft.description = action.data.hashmap.description;
-        draft.image = action.data.hashmap.image;
+        draft.imagePath = action.data.hashmap.imagePath;
+        draft.imageUrl = action.data.hashmap.imageUrl;
         draft.textImage = action.data.hashmap.textImage;
         draft.createIn = action.data.hashmap.createIn;
         draft.updateIn = action.data.hashmap.updateIn;
@@ -45,13 +48,15 @@ const HashmapReducer = (state = STATE_CLEAN, action) => {
         draft.description = action.text;
       });
     }
+    case ACTIONS.HASHMAP_IMAGE_UPDATE: {
+      return produce(state, draft => {
+        draft.imagePath = action.path;
+        draft.imageUrl = action.url;
+      });
+    }
     case ACTIONS.HASHMAP_CREATE_POST: {
       return produce(state, draft => {
-        action.post.key = '_'.concat(
-          Math.random()
-            .toString(36)
-            .substr(2, 9)
-        );
+        action.post.key = '_'.concat(shortid.generate());
         draft.posts.push(action.post);
       });
     }
@@ -72,6 +77,12 @@ const HashmapReducer = (state = STATE_CLEAN, action) => {
     case ACTIONS.HASHMAP_POST_SUBTITLE_UPDATE: {
       return produce(state, draft => {
         draft.posts[action.idPost].description = action.text;
+      });
+    }
+    case ACTIONS.HASHMAP_POST_IMAGE_UPDATE: {
+      return produce(state, draft => {
+        draft.posts[action.idPost].imagePath = action.path;
+        draft.posts[action.idPost].imageUrl = action.url;
       });
     }
     default:

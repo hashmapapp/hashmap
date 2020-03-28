@@ -7,8 +7,9 @@ import {
   titlePostUpdate,
   subtitlePostUpdate,
   postDelete,
+  imgPostUpdate,
 } from 'app/redux/actions/hashmapActions';
-import Button from '@material-ui/core/Button';
+import ImageUpload from 'app/components/UI/image/upload';
 
 const ArticleCardBox = styled.article`
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
@@ -77,6 +78,7 @@ const Publication = ({
   subtitlePostUpdate,
   postDelete,
   fakeKey,
+  imgPostUpdate,
 }) => {
   return (
     <>
@@ -108,14 +110,14 @@ const Publication = ({
             />
           </div>
           <div className="col-2 text-right">
-            <Button
-              color="secondary"
+            <button
+              type="button"
               onClick={() => {
                 postDelete(fakeKey);
               }}
             >
               Remover
-            </Button>
+            </button>
           </div>
         </header>
         <hr />
@@ -129,6 +131,21 @@ const Publication = ({
             subtitlePostUpdate(e.target.value, index);
           }}
           value={data.description}
+        />
+        <ImageUpload
+          onRequestSave={(path, url) => {
+            imgPostUpdate(path, url, index);
+          }}
+          onRequestClear={() => console.log('Clear')}
+          storageName="posts"
+          // defaultFiles={[
+          //   {
+          //     source: 'hashmaps/f0xudwabp',
+          //     options: {
+          //       type: 'local',
+          //     },
+          //   },
+          // ]}
         />
       </ArticleCardBox>
     </>
@@ -145,7 +162,7 @@ Publication.defaultProps = {
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { titlePostUpdate, subtitlePostUpdate, postDelete },
+    { titlePostUpdate, subtitlePostUpdate, postDelete, imgPostUpdate },
     dispatch
   );
 

@@ -13,7 +13,7 @@ const SectionHashmapView = ({ hashmap, posts }) => {
   const articleData = {
     description: hashmap.description,
     posts,
-    urlImage: hashmap.image,
+    urlImage: hashmap.imageUrl,
   };
   return (
     <>

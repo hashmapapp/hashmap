@@ -29,11 +29,8 @@ const Publication = ({ data }) => (
       <hr />
       <p>{data.description}</p>
     </div>
-    {/* <WrapImage
-      src="https://abrilexame.files.wordpress.com/2017/10/maskarad.jpg"
-      alt="Imagem"
-    /> */}
-    <LinkPreview data={data.link} />
+    {data.imageUrl && <WrapImage src={data.imageUrl} alt={data.title} />}
+    {/* <LinkPreview data={data.link} /> */}
     <div className="p-2">
       <footer className="row m-1">
         {data.react.like > 0 && (

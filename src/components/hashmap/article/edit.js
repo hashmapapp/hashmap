@@ -7,7 +7,9 @@ import styled from 'styled-components';
 import {
   postCreate,
   descriptionUpdate,
+  imgHashmapUpdate,
 } from 'app/redux/actions/hashmapActions';
+import ImageUpload from 'app/components/UI/image/upload';
 
 const DescriptionTextArea = styled.textarea`
   width: 100%;
@@ -23,13 +25,35 @@ const DescriptionTextArea = styled.textarea`
   }
 `;
 
-const article = ({ posts, descriptionUpdate, description, postCreate }) => {
+const article = ({
+  posts,
+  descriptionUpdate,
+  description,
+  postCreate,
+  imgHashmapUpdate,
+  // image,
+}) => {
   const handlerNewPost = evt => {
     evt.preventDefault();
     postCreate();
   };
   return (
     <article>
+      <ImageUpload
+        onRequestSave={(path, url) => {
+          imgHashmapUpdate(path, url);
+        }}
+        onRequestClear={() => console.log('Clear')}
+        storageName="hashmaps"
+        // defaultFiles={[
+        //   {
+        //     source: 'hashmaps/f0xudwabp',
+        //     options: {
+        //       type: 'local',
+        //     },
+        //   },
+        // ]}
+      />
       <DescriptionTextArea
         rows="5"
         type="text"
@@ -59,10 +83,14 @@ const article = ({ posts, descriptionUpdate, description, postCreate }) => {
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ postCreate, descriptionUpdate }, dispatch);
+  bindActionCreators(
+    { postCreate, descriptionUpdate, imgHashmapUpdate },
+    dispatch
+  );
 
 const mapStateToProps = state => ({
   description: state.hashmap.description,
+  image: state.hashmap.image,
   posts: state.hashmap.posts,
 });
 
