@@ -7,6 +7,7 @@ import UISectionMoreHashMaps from 'app/components/UI/more-hashmaps/more-hashmaps
 import { ItemLi } from 'app/components/UI/styles/styles';
 import withSubscriptionHashmapData from 'app/screens/lib/withSubscriptionHashmapData';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 
 const View = ({ hashmap, posts, hashmapKey }) => {
   return (
@@ -38,6 +39,22 @@ const View = ({ hashmap, posts, hashmapKey }) => {
       <UIFooter />
     </>
   );
+};
+
+View.propTypes = {
+  hashmap: PropTypes.shape(),
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string,
+    })
+  ).isRequired,
+  hashmapKey: PropTypes.string,
+};
+
+View.defaultProps = {
+  hashmap: undefined,
+  hashmapKey: undefined,
 };
 
 export default withSubscriptionHashmapData(View);

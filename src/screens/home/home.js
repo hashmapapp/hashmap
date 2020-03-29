@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import UINavBar from 'app/components/UI/navbar/navbar';
 import { ItemLi } from 'app/components/UI/styles/styles';
 import Footer from 'app/components/UI/footer/footer';
@@ -44,12 +45,12 @@ class home extends Component {
 
   render() {
     const { hashmaps } = this.state;
-    const { hashmapReset } = this.props;
+    const { handlerReset } = this.props;
     return (
       <>
         <UINavBar>
           <ul>
-            <ItemLi onClick={hashmapReset}>
+            <ItemLi onClick={handlerReset}>
               <Link href="/edit">
                 <a>Criar HashMap</a>
               </Link>
@@ -74,7 +75,11 @@ class home extends Component {
   }
 }
 
+home.propTypes = {
+  handlerReset: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ hashmapReset }, dispatch);
+  bindActionCreators({ handlerReset: hashmapReset }, dispatch);
 
 export default connect(null, mapDispatchToProps)(home);

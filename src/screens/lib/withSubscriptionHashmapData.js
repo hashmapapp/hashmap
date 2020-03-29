@@ -1,8 +1,9 @@
 import React from 'react';
 import { loadFirebaseStore } from 'app/lib/db';
+import PropTypes from 'prop-types';
 
 const withSubscriptionHashmapData = WrappedComponent => {
-  return class extends React.Component {
+  class Component extends React.Component {
     state = {
       posts: [],
     };
@@ -59,7 +60,13 @@ const withSubscriptionHashmapData = WrappedComponent => {
         <WrappedComponent hashmap={hashmap} posts={posts} hashmapKey={key} />
       );
     }
+  }
+
+  Component.propTypes = {
+    params: PropTypes.shape({ key: PropTypes.string }).isRequired,
   };
+
+  return Component;
 };
 
 export default withSubscriptionHashmapData;

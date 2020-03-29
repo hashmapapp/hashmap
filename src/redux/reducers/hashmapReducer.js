@@ -1,4 +1,4 @@
-import * as ACTIONS from 'app/redux/actions/hashmapActions';
+import * as ACTIONS from 'app/redux/constants/hashmapConstants';
 import produce from 'immer';
 import shortid from 'shortid';
 

@@ -61,7 +61,7 @@ const Edit = ({
 
 Edit.propTypes = {
   postsLength: PropTypes.number.isRequired,
-  hashmap: PropTypes.shape().isRequired,
+  hashmap: PropTypes.shape(),
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -74,6 +74,7 @@ Edit.propTypes = {
 };
 
 Edit.defaultProps = {
+  hashmap: undefined,
   hashmapKey: undefined,
 };
 

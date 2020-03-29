@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { GRAY, DARK_GRAY } from 'app/styles/colors';
 import { Image } from 'app/components/UI/styles/styles';
+import PropTypes from 'prop-types';
 
 const WrapLinkPreview = styled.div`
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
@@ -42,6 +43,10 @@ const LinkPreview = ({ data }) => {
       </WrapLinkPreview>
     </div>
   );
+};
+
+LinkPreview.propTypes = {
+  data: PropTypes.shape().isRequired,
 };
 
 export default LinkPreview;

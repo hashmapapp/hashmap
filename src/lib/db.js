@@ -24,23 +24,11 @@ export const loadFirebaseApp = () => {
 };
 
 export const loadFirebaseStore = () => {
-  try {
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-  } catch (msg) {
-    console.error('Error Firebase Store Initializer\n', msg);
-  }
-  return firebase.firestore;
+  return loadFirebaseApp().firestore;
 };
 
 export const loadFirebaseStorage = () => {
-  try {
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-  } catch (msg) {
-    console.error('Error Firebase Storage Initializer\n', msg);
-  }
-  return firebase.storage().ref();
+  return loadFirebaseApp()
+    .storage()
+    .ref();
 };

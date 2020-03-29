@@ -4,6 +4,7 @@ import { FilePond, registerPlugin } from 'react-filepond';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import { loadFirebaseStorage, loadFirebaseApp } from 'app/lib/db';
+import PropTypes from 'prop-types';
 import { getUrlImage } from '../lib/getUrlImage';
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
@@ -13,13 +14,13 @@ const firebase = loadFirebaseApp();
 const ImageUpload = ({
   onRequestSave,
   onRequestClear,
-  defaultFiles = [],
-  storageName = 'images',
+  defaultFiles,
+  storageName,
 }) => {
   const [files, setFiles] = React.useState(defaultFiles);
   const server = {
     // this uploads the image using firebase
-    process: (fieldName, file, metadata, load, error, progress, abort) => {
+    process: (fieldName, file, metadata, load, error, progress) => {
       // create a unique id for the file
       const id = shortid.generate();
 
@@ -90,6 +91,25 @@ const ImageUpload = ({
       server={server}
     />
   );
+};
+
+ImageUpload.propTypes = {
+  onRequestSave: PropTypes.func.isRequired,
+  onRequestClear: PropTypes.func.isRequired,
+  defaultFiles: PropTypes.arrayOf(
+    PropTypes.shape({
+      source: PropTypes.string.isRequired,
+      options: {
+        type: PropTypes.string.isRequired,
+      },
+    })
+  ),
+  storageName: PropTypes.string,
+};
+
+ImageUpload.defaultProps = {
+  defaultFiles: [],
+  storageName: 'imagens',
 };
 
 export default ImageUpload;
