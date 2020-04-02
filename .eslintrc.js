@@ -38,5 +38,13 @@ module.exports = {
     ],
     'no-console': ['error', { allow: ['tron', 'log', 'error'] }],
     'no-param-reassign': 'off',
+    'react/jsx-props-no-spreading': [
+      'off',
+      {
+        html: 'ignore',
+        custom: 'ignore',
+        exceptions: [],
+      },
+    ],
   },
 };

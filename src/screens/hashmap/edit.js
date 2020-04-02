@@ -7,8 +7,10 @@ import { ItemLi } from 'app/components/UI/styles/styles';
 import Router from 'next/router';
 import { bindActionCreators, compose } from 'redux';
 import { hashmapUpdate as handlerHashmapUpdate } from 'app/redux/actions/hashmapActions';
-import withSubscriptionHashmapData from 'app/screens/lib/withSubscriptionHashmapData';
 import { HashmapService } from 'app/services/hashmap.service';
+import withSubscriptionHashmapData from 'app/screens/lib/withSubscriptionHashmapData';
+import withAuthorization from 'app/screens/lib/withAuthorization';
+import { CREATE_HASHMAP } from 'app/screens/lib/constants';
 
 const Edit = ({
   postsLength,
@@ -87,6 +89,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators({ handlerHashmap: handlerHashmapUpdate }, dispatch);
 
 const enhance = compose(
+  Component => withAuthorization(Component, CREATE_HASHMAP),
   withSubscriptionHashmapData,
   connect(mapStateToProps, mapDispatchToProps)
 );

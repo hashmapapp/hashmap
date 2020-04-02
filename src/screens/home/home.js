@@ -9,10 +9,13 @@ import { loadFirebaseStore } from 'app/lib/db';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { hashmapReset } from 'app/redux/actions/hashmapActions';
+import { authorization } from 'app/screens/lib/authorization';
+import { CREATE_HASHMAP_BUTTON } from 'app/screens/lib/constants';
 
 class home extends Component {
   state = {
     hashmaps: [],
+    _createHashmapButton: false,
   };
 
   constructor(props) {
@@ -24,6 +27,9 @@ class home extends Component {
     const FirebaseStore = loadFirebaseStore();
     this.hashmapsRef = FirebaseStore().collection('hashmaps');
     this.unsubscribe = this.hashmapsRef.onSnapshot(this.onCollectionUpdate);
+    this.setState({
+      _createHashmapButton: authorization(CREATE_HASHMAP_BUTTON),
+    });
   }
 
   componentWillUnmount() {
@@ -44,17 +50,19 @@ class home extends Component {
   };
 
   render() {
-    const { hashmaps } = this.state;
+    const { hashmaps, _createHashmapButton } = this.state;
     const { handlerReset } = this.props;
     return (
       <>
         <UINavBar>
           <ul>
-            <ItemLi onClick={handlerReset}>
-              <Link href="/edit">
-                <a>Criar HashMap</a>
-              </Link>
-            </ItemLi>
+            {_createHashmapButton && (
+              <ItemLi onClick={handlerReset}>
+                <Link href="/edit">
+                  <a>Criar HashMap</a>
+                </Link>
+              </ItemLi>
+            )}
             <ItemLi>
               <Link href="/about">
                 <a>Sobre</a>
