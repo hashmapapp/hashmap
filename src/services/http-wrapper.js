@@ -11,6 +11,13 @@ export class HttpWrapperFirebase {
       .add(item);
   };
 
+  setNewItem = (path, key, item) => {
+    return this.db()
+      .collection(path)
+      .doc(key)
+      .set(item);
+  };
+
   createItems = (path, dataCreate = { items: [] }) => {
     const batch = this.db().batch();
     dataCreate.items.forEach(item => {

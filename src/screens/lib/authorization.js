@@ -1,7 +1,7 @@
 import * as ACTIONS from './constants';
 
 export const authorization = key => {
-  const role = 'productor';
+  const role = 'default';
   switch (key) {
     case ACTIONS.CREATE_HASHMAP_BUTTON: {
       console.log('CREATE_HASHMAP_BUTTON');

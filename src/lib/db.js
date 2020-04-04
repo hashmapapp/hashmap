@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/firebase-storage';
+import 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -31,4 +32,8 @@ export const loadFirebaseStorage = () => {
   return loadFirebaseApp()
     .storage()
     .ref();
+};
+
+export const loadFirebaseAuth = () => {
+  return loadFirebaseApp().auth();
 };

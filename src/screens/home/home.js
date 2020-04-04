@@ -5,12 +5,13 @@ import { ItemLi } from 'app/components/UI/styles/styles';
 import Footer from 'app/components/UI/footer/footer';
 import HomeComponent from 'app/components/home/home';
 import Link from 'next/link';
-import { loadFirebaseStore } from 'app/lib/db';
+import { loadFirebaseStore, loadFirebaseAuth } from 'app/lib/db';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { hashmapReset } from 'app/redux/actions/hashmapActions';
 import { authorization } from 'app/screens/lib/authorization';
 import { CREATE_HASHMAP_BUTTON } from 'app/screens/lib/constants';
+import AuthenticationServiceFirebase from 'app/services/authentication.service';
 
 class home extends Component {
   state = {
@@ -50,12 +51,43 @@ class home extends Component {
   };
 
   render() {
+    const auth = new AuthenticationServiceFirebase();
     const { hashmaps, _createHashmapButton } = this.state;
     const { handlerReset } = this.props;
+    const user = loadFirebaseAuth().currentUser;
+    // console.log(user);
+
     return (
       <>
         <UINavBar>
           <ul>
+            {user ? (
+              <ItemLi>
+                <a>
+                  <button
+                    onClick={() => {
+                      auth.signOut();
+                    }}
+                    type="button"
+                  >
+                    Sair
+                  </button>
+                </a>
+              </ItemLi>
+            ) : (
+              <ItemLi>
+                <a>
+                  <button
+                    onClick={() => {
+                      auth.signIn('kleyson@email.com', 'password1');
+                    }}
+                    type="button"
+                  >
+                    Entrar
+                  </button>
+                </a>
+              </ItemLi>
+            )}
             {_createHashmapButton && (
               <ItemLi onClick={handlerReset}>
                 <Link href="/edit">
