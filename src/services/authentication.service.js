@@ -55,7 +55,7 @@ class AuthenticationServiceFirebase {
         photoURL,
       })
       .then(resolve => {
-        console.log('Success');
+        console.log('Profile Update');
         console.log(resolve);
       })
       .catch(error => console.log(error.code, error.message));

@@ -3,7 +3,7 @@ import { DARK } from './colors';
 
 export default createGlobalStyle`
 
-  @font-face {
+  /* @font-face {
     font-family: 'Open Sans Regular';
     src: url('/fonts/OpenSans-Regular.ttf');
   }
@@ -21,7 +21,7 @@ export default createGlobalStyle`
   @font-face {
     font-family: 'Open Sans Light';
     src: url('/fonts/OpenSans-Light.ttf');
-  }
+  } */
 
   * {
     margin: 0;
@@ -39,8 +39,8 @@ export default createGlobalStyle`
   }
   
   body, input, button {
-    color: ${DARK};
-    font-size: 14px;
+    /* color: ${DARK};
+    font-size: 14px; */
   }
   
   button {
@@ -48,13 +48,13 @@ export default createGlobalStyle`
   }
 
   p, span, li {
-    font-family: 'Open Sans Regular', sans-serif;
-    font-size: 1.2em;
-    white-space: pre-line;
+    /* font-family: 'Open Sans Regular', sans-serif; */
+    /* font-size: 1.2em;
+    white-space: pre-line; */
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Open Sans Bold', sans-serif;
+    /* font-family: 'Open Sans Bold', sans-serif; */
   }
 
 `;

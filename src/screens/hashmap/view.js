@@ -4,41 +4,20 @@ import UIFooter from 'app/components/UI/footer/footer';
 import SectionHashmapView from 'app/components/hashmap/view';
 import UISectionComments from 'app/components/UI/comments/comments';
 import UISectionMoreHashMaps from 'app/components/UI/more-hashmaps/more-hashmaps';
-import { ItemLi } from 'app/components/UI/styles/styles';
 import withSubscriptionHashmapData from 'app/screens/lib/withSubscriptionHashmapData';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import { authorization } from 'app/screens/lib/authorization';
-import { EDIT_HASHMAP_BUTTON } from 'app/screens/lib/constants';
+// import { authorization } from 'app/screens/lib/authorization';
+// import { EDIT_HASHMAP_BUTTON } from 'app/screens/lib/constants';
 
 const View = ({ hashmap, posts, hashmapKey }) => {
-  const [_editHashmapButton, _setEditHashmapButton] = useState(false);
-  useEffect(() => {
-    _setEditHashmapButton(authorization(EDIT_HASHMAP_BUTTON));
-  }, []);
+  // const [_editHashmapButton, _setEditHashmapButton] = useState(false);
+  // useEffect(() => {
+  //   _setEditHashmapButton(authorization(EDIT_HASHMAP_BUTTON));
+  // }, []);
   return (
     <>
-      <UINavBar>
-        <ul>
-          {_editHashmapButton && (
-            <ItemLi>
-              <Link href={`/edit?key=${hashmapKey}`}>
-                <a>Editar HashMap</a>
-              </Link>
-            </ItemLi>
-          )}
-          <ItemLi>
-            <Link href="/about">
-              <a>Sobre</a>
-            </Link>
-          </ItemLi>
-          <ItemLi>
-            <Link href="/view">
-              <a>Ler</a>
-            </Link>
-          </ItemLi>
-        </ul>
-      </UINavBar>
+      <UINavBar />
       {hashmap && posts.length > 0 && (
         <SectionHashmapView hashmap={hashmap} posts={posts} />
       )}

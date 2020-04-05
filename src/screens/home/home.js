@@ -51,62 +51,15 @@ class home extends Component {
   };
 
   render() {
-    const auth = new AuthenticationServiceFirebase();
+    // const auth = new AuthenticationServiceFirebase();
+    // const user = loadFirebaseAuth().currentUser;
     const { hashmaps, _createHashmapButton } = this.state;
-    const { handlerReset } = this.props;
-    const user = loadFirebaseAuth().currentUser;
+    // const { handlerReset } = this.props;
     // console.log(user);
 
     return (
       <>
-        <UINavBar>
-          <ul>
-            {user ? (
-              <ItemLi>
-                <a>
-                  <button
-                    onClick={() => {
-                      auth.signOut();
-                    }}
-                    type="button"
-                  >
-                    Sair
-                  </button>
-                </a>
-              </ItemLi>
-            ) : (
-              <ItemLi>
-                <a>
-                  <button
-                    onClick={() => {
-                      auth.signIn('kleyson@email.com', 'password1');
-                    }}
-                    type="button"
-                  >
-                    Entrar
-                  </button>
-                </a>
-              </ItemLi>
-            )}
-            {_createHashmapButton && (
-              <ItemLi onClick={handlerReset}>
-                <Link href="/edit">
-                  <a>Criar HashMap</a>
-                </Link>
-              </ItemLi>
-            )}
-            <ItemLi>
-              <Link href="/about">
-                <a>Sobre</a>
-              </Link>
-            </ItemLi>
-            <ItemLi>
-              <Link href="/view">
-                <a>Ler</a>
-              </Link>
-            </ItemLi>
-          </ul>
-        </UINavBar>
+        <UINavBar />
         {/* <ModalAuth /> */}
         <HomeComponent hashmaps={hashmaps} />
         <Footer />

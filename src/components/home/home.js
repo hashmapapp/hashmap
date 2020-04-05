@@ -13,9 +13,7 @@ const HomeComponent = ({ hashmaps }) => {
               <ListHashmaps key={hashmap.key} hashmap={hashmap} />
             ))}
         </div>
-        <div className="col-lg-3">
-          <TopHashmaps />
-        </div>
+        <div className="col-lg-3">{/* <TopHashmaps /> */}</div>
       </div>
     </div>
   );

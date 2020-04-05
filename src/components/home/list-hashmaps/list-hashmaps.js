@@ -1,76 +1,60 @@
 import React from 'react';
 import Link from 'next/link';
-import styled from 'styled-components';
-import { Image } from 'app/components/UI/styles/styles';
-import { DARK, DARK_GRAY } from 'app/styles/colors';
-import { Avatar } from 'app/components/hashmap/publication/components/style';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import Router from 'next/router';
 
 const Wrapper = styled.div`
   a {
-    color: ${DARK};
     text-decoration: none;
-  }
-
-  h6 {
-    font-family: 'Open Sans Regular', sans-serif;
-    color: ${DARK_GRAY};
-  }
-
-  span {
-    display: grid;
-
-    &.author {
-      font-size: 1.2em;
-    }
-
-    &.info {
-      color: #545b6294;
-      font-size: 1em;
-    }
   }
 `;
 
-const WrapImage = styled(Image)``;
-
-const WrapAvatar = styled.div`
-  padding: 0px;
+const ImageWrapper = styled.div`
+  cursor: pointer;
 `;
 
 const ListHashmaps = ({ hashmap }) => {
   return (
-    <Wrapper className="row">
-      <div className="col">
-        <div className="row">
-          <Link href={`/view?key=${hashmap.key}`}>
-            <a>
-              <h4>{hashmap.title}</h4>
-            </a>
-          </Link>
-        </div>
-        <div className="row">
-          <Link href={`/view?key=${hashmap.key}`}>
-            <a>
-              <h6>{hashmap.subtitle}</h6>
-            </a>
-          </Link>
-        </div>
-        <div className="row pb-4 pt-2">
-          <WrapAvatar className="col col-lg-1 text-right">
-            <Avatar src="imgs/avatar/pp.jpg" alt="avatar" />
-          </WrapAvatar>
-          <div className="col-md-auto text-left">
-            <span className="author">Nome do cara</span>
-            <span className="info">Info - xx/xx/xx</span>
+    <Wrapper>
+      <div className="p-2 max-w-sm w-full lg:max-w-full lg:flex">
+        <ImageWrapper
+          className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t 
+        lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg md:w-56"
+          style={{ backgroundImage: `url('${hashmap.imageUrl}')` }}
+          title={hashmap.textImage}
+          onClick={() => {
+            Router.push(`/view?key=${hashmap.key}`);
+          }}
+        />
+
+        <div
+          className="bg-white 
+        rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between 
+        leading-normal"
+        >
+          <div className="mb-8">
+            <Link href={`/view?key=${hashmap.key}`}>
+              <a>
+                <div className="text-gray-900 font-bold text-xl mb-2">
+                  {hashmap.title}
+                </div>
+              </a>
+            </Link>
+            <p className="text-gray-700 text-base">{hashmap.subtitle}</p>
+          </div>
+          <div className="flex items-center">
+            <img
+              className="w-10 h-10 rounded-full mr-4"
+              src="imgs/avatar/avatar.png"
+              alt="Avatar of Jonathan Reinink"
+            />
+            <div className="text-sm">
+              <p className="text-gray-900 leading-none">Jonathan Reinink</p>
+              <p className="text-gray-600">Aug 18</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="col col-lg-3">
-        <Link href={`/view?key=${hashmap.key}`}>
-          <a>
-            <WrapImage src={hashmap.imageUrl} alt="img" />
-          </a>
-        </Link>
       </div>
     </Wrapper>
   );

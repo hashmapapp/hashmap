@@ -1,30 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { DARK_GRAY } from 'app/styles/colors';
-
-const Title = styled.h1``;
-
-const SubTitle = styled.h6`
-  font-family: 'Open Sans Regular';
-  color: ${DARK_GRAY};
-`;
-
-const Info = styled.span`
-  font-size: 12px;
-  color: ${DARK_GRAY};
-  font-family: 'Open Sans Light';
-`;
 
 const header = ({ data }) => (
   <header>
-    <Title>{data.title}</Title>
-    <SubTitle>{data.subtitle}</SubTitle>
-    <div className="container">
-      <div className="row pt-2 pb-2">
-        <Info>{data.info} · 7 Publicações</Info>
-      </div>
-    </div>
+    <h1 className="font-sans text-2xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-black">
+      {data.title}
+    </h1>
+    <h6 className="pt-3 font-sans text-gray-700 leading-normal">
+      {data.subtitle}
+    </h6>
+    <p className="pt-1 pb-4 font-sans text-gray-600 text-xs">
+      04 de Abril · 7 Publicações
+    </p>
   </header>
 );
 

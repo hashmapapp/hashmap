@@ -17,6 +17,7 @@
     "next": "^9.2.2",
     "next-redux-wrapper": "^5.0.0",
     "nextjs-fonts": "^0.22.0",
+    "postcss-preset-env": "^6.7.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0-beta.17",
@@ -29,7 +30,8 @@
     "rxfire": "^3.10.1",
     "rxjs": "^6.5.4",
     "shortid": "^2.2.15",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.0.1",
+    "tailwindcss": "^1.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

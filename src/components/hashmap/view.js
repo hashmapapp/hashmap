@@ -14,10 +14,11 @@ const SectionHashmapView = ({ hashmap, posts }) => {
     description: hashmap.description,
     posts,
     urlImage: hashmap.imageUrl,
+    textImage: hashmap.textImage,
   };
   return (
     <>
-      <div className="container">
+      <div className="pt-4 container">
         <div className="row justify-content-md-center">
           <div className="col col-lg-8">
             <HeaderView data={headerData} />
