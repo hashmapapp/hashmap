@@ -1,52 +1,39 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Image } from 'app/components/UI/styles/styles';
-import { Avatar } from 'app/components/hashmap/publication/components/style';
-
-const Wrap = styled.div`
-  h6 {
-    font-family: 'Open Sans Regular';
-  }
-
-  span {
-    display: grid;
-    &.author {
-      font-size: 0.8em;
-    }
-
-    &.info {
-      color: #545b6294;
-      font-size: 0.6em;
-    }
-  }
-`;
-
-const WrapImage = styled(Image)`
-  padding: 15px 0px;
-`;
-
-const WrapAvatar = styled.div`
-  padding-right: 0px;
-`;
+// import styled from 'styled-components';
 
 const Item = () => {
   return (
-    <Wrap>
-      <WrapImage
-        src="https://siena.rosselcdn.net/sites/default/files/dpistyles_v2/ena_16_9_extra_big/2019/03/16/node_361216/1313078/public/2019/03/16/B9718926104Z.1_20190316212158_000%2BG0UD6AC6Q.1-0.jpg?itok=Mn-MJkZT1555584182"
-        alt="img"
+    <div className="shadow max-w-sm w-full lg:max-w-auto rounded-b-lg">
+      <img
+        className="rounded-t-lg w-full h-48"
+        src="https://picsum.photos/600/400"
+        alt="Woman paying for a purchase"
       />
-      <h6>Algum título aqui</h6>
-      <div className="row pb-4 pt-2">
-        <WrapAvatar className="col col-lg-2 text-right">
-          <Avatar src="imgs/avatar/pp.jpg" alt="avatar" />
-        </WrapAvatar>
-        <div className="col-md-auto text-left">
-          <span className="author">Nome do cara</span>
-          <span className="info">Info - xx/xx/xx</span>
+
+      <div className="bg-white p-4 flex flex-col justify-between leading-normal rounded-b-lg">
+        <div className="mb-8">
+          <div className="text-gray-900 font-bold text-xl">
+            Can coffee make you a better developer?
+          </div>
+          <p className="text-gray-700 text-base">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Voluptatibus quia, nulla! Maiores et perferendis eaque,
+            exercitationem praesentium nihil.
+          </p>
+        </div>
+        <div className="flex items-center">
+          <img
+            className="w-10 h-10 rounded-full mr-4"
+            src="https://picsum.photos/600/400"
+            alt="Avatar of Jonathan Reinink"
+          />
+          <div className="text-sm">
+            <p className="text-gray-900 leading-none">Jonathan Reinink</p>
+            <p className="text-gray-600">Aug 18</p>
+          </div>
         </div>
       </div>
-    </Wrap>
+    </div>
   );
 };
 

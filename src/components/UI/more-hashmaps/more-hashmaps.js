@@ -4,30 +4,20 @@ import Item from './Item';
 
 const Section = styled.section`
   background-color: #fafafa;
-
-  h6 {
-    font-family: 'Open Sans Light';
-  }
 `;
 
 const SectionMoreHashMaps = () => (
   <Section>
-    <div className="container pt-4">
-      <div className="row justify-content-md-center">
-        <div>
-          <h6>Mais Hashmaps</h6>
-          <hr />
-          <div className="row">
-            <div className="col">
-              <Item />
-            </div>
-            <div className="col">
-              <Item />
-            </div>
-            <div className="col">
-              <Item />
-            </div>
-          </div>
+    <div className="container py-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        <div className="p-2 sm:p-8">
+          <Item />
+        </div>
+        <div className="p-2 sm:p-8">
+          <Item />
+        </div>
+        <div className="p-2 sm:p-8">
+          <Item />
         </div>
       </div>
     </div>
