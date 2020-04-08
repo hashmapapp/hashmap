@@ -17,10 +17,10 @@ const ImageWrapper = styled.div`
 const ListHashmaps = ({ hashmap }) => {
   return (
     <Wrapper>
-      <div className="p-2 max-w-sm w-full lg:max-w-full lg:flex">
+      <div className="p-1 max-w-sm w-full lg:max-w-full lg:flex ">
         <ImageWrapper
-          className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t 
-        lg:rounded-t-none lg:rounded-l text-center overflow-hidden rounded-lg md:w-56"
+          className="h-48 lg:h-auto lg:w-64 flex-none bg-cover
+         lg:rounded-l text-center overflow-hidden md:w-56"
           style={{ backgroundImage: `url('${hashmap.imageUrl}')` }}
           title={hashmap.textImage}
           onClick={() => {
@@ -31,7 +31,7 @@ const ListHashmaps = ({ hashmap }) => {
         <div
           className="bg-white 
         rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between 
-        leading-normal"
+        leading-normal shadow-lg w-full"
         >
           <div className="mb-8">
             <Link href={`/view?key=${hashmap.key}`}>
