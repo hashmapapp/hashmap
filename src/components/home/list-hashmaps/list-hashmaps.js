@@ -14,45 +14,42 @@ const ImageWrapper = styled.div`
   cursor: pointer;
 `;
 
-const ListHashmaps = ({ hashmap }) => {
+const Item = ({ hashmap }) => {
   return (
-    <Wrapper>
-      <div className="p-1 max-w-sm w-full lg:max-w-full lg:flex ">
-        <ImageWrapper
-          className="h-48 lg:h-auto lg:w-64 flex-none bg-cover
-         lg:rounded-l text-center overflow-hidden md:w-56"
-          style={{ backgroundImage: `url('${hashmap.imageUrl}')` }}
-          title={hashmap.textImage}
-          onClick={() => {
-            Router.push(`/view?key=${hashmap.key}`);
-          }}
-        />
+    <Wrapper className="p-1 max-w-sm w-full lg:max-w-full lg:flex h-full">
+      <ImageWrapper
+        className="h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t-lg
+         md:rounded-l-lg text-center overflow-hidden md:w-56"
+        style={{ backgroundImage: `url('${hashmap.imageUrl}')` }}
+        title={hashmap.textImage}
+        onClick={() => {
+          Router.push(`/view?key=${hashmap.key}`);
+        }}
+      />
 
-        <div
-          className="bg-white 
-        rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between 
-        leading-normal shadow-lg w-full"
-        >
-          <div className="mb-8">
-            <Link href={`/view?key=${hashmap.key}`}>
-              <a>
-                <div className="text-gray-900 font-bold text-xl mb-2">
-                  {hashmap.title}
-                </div>
-              </a>
-            </Link>
-            <p className="text-gray-700 text-base">{hashmap.subtitle}</p>
-          </div>
-          <div className="flex items-center">
-            <img
-              className="w-10 h-10 rounded-full mr-4"
-              src="imgs/avatar/avatar.png"
-              alt="Avatar of Jonathan Reinink"
-            />
-            <div className="text-sm">
-              <p className="text-gray-900 leading-none">Jonathan Reinink</p>
-              <p className="text-gray-600">Aug 18</p>
-            </div>
+      <div
+        className="rounded-b-lg md:rounded-r-lg p-4 flex flex-col justify-between 
+        leading-normal shadow w-full bg-white"
+      >
+        <div className="mb-8">
+          <Link href={`/view?key=${hashmap.key}`}>
+            <a>
+              <div className="text-gray-900 font-bold text-xl mb-2">
+                {hashmap.title}
+              </div>
+            </a>
+          </Link>
+          <p className="text-gray-700 text-base">{hashmap.subtitle}</p>
+        </div>
+        <div className="flex items-center">
+          <img
+            className="w-10 h-10 rounded-full mr-4"
+            src="imgs/avatar/avatar.png"
+            alt="Avatar of Jonathan Reinink"
+          />
+          <div className="text-sm">
+            <p className="text-gray-900 leading-none">Jonathan Reinink</p>
+            <p className="text-gray-600">Aug 18</p>
           </div>
         </div>
       </div>
@@ -60,8 +57,8 @@ const ListHashmaps = ({ hashmap }) => {
   );
 };
 
-ListHashmaps.propTypes = {
+Item.propTypes = {
   hashmap: PropTypes.shape().isRequired,
 };
 
-export default ListHashmaps;
+export default Item;

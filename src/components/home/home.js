@@ -1,77 +1,39 @@
 import React from 'react';
-import ListHashmaps from 'app/components/home/list-hashmaps/list-hashmaps';
+import Item from 'app/components/home/list-hashmaps/list-hashmaps';
 import PropTypes from 'prop-types';
 
-const HomeComponent = ({ hashmaps }) => {
-  let hashmap1;
-  let hashmap2;
-  let hashmap3;
-  let hashmap4;
-  let hashmap5;
-  if (hashmaps.length > 0) {
-    [hashmap1, hashmap2, hashmap3, hashmap4, hashmap5] = hashmaps;
-  }
-  // return (
-  //   <div className="container">
-  //     {hashmaps.length > 0 &&
-  //       hashmaps.map(hashmap => (
-  //         <ListHashmaps key={hashmap.key} hashmap={hashmap} />
-  //       ))}
-  //   </div>
-  // );
+const orders = [
+  ['col-span-6 md:col-span-4', 'col-span-6 md:col-span-2'],
+  ['col-span-6 md:col-span-2', 'col-span-6 md:col-span-4'],
+  ['col-span-6 md:col-span-3', 'col-span-6 md:col-span-3'],
+  [
+    'col-span-6 md:col-span-2',
+    'col-span-6 md:col-span-2',
+    'col-span-6 md:col-span-2',
+  ],
+];
 
+let index = 0;
+let size = 1;
+let order = 0;
+
+const HomeComponent = ({ hashmaps }) => {
   return (
-    <>
-      (
-      <div className="m-16 grid grid-cols-6 gap-4">
-        {hashmap5 && (
-          <div className="col-span-4">
-            <ListHashmaps hashmap={hashmap5} />
-          </div>
-        )}
-        {hashmap2 && (
-          <div className="col-span-2">
-            <ListHashmaps hashmap={hashmap2} />
-          </div>
-        )}
-        {hashmap3 && (
-          <div className="col-span-2">
-            <ListHashmaps hashmap={hashmap3} />
-          </div>
-        )}
-        {hashmap1 && (
-          <div className="col-span-4">
-            <ListHashmaps hashmap={hashmap1} />
-          </div>
-        )}
-        {hashmap4 && (
-          <div className="col-span-2">
-            <ListHashmaps hashmap={hashmap4} />
-          </div>
-        )}
-        {hashmap3 && (
-          <div className="col-span-2">
-            <ListHashmaps hashmap={hashmap3} />
-          </div>
-        )}
-        {hashmap1 && (
-          <div className="col-span-2">
-            <ListHashmaps hashmap={hashmap1} />
-          </div>
-        )}
-        {hashmap3 && (
-          <div className="col-span-3">
-            <ListHashmaps hashmap={hashmap3} />
-          </div>
-        )}
-        {hashmap1 && (
-          <div className="col-span-3">
-            <ListHashmaps hashmap={hashmap1} />
-          </div>
-        )}
-      </div>
-      )
-    </>
+    <div className="m-2 md:m-16 grid grid-cols-6 gap-4 ">
+      {hashmaps.length > 0 &&
+        hashmaps.map(hashmap => {
+          if (index === size - 1) {
+            order = orders[Math.floor(Math.random() * orders.length)];
+            size = order.length;
+            index = 0;
+          } else index += 1;
+          return (
+            <div key={hashmap.key} className={order[index]}>
+              <Item hashmap={hashmap} />
+            </div>
+          );
+        })}
+    </div>
   );
 };
 
