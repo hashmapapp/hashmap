@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { loadFirebaseAuth } from 'app/lib/db';
+import AccountDropdown from './account-dropdown';
 
 const Avatar = styled.img`
   max-width: 100%;
@@ -68,25 +69,7 @@ const NavBar = () => {
               Messages
             </a>
           </Link>
-          <button
-            type="button"
-            className="hidden sm:block px-8 text-gray-500 hover:text-white focus:text-white focus:outline-none"
-            onClick={() => {
-              setShowNav(!showNav);
-            }}
-          >
-            {user ? (
-              <Avatar
-                className="h-8 w-8 rounded-full mx-auto"
-                src={user.photoURL}
-              />
-            ) : (
-              <Avatar
-                className="h-8 w-8 rounded-full mx-auto"
-                src="imgs/avatar/avatar.jpg"
-              />
-            )}
-          </button>
+          <AccountDropdown user={user} />
         </nav>
       </div>
     </header>

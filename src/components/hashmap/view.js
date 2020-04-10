@@ -1,7 +1,7 @@
 import React from 'react';
 import HeaderView from 'app/components/hashmap/header/view';
 import ArticleView from 'app/components/hashmap/article/view';
-// import Footer from 'app/components/hashmap/footer/footer';
+import Footer from 'app/components/hashmap/footer/footer';
 import PropTypes from 'prop-types';
 
 const SectionHashmapView = ({ hashmap, posts }) => {
@@ -20,7 +20,7 @@ const SectionHashmapView = ({ hashmap, posts }) => {
     <>
       <HeaderView data={headerData} />
       <ArticleView data={articleData} />
-      {/* <Footer data={data.author} /> */}
+      <Footer data={hashmap} />
     </>
   );
 };

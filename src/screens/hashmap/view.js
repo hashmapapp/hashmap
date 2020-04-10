@@ -24,7 +24,7 @@ const View = ({ hashmap, posts, hashmapKey }) => {
       )}
       <UISectionComments />
       <UISectionMoreHashMaps />
-      <UIFooter />
+      {/* <UIFooter /> */}
     </>
   );
 };

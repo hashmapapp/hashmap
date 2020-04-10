@@ -1,33 +1,22 @@
 import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Avatar } from '../publication/components/style';
-
-const Author = styled.h6``;
-
-const Bio = styled.p``;
-
-const Span = styled.span`
-  color: #444;
-`;
 
 const footer = ({ data }) => (
-  <>
-    <hr />
-    <footer className="p-2">
-      <div className="row">
-        <div className="col col-lg-2 text-right">
-          <Avatar src="imgs/avatar/pp.jpg" alt="avatar" />
-        </div>
-        <div className="col-md-auto text-left">
-          <Span>Criado Por</Span>
-          <Author>{data.name}</Author>
-          <Bio>{data.bio}</Bio>
-        </div>
+  <div className="container mx-auto sm:py-8 md:px-64">
+    <div className="md:flex bg-white rounded-lg p-6">
+      <img
+        className="h-16 w-16 md:h-24 md:w-24 rounded-full mx-auto md:mx-0 md:mr-6"
+        src="imgs/avatar/avatar.jpg"
+        alt="Perfil"
+      />
+      <div className="text-center md:text-left pt-2">
+        <h2 className="text-lg">Erin Lindford</h2>
+        <div className="text-purple-500">Customer Support</div>
+        <div className="text-gray-600">erinlindford@example.com</div>
+        <div className="text-gray-600">(555) 765-4321</div>
       </div>
-    </footer>
-    <hr />
-  </>
+    </div>
+  </div>
 );
 
 footer.propTypes = {

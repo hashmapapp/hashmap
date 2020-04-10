@@ -62,7 +62,7 @@ class home extends Component {
         <UINavBar />
         {/* <ModalAuth /> */}
         <HomeComponent hashmaps={hashmaps} />
-        <Footer />
+        {/* <Footer /> */}
       </>
     );
   }

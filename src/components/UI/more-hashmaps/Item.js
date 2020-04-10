@@ -1,16 +1,15 @@
 import React from 'react';
-// import styled from 'styled-components';
 
 const Item = () => {
   return (
-    <div className="shadow max-w-sm w-full lg:max-w-auto rounded-b-lg">
+    <div className="shadow md:shadow-none md:bg-gray-100 max-w-sm w-full lg:max-w-auto rounded-b-lg">
       <img
-        className="rounded-t-lg w-full h-48"
+        className="rounded-t-lg w-full h-48 md:rounded-none"
         src="https://picsum.photos/600/400"
         alt="Woman paying for a purchase"
       />
 
-      <div className="bg-white p-4 flex flex-col justify-between leading-normal rounded-b-lg">
+      <div className="bg-white md:bg-gray-100 p-4 flex flex-col justify-between leading-normal rounded-b-lg">
         <div className="mb-8">
           <div className="text-gray-900 font-bold text-xl">
             Can coffee make you a better developer?
