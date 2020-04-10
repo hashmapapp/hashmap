@@ -8,7 +8,7 @@ const Section = styled.section`
 
 const SectionMoreHashMaps = () => (
   <Section>
-    <div className="container py-4">
+    <div className="container mx-auto py-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         <div className="p-2 sm:p-8">
           <Item />

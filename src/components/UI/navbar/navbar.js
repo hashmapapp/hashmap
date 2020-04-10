@@ -1,78 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { loadFirebaseAuth } from 'app/lib/db';
-// import { Container } from 'react-bootstrap';
-// import PropTypes from 'prop-types';
-// import { DARK_GRAY } from 'app/styles/colors';
-// import AuthenticationServiceFirebase from 'app/services/authentication.service';
-// import { loadFirebaseAuth } from 'app/lib/db';
-// import px2vw from 'app/styles/px2vw';
-
-const NavBarDiv = styled.nav`
-  overflow: hidden;
-  background-color: white;
-  -webkit-box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
-  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
-  height: 8vh;
-  /* transition: transform 300ms ease; */
-  /* transform: translateY(-100%); */
-  position: ${prop => (prop.fixed ? 'fixed;' : '')};
-  top: ${prop => (prop.fixed ? '0' : '')};
-  width: ${prop => (prop.fixed ? '100%;' : '')};
-  z-index: 10;
-`;
-
-const Items = styled.div`
-  li {
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-
-  a {
-    cursor: pointer;
-  }
-`;
 
 const Avatar = styled.img`
   max-width: 100%;
   max-height: 100%;
 `;
 
-const Profile = styled.li`
-  cursor: pointer;
-`;
-
 const NavBar = () => {
+  const [showNav, setShowNav] = useState(false);
   const user = loadFirebaseAuth().currentUser;
   return (
-    <NavBarDiv className="navbar navbar-expand-lg">
-      <Items className="container d-flex justify-content-between">
-        <Link href="/">
-          <strong>
-            <a className="navbar-brand">{'{ Hashmap }'}</a>
-          </strong>
-        </Link>
-        <ul className="navbar-nav">
-          {/* <li className="nav-item active">
-            <a className="nav-link" href="#">
-              Home <span className="sr-only">(current)</span>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              Features
-            </a>
-          </li> */}
-          {user && (
-            <Profile
-              className="nav-item"
+    <header className="shadow-lg">
+      <div className="container mx-auto sm:px-24 sm:flex sm:justify-between sm:items:center sm:px-4 sm:py-3">
+        <div className="flex items-center justify-between px-4 py-3 sm:p-0">
+          <div>
+            <Link href="/">
+              <a>
+                <img
+                  src="/imgs/logo/default-logo.png"
+                  className="h-8"
+                  alt="logo"
+                />
+              </a>
+            </Link>
+          </div>
+          <div className="sm:hidden">
+            <button
+              type="button"
+              className="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
               onClick={() => {
-                console.log('Sair');
+                setShowNav(!showNav);
               }}
             >
-              {user.photoURL ? (
+              {user ? (
                 <Avatar
                   className="h-8 w-8 rounded-full mx-auto"
                   src={user.photoURL}
@@ -83,11 +45,51 @@ const NavBar = () => {
                   src="imgs/avatar/avatar.jpg"
                 />
               )}
-            </Profile>
-          )}
-        </ul>
-      </Items>
-    </NavBarDiv>
+            </button>
+          </div>
+        </div>
+        <nav
+          className={`px-2 pt-2 pb-4 sm:flex sm:p-0 ${
+            showNav ? 'block' : 'hidden'
+          }`}
+        >
+          <Link href="/">
+            <a className="uppercase block px-2 py-1 font-semibold rounded hover:bg-gray-100">
+              Criar Hashmap
+            </a>
+          </Link>
+          <Link href="/">
+            <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-100 sm:mt-0 sm:ml-2">
+              Trips
+            </a>
+          </Link>
+          <Link href="/">
+            <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-100 sm:mt-0 sm:ml-2">
+              Messages
+            </a>
+          </Link>
+          <button
+            type="button"
+            className="hidden sm:block px-8 text-gray-500 hover:text-white focus:text-white focus:outline-none"
+            onClick={() => {
+              setShowNav(!showNav);
+            }}
+          >
+            {user ? (
+              <Avatar
+                className="h-8 w-8 rounded-full mx-auto"
+                src={user.photoURL}
+              />
+            ) : (
+              <Avatar
+                className="h-8 w-8 rounded-full mx-auto"
+                src="imgs/avatar/avatar.jpg"
+              />
+            )}
+          </button>
+        </nav>
+      </div>
+    </header>
   );
 };
 

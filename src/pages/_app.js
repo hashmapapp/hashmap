@@ -2,7 +2,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import store from 'app/redux/store';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import '../styles/index.css';

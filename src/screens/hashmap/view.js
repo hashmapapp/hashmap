@@ -7,6 +7,7 @@ import UISectionMoreHashMaps from 'app/components/UI/more-hashmaps/more-hashmaps
 import withSubscriptionHashmapData from 'app/screens/lib/withSubscriptionHashmapData';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+import { Section } from 'app/components/UI/styles/styles';
 // import { authorization } from 'app/screens/lib/authorization';
 // import { EDIT_HASHMAP_BUTTON } from 'app/screens/lib/constants';
 

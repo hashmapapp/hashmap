@@ -16,9 +16,9 @@ const ImageWrapper = styled.div`
 
 const Item = ({ hashmap }) => {
   return (
-    <Wrapper className="p-1 max-w-sm w-full lg:max-w-full lg:flex h-full">
+    <Wrapper className="p-1 max-w-sm w-full md:max-w-full md:flex h-full">
       <ImageWrapper
-        className="h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t-lg
+        className="h-48 md:h-auto md:w-64 flex-none bg-cover rounded-t-lg
          md:rounded-l-lg text-center overflow-hidden md:w-56"
         style={{ backgroundImage: `url('${hashmap.imageUrl}')` }}
         title={hashmap.textImage}
@@ -29,7 +29,7 @@ const Item = ({ hashmap }) => {
 
       <div
         className="rounded-b-lg md:rounded-r-lg p-4 flex flex-col justify-between 
-        leading-normal shadow w-full bg-white"
+        leading-normal shadow-xl w-full bg-white"
       >
         <div className="mb-8">
           <Link href={`/view?key=${hashmap.key}`}>

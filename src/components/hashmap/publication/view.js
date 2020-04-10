@@ -1,27 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Rater from 'react-rater';
-// import { Facebook } from './components/Facebook';
-// import ReactCount from 'app/components/hashmap/publication/components/react-count';
-// import WrapImage from 'app/components/UI/image/wrapper';
 // import LinkPreview from 'app/components/UI/link-preview/link-preview';
-// import AddReact from './components/add-react';
+import Star from './components/star';
 
 const Publication = ({ data }) => (
-  <article className="my-3 max-w-xg rounded overflow-hidden shadow">
-    <div className="">
-      <div className="px-6 py-4 font-sans font-bold text-xl mb-2">
-        {data.title}
+  <article className="rounded-lg overflow-hidden shadow-xl">
+    <div className="pt-6">
+      <div className="p-4 font-sans font-bold text-xl">{data.title}</div>
+      <div className="flex justify-center">
+        {data.imageUrl && (
+          <img
+            className="shadow"
+            src={data.imageUrl}
+            alt={data.title}
+            style={{ maxHeight: '32rem' }}
+          />
+        )}
       </div>
-      {data.imageUrl && (
-        <img className="w-full" src={data.imageUrl} alt={data.title} />
-      )}
-      <p className="px-6 py-4 font-sans text-lg text-gray-700">
+      <p className="p-4 font-sans text-base md:text-lg text-gray-700">
         {data.description}
       </p>
+      {/* <LinkPreview
+        data={{
+          image:
+            'https://avatars0.githubusercontent.com/u/18178570?s=400&u=125429dc6e6986c49ab1841447b2840583544ed1&v=4',
+          url: 'https://github.com/kleysonmorais',
+          title: 'kleysonmorais (Kleyson Morais) · GitHub',
+          description:
+            'Computer Scientist. kleysonmorais has 45 repositories available. Follow their code on GitHub.',
+        }}
+      /> */}
     </div>
-    <div className="px-6 pt-4 pb-2">
-      <Rater total={5} rating={2} />
+    <div className="p-4 flex justify-end md:justify-start">
+      <Star />
     </div>
   </article>
 );

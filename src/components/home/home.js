@@ -3,13 +3,13 @@ import Item from 'app/components/home/list-hashmaps/list-hashmaps';
 import PropTypes from 'prop-types';
 
 const orders = [
-  ['col-span-6 md:col-span-4', 'col-span-6 md:col-span-2'],
-  ['col-span-6 md:col-span-2', 'col-span-6 md:col-span-4'],
-  ['col-span-6 md:col-span-3', 'col-span-6 md:col-span-3'],
+  ['col-span-6 xl:col-span-4', 'col-span-6 xl:col-span-2'],
+  ['col-span-6 xl:col-span-2', 'col-span-6 xl:col-span-4'],
+  ['col-span-6 xl:col-span-3', 'col-span-6 xl:col-span-3'],
   [
-    'col-span-6 md:col-span-2',
-    'col-span-6 md:col-span-2',
-    'col-span-6 md:col-span-2',
+    'col-span-6 xl:col-span-2',
+    'col-span-6 xl:col-span-2',
+    'col-span-6 xl:col-span-2',
   ],
 ];
 

@@ -18,16 +18,9 @@ const SectionHashmapView = ({ hashmap, posts }) => {
   };
   return (
     <>
-      <div className="pt-4 container">
-        <div className="row justify-content-md-center">
-          <div className="col col-lg-8">
-            <HeaderView data={headerData} />
-            <hr />
-            <ArticleView data={articleData} />
-            {/* <Footer data={data.author} /> */}
-          </div>
-        </div>
-      </div>
+      <HeaderView data={headerData} />
+      <ArticleView data={articleData} />
+      {/* <Footer data={data.author} /> */}
     </>
   );
 };

@@ -1,46 +1,48 @@
-import React from 'react';
-import styled from 'styled-components';
-import { GRAY, DARK_GRAY } from 'app/styles/colors';
-import { Image } from 'app/components/UI/styles/styles';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-
-const WrapLinkPreview = styled.div`
-  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
-  margin: 15px;
-  padding: 0px;
-  cursor: pointer;
-`;
-
-const WrapImage = styled(Image)`
-  height: 220px;
-`;
-
-const WrapInfo = styled.div`
-  background-color: ${GRAY};
-  width: 100%;
-
-  span {
-    font-size: 12px;
-    color: ${DARK_GRAY};
-    font-family: 'Open Sans Light';
-  }
-`;
+import Link from 'next/link';
 
 const LinkPreview = ({ data }) => {
+  const { domain, shortLink } = useMemo(() => {
+    if (data.url.startsWith('https://' || 'http://')) {
+      const urlArray = data.url.split('//');
+      return {
+        domain: urlArray[1].split('.')[0],
+        shortLink: `//${urlArray[1]}`,
+      };
+    }
+    return { domain: 'Link', shortLink: '' };
+  }, [data]);
+
   return (
-    <div className="row justify-content-md-center">
-      <WrapLinkPreview
-        className="col-8 text-center"
-        onClick={() => {
-          alert('Redirecionar para Site');
-        }}
-      >
-        <WrapImage src={data.image} alt="text" />
-        <WrapInfo className="p-2 text-left">
-          <span>{data.url}</span>
-          <h6>{data.title}</h6>
-        </WrapInfo>
-      </WrapLinkPreview>
+    <div className="flex px-8 md:px-16 py-6" target="_blank">
+      <div className="flex md:flex-shrink-0 items-center border-b border-l border-t border-gray-300 rounded-l-lg">
+        <Link href={shortLink}>
+          <a target="_blank">
+            <img
+              className="rounded-lg w-36 md:w-56 p-2"
+              src={data.image}
+              alt="Woman paying for a purchase"
+              style={{ borderRadius: '1.5rem' }}
+            />
+          </a>
+        </Link>
+      </div>
+      <div className="py-2 md:py-4 pl-2 pr-2 md:pr-0 md:pl-6 border-b border-r border-t border-gray-300 rounded-r-lg">
+        <div className="uppercase tracking-wide text-xs md:text-sm text-indigo-600 font-bold">
+          {domain}
+        </div>
+        <Link href={shortLink}>
+          <a target="_blank">
+            <p className="block mt-1 text-xs md:text-lg leading-tight font-semibold text-gray-900 hover:underline">
+              {data.title}
+            </p>
+          </a>
+        </Link>
+        <p className="md:mt-2 text-xs md:text-base text-gray-600">
+          {data.description}
+        </p>
+      </div>
     </div>
   );
 };
