@@ -9,7 +9,7 @@ class AuthenticationServiceFirebase {
     this.httpFirebase = new HttpWrapperFirebase();
   }
 
-  createAccount(email, password) {
+  createAccount(name, email, password, callback) {
     console.log('createAccount');
     this.fb
       .createUserWithEmailAndPassword(email, password)
@@ -20,29 +20,35 @@ class AuthenticationServiceFirebase {
         this.httpFirebase
           .setNewItem(USERS_COLLECTION, user.uid, {
             email: user.email,
+            name,
           })
           .then(() => {
             console.log('Usuário Criado Com Sucesso!');
+            callback();
           });
       })
       .catch(error => console.log(error.code, error.message));
   }
 
-  signIn(email, password) {
+  signIn(email, password, callbackSuccess, callbackError) {
     this.fb
       .signInWithEmailAndPassword(email, password)
-      .then(resolve => {
+      .then(() => {
         console.log('Entrou com sucesso');
-        console.log(resolve);
+        callbackSuccess();
       })
-      .catch(error => console.log(error.code, error.message));
+      .catch(error => {
+        console.log(error.code, error.message);
+        callbackError();
+      });
   }
 
-  signOut() {
+  signOut(callback) {
     this.fb
       .signOut()
       .then(() => {
         console.log('Saiu com Sucesso');
+        callback();
       })
       .catch(error => console.log(error.code, error.message));
   }

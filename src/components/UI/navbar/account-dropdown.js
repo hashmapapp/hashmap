@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import styled from 'styled-components';
 
-const AccountDropdown = ({ user }) => {
+const ItemDrop = styled.div`
+  cursor: pointer;
+`;
+
+const AccountDropdown = ({ user, signOut }) => {
   const [showNav, setShowNav] = useState(false);
   return (
     <>
@@ -13,7 +18,7 @@ const AccountDropdown = ({ user }) => {
             setShowNav(!showNav);
           }}
         >
-          {user ? (
+          {user.photoURL ? (
             <img
               className="h-full w-full object-cover"
               src={user.photoURL}
@@ -33,20 +38,16 @@ const AccountDropdown = ({ user }) => {
           }`}
         >
           <Link href="/">
-            <a className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
-              Account settings
+            <a className="block px-4 py-2 text-gray-800 hover:bg-gray-600 hover:text-white">
+              Meu Perfil
             </a>
           </Link>
-          <Link href="/">
-            <a className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
-              Account settings
-            </a>
-          </Link>
-          <Link href="/">
-            <a className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
-              Account settings
-            </a>
-          </Link>
+          <ItemDrop
+            className="block px-4 py-2 text-gray-800 hover:bg-gray-600 hover:text-white"
+            onClick={signOut}
+          >
+            Sair
+          </ItemDrop>
         </div>
       </div>
     </>

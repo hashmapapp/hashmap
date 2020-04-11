@@ -6,7 +6,7 @@ const article = ({ data }) => (
   <>
     <article style={{ backgroundColor: '#fafafa' }}>
       <div className="container mx-auto py-4">
-        <div className="my-4 px-4 md:px-24">
+        <div className="px-4 md:px-24">
           <img
             className="shadow w-full object-cover "
             src={data.urlImage}
@@ -18,7 +18,7 @@ const article = ({ data }) => (
             </p>
           )}
         </div>
-        <p className="font-sans text-lg text-gray-800 py-8 px-4 md:px-64">
+        <p className="font-sans text-base md:text-lg text-gray-800 py-8 px-4 md:px-64">
           {data.description}
         </p>
       </div>
