@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -6,6 +7,8 @@ import { loadFirebaseAuth } from 'app/lib/db';
 import { MdClose } from 'react-icons/md';
 import AuthenticationServiceFirebase from 'app/services/authentication.service';
 import { TiThMenu } from 'react-icons/ti';
+import * as ACTIONS_AUTH from 'app/screens/lib/constants';
+import { authorization } from 'app/screens/lib/authorization';
 import AccountDropdown from './account-dropdown';
 
 const Avatar = styled.img`
@@ -17,7 +20,7 @@ const DivButton = styled.div`
   cursor: pointer;
 `;
 
-const NavBar = ({ typeNav = 'signin' }) => {
+const NavBar = ({ typeNav }) => {
   const [showNav, setShowNav] = useState(false);
   const user = loadFirebaseAuth().currentUser;
   const signOut = () => {
@@ -89,8 +92,15 @@ const NavBar = ({ typeNav = 'signin' }) => {
             showNav ? 'block' : 'hidden'
           }`}
         >
+          {user && authorization(ACTIONS_AUTH.CREATE_HASHMAP_BUTTON) && (
+            <Link href="/edit">
+              <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
+                Criar Hashmap
+              </a>
+            </Link>
+          )}
           {user && (
-            <Link href="/">
+            <Link href="/profile">
               <a className="md:hidden uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-100 sm:mt-0 sm:ml-2">
                 Meu Perfil
               </a>
@@ -126,11 +136,11 @@ const NavBar = ({ typeNav = 'signin' }) => {
 };
 
 NavBar.propTypes = {
-  // fixed: PropTypes.bool,
+  typeNav: PropTypes.string,
 };
 
 NavBar.defaultProps = {
-  fixed: false,
+  typeNav: 'signin',
 };
 
 export default NavBar;

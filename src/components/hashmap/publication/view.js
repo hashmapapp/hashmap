@@ -32,7 +32,7 @@ const Publication = ({ data }) => (
       /> */}
     </div>
     <div className="p-4 flex justify-end md:justify-start">
-      <Star />
+      <Star rating={0} />
     </div>
   </article>
 );

@@ -6,6 +6,7 @@ import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import '../styles/index.css';
 import 'react-rater/lib/react-rater.css';
+import 'app/styles/AnimatedRater.css';
 
 // eslint-disable-next-line
 const MyApp = ({ Component, pageProps, store }) => {

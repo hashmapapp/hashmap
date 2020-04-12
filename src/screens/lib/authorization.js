@@ -1,7 +1,7 @@
 import * as ACTIONS from './constants';
 
 export const authorization = key => {
-  const role = 'default';
+  const role = localStorage.getItem('@hashmap/role');
   switch (key) {
     case ACTIONS.CREATE_HASHMAP_BUTTON: {
       return role === 'admin' || role === 'productor';

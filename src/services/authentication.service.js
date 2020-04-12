@@ -1,4 +1,4 @@
-import { loadFirebaseAuth } from 'app/lib/db';
+import { loadFirebaseAuth, loadFirebaseStore } from 'app/lib/db';
 import { HttpWrapperFirebase } from './http-wrapper';
 
 const USERS_COLLECTION = 'users';
@@ -6,41 +6,67 @@ const USERS_COLLECTION = 'users';
 class AuthenticationServiceFirebase {
   constructor() {
     this.fb = loadFirebaseAuth();
+    this.fbStore = loadFirebaseStore();
     this.httpFirebase = new HttpWrapperFirebase();
   }
 
-  createAccount(name, email, password, callback) {
-    console.log('createAccount');
+  createAccount(
+    displayName,
+    email,
+    password,
+    callbackSuccess = () => {},
+    callbackError = error => console.log(error.code, error.message),
+    role = 'default'
+  ) {
     this.fb
       .createUserWithEmailAndPassword(email, password)
       .then(resolve => {
-        console.log('Success');
         const { user } = resolve;
-        console.log(user.uid);
-        this.httpFirebase
-          .setNewItem(USERS_COLLECTION, user.uid, {
-            email: user.email,
-            name,
-          })
+        user
+          .updateProfile({ displayName })
           .then(() => {
-            console.log('Usuário Criado Com Sucesso!');
-            callback();
-          });
+            this.httpFirebase
+              .setNewItem(USERS_COLLECTION, user.uid, {
+                role,
+              })
+              .then(() => {
+                localStorage.setItem('@hashmap/role', role);
+                callbackSuccess();
+              })
+              .catch(callbackError);
+          })
+          .catch(callbackError);
       })
-      .catch(error => console.log(error.code, error.message));
+      .catch(callbackError);
   }
 
-  signIn(email, password, callbackSuccess, callbackError) {
+  signIn(
+    email,
+    password,
+    callbackSuccess = () => {},
+    callbackError = error => console.log(error.code, error.message)
+  ) {
     this.fb
       .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('Entrou com sucesso');
-        callbackSuccess();
+      .then(response => {
+        const { user } = response;
+        const userRef = this.fbStore()
+          .collection(USERS_COLLECTION)
+          .doc(user.uid);
+        userRef
+          .get()
+          .then(doc => {
+            if (!doc.exists) {
+              console.error('User not found');
+              localStorage.setItem('@hashmap/role', undefined);
+            } else {
+              localStorage.setItem('@hashmap/role', doc.data().role);
+              callbackSuccess();
+            }
+          })
+          .catch(callbackError);
       })
-      .catch(error => {
-        console.log(error.code, error.message);
-        callbackError();
-      });
+      .catch(callbackError);
   }
 
   signOut(callback) {
@@ -48,21 +74,22 @@ class AuthenticationServiceFirebase {
       .signOut()
       .then(() => {
         console.log('Saiu com Sucesso');
+        localStorage.setItem('@hashmap/role', undefined);
         callback();
       })
       .catch(error => console.log(error.code, error.message));
   }
 
-  updateProfile(displayName, photoURL) {
+  updateProfile(displayName, photoURL, callback) {
     const user = this.fb.currentUser;
     user
       .updateProfile({
         displayName,
         photoURL,
       })
-      .then(resolve => {
+      .then(() => {
         console.log('Profile Update');
-        console.log(resolve);
+        callback();
       })
       .catch(error => console.log(error.code, error.message));
   }

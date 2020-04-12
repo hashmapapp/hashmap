@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StaggeredMotion, spring, presets } from 'react-motion';
 import Rater from 'react-rater';
-// import './AnimatedRater.scss'
 
 const Star = ({ willBeActive, isActive, style }) => {
-  const fill = isActive ? '#fc6' : willBeActive ? '#ffdd99' : '#e3e3e3';
+  const colorAux = willBeActive ? '#ffdd99' : '#e3e3e3';
+  const fill = isActive ? '#fc6' : colorAux;
   return (
     <svg viewBox="0 0 19.481 19.481" width="36" height="36" style={style}>
       <path
@@ -19,26 +19,53 @@ const Star = ({ willBeActive, isActive, style }) => {
 Star.propTypes = {
   isActive: PropTypes.bool,
   willBeActive: PropTypes.bool,
-  style: PropTypes.any,
+  style: PropTypes.shape(),
+};
+
+Star.defaultProps = {
+  isActive: false,
+  willBeActive: false,
+  style: {},
 };
 
 export default class AnimatedRater extends Component {
-  constructor() {
-    super();
-    this.state = {
-      shouldStart: false,
-      rating: 0,
-      defaultStyles: [{ x: 0 }, { x: 0 }, { x: 0 }, { x: 0 }, { x: 0 }],
-    };
-  }
+  state = {
+    shouldStart: false,
+    rating: 0,
+    defaultStyles: [{ x: 0 }, { x: 0 }, { x: 0 }, { x: 0 }, { x: 0 }],
+  };
+
   componentDidMount() {
+    const { rating } = this.props;
     setTimeout(() => {
       this.setState({
         shouldStart: true,
+        rating,
       });
     }, 0);
   }
-  handleRate({ rating }) {
+
+  getStyle = prevInterpolatedStyles => {
+    const { shouldStart, rating } = this.state;
+    if (!shouldStart) {
+      return prevInterpolatedStyles.map(() => ({ x: 0 }));
+    }
+    if (rating) {
+      return prevInterpolatedStyles.map((_, i) => {
+        if (i + 1 > rating) return { x: 1 };
+        return i === 0
+          ? { x: spring(1, presets.gentle) }
+          : { x: spring(prevInterpolatedStyles[i - 1].x, presets.gentle) };
+      });
+    }
+    return prevInterpolatedStyles.map((_, i) => {
+      return i === 0
+        ? { x: spring(1, presets.wobbly) }
+        : { x: spring(prevInterpolatedStyles[i - 1].x, presets.wobbly) };
+    });
+  };
+
+  handleRate = ({ rating }) => {
     const defaultStyles = [
       { x: 0 },
       { x: 0 },
@@ -55,48 +82,24 @@ export default class AnimatedRater extends Component {
       rating,
       defaultStyles,
     });
-  }
-  getStyle(prevInterpolatedStyles) {
-    const { shouldStart, rating } = this.state;
-    if (!shouldStart) {
-      return prevInterpolatedStyles.map(() => {
-        return { x: 0 };
-      });
-    } else {
-      if (rating) {
-        return prevInterpolatedStyles.map((_, i) => {
-          if (i + 1 > rating) {
-            return { x: 1 };
-          }
-          return i === 0
-            ? { x: spring(1, presets.gentle) }
-            : { x: spring(prevInterpolatedStyles[i - 1].x, presets.gentle) };
-        });
-      } else {
-        return prevInterpolatedStyles.map((_, i) => {
-          return i === 0
-            ? { x: spring(1, presets.wobbly) }
-            : { x: spring(prevInterpolatedStyles[i - 1].x, presets.wobbly) };
-        });
-      }
-    }
-  }
+  };
+
   render() {
+    const { defaultStyles, rating } = this.state;
     return (
       <div className="animated-rater">
         <StaggeredMotion
-          defaultStyles={this.state.defaultStyles}
-          styles={this.getStyle.bind(this)}
-          key={this.state.defaultStyles.filter(style => style.x === 1).length}
+          defaultStyles={defaultStyles}
+          styles={this.getStyle}
+          key={defaultStyles.filter(style => style.x === 1).length}
         >
           {interpolatingStyles => (
-            <Rater
-              total={5}
-              rating={this.state.rating}
-              onRate={this.handleRate.bind(this)}
-            >
+            <Rater total={5} rating={rating} onRate={this.handleRate}>
               {interpolatingStyles.map((style, i) => (
-                <Star style={{ transform: `scale(${style.x})` }} key={i} />
+                <Star
+                  style={{ transform: `scale(${style.x})` }}
+                  key={i.toString()}
+                />
               ))}
             </Rater>
           )}

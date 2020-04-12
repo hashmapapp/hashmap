@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container } from 'react-bootstrap';
 
 const Footer = styled.footer`
   flex-shrink: 0;
@@ -12,11 +11,9 @@ const Footer = styled.footer`
 `;
 
 const footer = () => (
-  <Footer>
-    <Container>
+  <Footer>{/* <Container>
       <p>FOOTER</p>
-    </Container>
-  </Footer>
+    </Container> */}</Footer>
 );
 
 export default footer;
