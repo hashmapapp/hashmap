@@ -2,14 +2,14 @@ import React from 'react';
 
 const Item = () => {
   return (
-    <div className="shadow md:shadow-none md:bg-gray-100 max-w-sm w-full lg:max-w-auto rounded-b-lg">
+    <div className="bg-gray-100 max-w-sm w-full lg:max-w-auto rounded-b-lg">
       <img
-        className="rounded-t-lg w-full h-48 md:rounded-none"
+        className="w-full h-48"
         src="https://picsum.photos/600/400"
         alt="Woman paying for a purchase"
       />
 
-      <div className="bg-white md:bg-gray-100 p-4 flex flex-col justify-between leading-normal rounded-b-lg">
+      <div className="bg-gray-100 p-4 flex flex-col justify-between leading-normal rounded-b-lg">
         <div className="mb-8">
           <div className="text-gray-900 font-bold text-xl">
             Can coffee make you a better developer?
@@ -20,7 +20,7 @@ const Item = () => {
             exercitationem praesentium nihil.
           </p>
         </div>
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           <img
             className="w-10 h-10 rounded-full mr-4"
             src="https://picsum.photos/600/400"
@@ -30,7 +30,7 @@ const Item = () => {
             <p className="text-gray-900 leading-none">Jonathan Reinink</p>
             <p className="text-gray-600">Aug 18</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

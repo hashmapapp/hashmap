@@ -22,7 +22,7 @@ const View = ({ hashmap, posts, hashmapKey }) => {
       {hashmap && posts.length > 0 && (
         <SectionHashmapView hashmap={hashmap} posts={posts} />
       )}
-      <UISectionComments />
+      {/* <UISectionComments /> */}
       <UISectionMoreHashMaps />
       {/* <UIFooter /> */}
     </>

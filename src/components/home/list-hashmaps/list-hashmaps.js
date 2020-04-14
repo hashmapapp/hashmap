@@ -31,7 +31,7 @@ const Item = ({ hashmap }) => {
         className="rounded-b-lg md:rounded-r-lg p-4 flex flex-col justify-between 
         leading-normal shadow-xl w-full bg-white"
       >
-        <div className="mb-8">
+        <div className="">
           <Link href={`/view?key=${hashmap.key}`}>
             <a>
               <div className="text-gray-900 font-bold text-xl mb-2">
@@ -41,7 +41,7 @@ const Item = ({ hashmap }) => {
           </Link>
           <p className="text-gray-700 text-base">{hashmap.subtitle}</p>
         </div>
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           <img
             className="w-10 h-10 rounded-full mr-4"
             src="imgs/avatar/avatar.png"
@@ -51,7 +51,7 @@ const Item = ({ hashmap }) => {
             <p className="text-gray-900 leading-none">Jonathan Reinink</p>
             <p className="text-gray-600">Aug 18</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </Wrapper>
   );

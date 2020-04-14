@@ -42,7 +42,7 @@ const NavBar = ({ typeNav }) => {
               </a>
             </Link>
           </div>
-          {user ? (
+          {/* {user ? (
             <div className="sm:hidden">
               <button
                 type="button"
@@ -85,7 +85,7 @@ const NavBar = ({ typeNav }) => {
                 )}
               </button>
             </div>
-          )}
+          )} */}
         </div>
         <nav
           className={`px-2 pt-2 pb-4 sm:flex sm:p-0 ${
@@ -114,7 +114,7 @@ const NavBar = ({ typeNav }) => {
               Sair
             </DivButton>
           )}
-          {!user && typeNav === 'signin' && (
+          {/* {!user && typeNav === 'signin' && (
             <Link href="/login">
               <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-100 sm:mt-0 sm:ml-2">
                 Entrar
@@ -127,8 +127,8 @@ const NavBar = ({ typeNav }) => {
                 Criar Conta
               </a>
             </Link>
-          )}
-          {user && <AccountDropdown user={user} signOut={signOut} />}
+          )} */}
+          {/* {user && <AccountDropdown user={user} signOut={signOut} />} */}
         </nav>
       </div>
     </header>

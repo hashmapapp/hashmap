@@ -31,9 +31,9 @@ const Publication = ({ data }) => (
         }}
       /> */}
     </div>
-    <div className="p-4 flex justify-end md:justify-start">
+    {/* <div className="p-4 flex justify-end md:justify-start">
       <Star rating={0} />
-    </div>
+    </div> */}
   </article>
 );
 

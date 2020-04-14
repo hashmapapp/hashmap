@@ -20,7 +20,7 @@ const SectionHashmapView = ({ hashmap, posts }) => {
     <>
       <HeaderView data={headerData} />
       <ArticleView data={articleData} />
-      <Footer data={hashmap} />
+      {/* <Footer data={hashmap} /> */}
     </>
   );
 };
