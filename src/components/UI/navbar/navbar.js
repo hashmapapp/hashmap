@@ -42,7 +42,7 @@ const NavBar = ({ typeNav }) => {
               </a>
             </Link>
           </div>
-          {/* {user ? (
+          {user ? (
             <div className="sm:hidden">
               <button
                 type="button"
@@ -65,7 +65,7 @@ const NavBar = ({ typeNav }) => {
               </button>
             </div>
           ) : (
-            <div className="sm:hidden">
+            <div className="hidden">
               <button
                 type="button"
                 className="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
@@ -85,7 +85,7 @@ const NavBar = ({ typeNav }) => {
                 )}
               </button>
             </div>
-          )} */}
+          )}
         </div>
         <nav
           className={`px-2 pt-2 pb-4 sm:flex sm:p-0 ${
@@ -95,13 +95,34 @@ const NavBar = ({ typeNav }) => {
           {user && authorization(ACTIONS_AUTH.CREATE_HASHMAP_BUTTON) && (
             <Link href="/edit">
               <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
-                Criar Hashmap
+                Criar
+              </a>
+            </Link>
+          )}
+          {user && (
+            <Link href="/">
+              <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
+                Editar
+              </a>
+            </Link>
+          )}
+          {user && (
+            <Link href="/">
+              <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-green-200 sm:mt-0 sm:ml-2">
+                Salvar
+              </a>
+            </Link>
+          )}
+          {user && (
+            <Link href="/">
+              <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-red-200 sm:mt-0 sm:ml-2">
+                Remover
               </a>
             </Link>
           )}
           {user && (
             <Link href="/profile">
-              <a className="md:hidden uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-100 sm:mt-0 sm:ml-2">
+              <a className="md:hidden uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
                 Meu Perfil
               </a>
             </Link>
@@ -109,7 +130,7 @@ const NavBar = ({ typeNav }) => {
           {user && (
             <DivButton
               onClick={signOut}
-              className="md:hidden uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-100 sm:mt-0 sm:ml-2"
+              className="md:hidden uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2"
             >
               Sair
             </DivButton>
@@ -128,7 +149,7 @@ const NavBar = ({ typeNav }) => {
               </a>
             </Link>
           )} */}
-          {/* {user && <AccountDropdown user={user} signOut={signOut} />} */}
+          {user && <AccountDropdown user={user} signOut={signOut} />}
         </nav>
       </div>
     </header>

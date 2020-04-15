@@ -4,27 +4,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PublicationEdit from 'app/components/hashmap/publication/edit';
 import NewPublicationButton from 'app/components/hashmap/publication/components/new-button';
-import styled from 'styled-components';
 import {
   postCreate,
   descriptionUpdate,
   imgHashmapUpdate,
 } from 'app/redux/actions/hashmapActions';
 import ImageUpload from 'app/components/UI/image/upload';
-
-const DescriptionTextArea = styled.textarea`
-  width: 100%;
-  margin: 4px 0;
-  box-sizing: border-box;
-  border: none;
-  font-size: 1rem;
-  resize: none;
-  font-family: 'Open Sans Regular', sans-serif;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
+import { TextArea } from 'app/components/UI/styles/styles';
 
 const article = ({
   posts,
@@ -39,7 +25,7 @@ const article = ({
     handlerCrete();
   };
   return (
-    <article>
+    <article className="container mx-auto px-4 md:px-64 md:py-8">
       <ImageUpload
         onRequestSave={(path, url) => {
           handlerImage(path, url);
@@ -55,7 +41,8 @@ const article = ({
         //   },
         // ]}
       />
-      <DescriptionTextArea
+      <TextArea
+        className="Text"
         rows="5"
         type="text"
         id="description"

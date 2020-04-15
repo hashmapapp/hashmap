@@ -1,5 +1,4 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -10,66 +9,10 @@ import {
   imgPostUpdate,
 } from 'app/redux/actions/hashmapActions';
 import ImageUpload from 'app/components/UI/image/upload';
-
-const ArticleCardBox = styled.article`
-  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
-  transition: 0.3s;
-  width: 100%;
-  margin: 2% 0%;
-`;
-
-// const LinkPreviewCard = styled.div`
-//   border: solid 1px rgba(0, 0, 0, 0.05);
-//   padding: 2%;
-//   margin: 5% 0%;
-// `;
-
-const TitleTextArea = styled.textarea`
-  width: 100%;
-  margin: 4px 0;
-  box-sizing: border-box;
-  border: none;
-  font-size: 1.2rem;
-  resize: none;
-  font-family: 'Open Sans Bold', sans-serif;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const DescriptionTextArea = styled.textarea`
-  width: 100%;
-  margin: 4px 0;
-  box-sizing: border-box;
-  border: none;
-  font-size: 1rem;
-  resize: none;
-  font-family: 'Open Sans Regular', sans-serif;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-// const LinkBar = styled.div`
-//   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
-//   border-radius: 15px;
-//   transition: 0.3s;
-//   width: 100%;
-//   margin: 1% 0%;
-// `;
-
-// const InputLink = styled.input`
-//   padding-left: 15px;
-//   border-radius: 15px;
-//   width: 100%;
-//   margin: 4px 0;
-//   box-sizing: border-box;
-//   border: none;
-//   font-size: 1rem;
-//   resize: none;
-// `;
+import { TextArea } from 'app/components/UI/styles/styles';
+import { MdRemoveCircle } from 'react-icons/md';
+import { IoMdLink } from 'react-icons/io';
+import { FaImage } from 'react-icons/fa';
 
 const Publication = ({
   data,
@@ -79,24 +22,16 @@ const Publication = ({
   handlerDelete,
   handlerImage,
 }) => {
+  const [showUploadImage, setShowUploadImage] = useState(false);
+  const [showLink, setShowLink] = useState(false);
+
   return (
     <>
-      {/* <LinkBar>
-        <InputLink
-          type="text"
-          id="link"
-          name="link"
-          placeholder="https://seulinkaqui.com"
-          onChange={e => {
-            setLink(e.target.value);
-          }}
-          value={link || ''}
-        />
-      </LinkBar> */}
-      <ArticleCardBox className="p-2">
-        <header className="row justify-content-between">
-          <div className="col-10">
-            <TitleTextArea
+      <div className="p-2 m-4 shadow">
+        <header className="grid grid-cols-6 gap-4 flex">
+          <div className="col-span-4 md:col-span-5 flex-shrink h-12">
+            <TextArea
+              className="Text"
               rows="1"
               type="text"
               id="title"
@@ -108,19 +43,20 @@ const Publication = ({
               value={data.title}
             />
           </div>
-          <div className="col-2 text-right">
+          <div className="col-span-2 md:col-span-1 text-right flex-shrink">
             <button
               type="button"
+              className="hover:bg-red-300 py-2 px-4 rounded"
               onClick={() => {
                 handlerDelete(temporaryKey);
               }}
             >
-              Remover
+              <MdRemoveCircle />
             </button>
           </div>
         </header>
-        <hr />
-        <DescriptionTextArea
+        <TextArea
+          className="Text"
           rows="10"
           type="text"
           id="description"
@@ -131,22 +67,51 @@ const Publication = ({
           }}
           value={data.description}
         />
-        <ImageUpload
-          onRequestSave={(path, url) => {
-            handlerImage(path, url, temporaryKey);
-          }}
-          onRequestClear={() => console.log('Clear')}
-          storageName="posts"
-          // defaultFiles={[
-          //   {
-          //     source: 'hashmaps/f0xudwabp',
-          //     options: {
-          //       type: 'local',
-          //     },
-          //   },
-          // ]}
-        />
-      </ArticleCardBox>
+        {showUploadImage && (
+          <ImageUpload
+            onRequestSave={(path, url) => {
+              handlerImage(path, url, temporaryKey);
+            }}
+            onRequestClear={() => console.log('Clear')}
+            storageName="posts"
+            // defaultFiles={[
+            //   {
+            //     source: 'hashmaps/f0xudwabp',
+            //     options: {
+            //       type: 'local',
+            //     },
+            //   },
+            // ]}
+          />
+        )}
+        {showLink && (
+          <input
+            className="appearance-none block w-full bg-gray-200 text-gray-700 
+          border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            id="link"
+            type="text"
+            placeholder="https://seulink.com"
+          />
+        )}
+        <div className="text-right">
+          <div className="inline-flex">
+            <button
+              type="button"
+              className="hover:bg-gray-300 py-2 px-4 rounded-l"
+              onClick={() => setShowLink(!showLink)}
+            >
+              <IoMdLink />
+            </button>
+            <button
+              type="button"
+              className="hover:bg-gray-300 py-2 px-4 rounded-r"
+              onClick={() => setShowUploadImage(!showUploadImage)}
+            >
+              <FaImage />
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

@@ -1,31 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const CardBox = styled.div`
-  box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.05);
-  padding: 2%;
-  margin: 5% 0%;
-  width: 40%;
-  border-radius: 30px;
-
-  a {
-    color: black;
-    text-decoration: none;
-  }
-
-  &:hover {
-    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1);
-  }
-`;
-
 const NewPublication = ({ onAction }) => (
-  <div className="row justify-content-md-center">
-    <CardBox className="col-md-auto text-center">
-      <a href="/" onClick={onAction}>
-        Adicionar Publicação
-      </a>
-    </CardBox>
+  <div className="w-full flex items-center mb-8">
+    <button
+      type="button"
+      className="flex-1 h-16 bg-white hover:bg-gray-100 text-2xl text-gray-800 font-semibold py-2 px-4 
+    border border-gray-400 rounded-full shadow"
+      onClick={onAction}
+    >
+      + Novo Post
+    </button>
   </div>
 );
 

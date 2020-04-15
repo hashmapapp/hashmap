@@ -1,42 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { titleUpdate, subtitleUpdate } from 'app/redux/actions/hashmapActions';
-
-const TitleTextArea = styled.textarea`
-  width: 100%;
-  margin: 4px 0;
-  box-sizing: border-box;
-  border: none;
-  font-size: 2.5rem;
-  resize: none;
-  font-family: 'Open Sans Bold', sans-serif;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const SubTitleTextArea = styled.textarea`
-  width: 100%;
-  margin: 4px 0;
-  box-sizing: border-box;
-  border: none;
-  font-size: 1rem;
-  resize: none;
-  font-family: 'Open Sans Regular', sans-serif;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
+import { TextArea } from 'app/components/UI/styles/styles';
 
 const header = ({ title, subtitle, handlerTitle, handlerSubtitle }) => {
   return (
-    <header>
-      <TitleTextArea
+    <header className="container mx-auto px-4 md:px-64 md:py-8">
+      <TextArea
+        className="Title"
         rows="2"
         id="title"
         name="title"
@@ -46,7 +19,8 @@ const header = ({ title, subtitle, handlerTitle, handlerSubtitle }) => {
         }}
         value={title}
       />
-      <SubTitleTextArea
+      <TextArea
+        className="Text"
         rows="3"
         type="text"
         id="subtitle"
