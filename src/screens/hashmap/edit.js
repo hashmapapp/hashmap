@@ -3,49 +3,26 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import UINavBar from 'app/components/UI/navbar/navbar';
 import SectionHashmapEdit from 'app/components/hashmap/edit';
-import Router from 'next/router';
 import { bindActionCreators, compose } from 'redux';
 import { hashmapUpdate as handlerHashmapUpdate } from 'app/redux/actions/hashmapActions';
-import { HashmapService } from 'app/services/hashmap.service';
 import withSubscriptionHashmapData from 'app/screens/lib/withSubscriptionHashmapData';
 import withAuthorization from 'app/screens/lib/withAuthorization';
 import { CREATE_HASHMAP } from 'app/screens/lib/constants';
 
-const Edit = ({
-  postsLength,
-  hashmap,
-  posts,
-  hashmapKey,
-  handlerHashmap,
-  hashmapRedux,
-}) => {
+const Edit = ({ hashmap, posts, handlerHashmap, hashmapKey }) => {
   useEffect(() => {
     if (hashmap && posts.length > 0) handlerHashmap({ hashmap, posts });
   }, [hashmap, posts]);
 
-  const callback = () => {
-    Router.push('/');
-  };
-  const handlerSave = evt => {
-    evt.preventDefault();
-    HashmapService.saveHashmap(hashmapRedux, callback);
-  };
-
-  const handlerDelete = evt => {
-    evt.preventDefault();
-    HashmapService.deleteHashmap(hashmapKey, callback);
-  };
-
   return (
     <>
-      <UINavBar />
+      <UINavBar typeNav="edit" hashmapKey={hashmapKey} />
       <SectionHashmapEdit />
     </>
   );
 };
 
 Edit.propTypes = {
-  postsLength: PropTypes.number.isRequired,
   hashmap: PropTypes.shape(),
   posts: PropTypes.arrayOf(
     PropTypes.shape({
@@ -53,20 +30,12 @@ Edit.propTypes = {
       description: PropTypes.string,
     })
   ).isRequired,
-  hashmapKey: PropTypes.string,
   handlerHashmap: PropTypes.func.isRequired,
-  hashmapRedux: PropTypes.shape().isRequired,
 };
 
 Edit.defaultProps = {
   hashmap: undefined,
-  hashmapKey: undefined,
 };
-
-const mapStateToProps = state => ({
-  postsLength: state.hashmap.posts.length,
-  hashmapRedux: state.hashmap,
-});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ handlerHashmap: handlerHashmapUpdate }, dispatch);
@@ -74,7 +43,7 @@ const mapDispatchToProps = dispatch =>
 const enhance = compose(
   Component => withAuthorization(Component, CREATE_HASHMAP),
   withSubscriptionHashmapData,
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(null, mapDispatchToProps)
 );
 
 export default enhance(Edit);

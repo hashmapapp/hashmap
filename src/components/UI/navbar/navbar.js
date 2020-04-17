@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Link from 'next/link';
@@ -9,6 +11,8 @@ import AuthenticationServiceFirebase from 'app/services/authentication.service';
 import { TiThMenu } from 'react-icons/ti';
 import * as ACTIONS_AUTH from 'app/screens/lib/constants';
 import { authorization } from 'app/screens/lib/authorization';
+import { hashmapReset } from 'app/redux/actions/hashmapActions';
+import { HashmapService } from 'app/services/hashmap.service';
 import AccountDropdown from './account-dropdown';
 
 const Avatar = styled.img`
@@ -20,13 +24,28 @@ const DivButton = styled.div`
   cursor: pointer;
 `;
 
-const NavBar = ({ typeNav }) => {
+const NavBar = ({ typeNav, hashmapKey, handlerReset, hashmapRedux }) => {
   const [showNav, setShowNav] = useState(false);
   const user = loadFirebaseAuth().currentUser;
   const signOut = () => {
     const auth = new AuthenticationServiceFirebase();
     auth.signOut(() => Router.push('/login'));
   };
+
+  const callback = () => {
+    Router.push('/');
+  };
+
+  const handlerSave = evt => {
+    evt.preventDefault();
+    HashmapService.saveHashmap(hashmapRedux, callback);
+  };
+
+  const handlerDelete = evt => {
+    evt.preventDefault();
+    HashmapService.deleteHashmap(hashmapKey, callback);
+  };
+
   return (
     <header className="shadow-lg bg-gray-100">
       <div className="container mx-auto sm:px-24 sm:flex sm:justify-between sm:items:center sm:px-4 sm:py-3">
@@ -92,33 +111,44 @@ const NavBar = ({ typeNav }) => {
             showNav ? 'block' : 'hidden'
           }`}
         >
-          {user && authorization(ACTIONS_AUTH.CREATE_HASHMAP_BUTTON) && (
-            <Link href="/edit">
-              <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
+          {user &&
+            authorization(ACTIONS_AUTH.CREATE_HASHMAP_BUTTON) &&
+            typeNav === 'home' && (
+              <button
+                onClick={() => {
+                  handlerReset();
+                  Router.push('/edit');
+                }}
+                type="button"
+                className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2"
+              >
                 Criar
-              </a>
-            </Link>
-          )}
-          {user && (
-            <Link href="/">
+              </button>
+            )}
+          {user && typeNav === 'view' && (
+            <Link href={`/edit?key=${hashmapKey}`}>
               <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
                 Editar
               </a>
             </Link>
           )}
-          {user && (
-            <Link href="/">
-              <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-green-200 sm:mt-0 sm:ml-2">
-                Salvar
-              </a>
-            </Link>
+          {user && typeNav === 'edit' && (
+            <button
+              onClick={handlerSave}
+              type="button"
+              className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-green-200 sm:mt-0 sm:ml-2"
+            >
+              Salvar
+            </button>
           )}
-          {user && (
-            <Link href="/">
-              <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-red-200 sm:mt-0 sm:ml-2">
-                Remover
-              </a>
-            </Link>
+          {user && typeNav === 'edit' && (
+            <button
+              type="button"
+              onClick={handlerDelete}
+              className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-red-200 sm:mt-0 sm:ml-2"
+            >
+              Deletar
+            </button>
           )}
           {user && (
             <Link href="/profile">
@@ -158,10 +188,21 @@ const NavBar = ({ typeNav }) => {
 
 NavBar.propTypes = {
   typeNav: PropTypes.string,
+  hashmapKey: PropTypes.string,
+  hashmapRedux: PropTypes.shape().isRequired,
+  handlerReset: PropTypes.func.isRequired,
 };
 
 NavBar.defaultProps = {
-  typeNav: 'signin',
+  typeNav: 'home',
+  hashmapKey: undefined,
 };
 
-export default NavBar;
+const mapStateToProps = state => ({
+  hashmapRedux: state.hashmap,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ handlerReset: hashmapReset }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
