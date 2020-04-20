@@ -16,11 +16,16 @@ const SectionHashmapView = ({ hashmap, posts }) => {
     urlImage: hashmap.imageUrl,
     textImage: hashmap.textImage,
   };
+  const authorData = {
+    displayName: hashmap.author.displayName,
+    photoUrl: hashmap.author.photoUrl,
+    username: hashmap.author.username,
+  };
   return (
     <>
       <HeaderView data={headerData} />
       <ArticleView data={articleData} />
-      <Footer data={hashmap} />
+      <Footer data={authorData} />
     </>
   );
 };

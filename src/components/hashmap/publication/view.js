@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import LinkPreview from 'app/components/UI/link-preview/link-preview';
-import Star from './components/star';
+// import Star from './components/star';
 
 const Publication = ({ data }) => (
   <article className="rounded-lg overflow-hidden shadow-xl">

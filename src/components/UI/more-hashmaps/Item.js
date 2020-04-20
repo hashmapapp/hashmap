@@ -20,7 +20,7 @@ const Item = () => {
             exercitationem praesentium nihil.
           </p>
         </div>
-        {/* <div className="flex items-center">
+        <div className="flex items-center">
           <img
             className="w-10 h-10 rounded-full mr-4"
             src="https://picsum.photos/600/400"
@@ -30,7 +30,7 @@ const Item = () => {
             <p className="text-gray-900 leading-none">Jonathan Reinink</p>
             <p className="text-gray-600">Aug 18</p>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

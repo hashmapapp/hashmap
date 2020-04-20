@@ -16,7 +16,10 @@ const Edit = ({ hashmap, posts, handlerHashmap, hashmapKey }) => {
 
   return (
     <>
-      <UINavBar typeNav="edit" hashmapKey={hashmapKey} />
+      <UINavBar
+        typeNav={hashmapKey ? 'edit' : 'create'}
+        hashmapKey={hashmapKey}
+      />
       <SectionHashmapEdit />
     </>
   );
@@ -31,10 +34,12 @@ Edit.propTypes = {
     })
   ).isRequired,
   handlerHashmap: PropTypes.func.isRequired,
+  hashmapKey: PropTypes.string,
 };
 
 Edit.defaultProps = {
   hashmap: undefined,
+  hashmapKey: undefined,
 };
 
 const mapDispatchToProps = dispatch =>

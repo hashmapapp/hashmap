@@ -1,28 +1,26 @@
-import React, { useMemo } from 'react';
-import { loadFirebaseAuth } from 'app/lib/db';
+import React from 'react';
+import Item from 'app/components/home/list-hashmaps/list-hashmaps';
 
-const Profile = () => {
-  const user = loadFirebaseAuth().currentUser;
-  const role = useMemo(() => {
-    const roleAux = localStorage.getItem('@hashmap/role');
-    if (roleAux === 'default') return 'Padrão';
-    if (roleAux === 'productor') return 'Produtor';
-    if (roleAux === 'admin') return 'Administrador';
-    return undefined;
-  }, []);
+const Profile = ({ profile, hashmaps }) => {
   return (
-    <div className="container mx-auto sm:py-8">
-      <div className="rounded-lg p-6">
+    <div className="container mx-auto">
+      <div className="rounded-lg">
         <img
-          className="my-8 h-16 w-16 rounded-full mx-auto"
-          src="imgs/avatar/avatar.jpg"
+          className="my-8 h-32 w-32 rounded-full mx-auto"
+          src={profile.photoUrl}
           alt="Perfil"
         />
         <div className="text-center pt-2">
-          <h2 className="text-lg">{user.displayName}</h2>
-          <div className="text-purple-500">{role}</div>
-          <div className="text-gray-600">{user.email}</div>
+          <h2 className="text-lg">{profile.displayName}</h2>
         </div>
+      </div>
+      <div className="m-2 md:m-16 grid grid-cols-6 gap-4 ">
+        {hashmaps.length > 0 &&
+          hashmaps.map(hashmap => (
+            <div key={hashmap.key} className="col-span-6 xl:col-span-3">
+              <Item hashmap={hashmap} />
+            </div>
+          ))}
       </div>
     </div>
   );

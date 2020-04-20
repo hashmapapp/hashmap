@@ -4,12 +4,12 @@ const HASHMAPS_COLLECTION = 'hashmaps';
 const POSTS_COLLECTION = 'posts';
 
 export class HashmapService {
-  static saveHashmap = (hashmap, callback) => {
+  static saveHashmap = (hashmap, callback, userId) => {
     const fb = new HttpWrapperFirebase();
     if (hashmap.key) {
       HashmapService.updateHashmap(fb, hashmap, callback);
     } else {
-      HashmapService.createNewHashmap(fb, hashmap, callback);
+      HashmapService.createNewHashmap(fb, hashmap, callback, userId);
     }
   };
 
@@ -26,6 +26,7 @@ export class HashmapService {
     delete newHashmap.posts;
     delete newHashmap.key;
     delete newHashmap.createIn;
+    newHashmap.author = newHashmap.author.key;
     newHashmap.updateIn = fb.db.FieldValue.serverTimestamp();
     fb.updateItem(HASHMAPS_COLLECTION, hashmap.key, newHashmap).then(() => {
       console.log('Hashmap atualizado com sucesso!');
@@ -58,12 +59,13 @@ export class HashmapService {
 
   // ======================================================================= //
 
-  static createNewHashmap = (fb, hashmap, callback) => {
+  static createNewHashmap = (fb, hashmap, callback, userId) => {
     const newHashmap = { ...hashmap };
     delete newHashmap.posts;
     delete newHashmap.key;
     newHashmap.createIn = fb.db.FieldValue.serverTimestamp();
     newHashmap.updateIn = fb.db.FieldValue.serverTimestamp();
+    newHashmap.author = userId;
     fb.createItem(HASHMAPS_COLLECTION, newHashmap).then(hashmapSucess => {
       console.log('Hashmap criado com sucesso!');
       const { path } = hashmapSucess;
@@ -113,16 +115,16 @@ export class HashmapService {
           title: '',
           url: '',
         },
-        react: {
-          dissatisfied: 0,
-          eyes: 0,
-          heart: 0,
-          hooray: 0,
-          like: 0,
-          rocket: 0,
-          smiley: 0,
-          unlike: 0,
-        },
+        // react: {
+        //   dissatisfied: 0,
+        //   eyes: 0,
+        //   heart: 0,
+        //   hooray: 0,
+        //   like: 0,
+        //   rocket: 0,
+        //   smiley: 0,
+        //   unlike: 0,
+        // },
         status: 'VISIBLE',
       };
     });

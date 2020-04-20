@@ -13,27 +13,38 @@ const withSubscriptionHashmapData = WrappedComponent => {
       this.postsRef = undefined;
     }
 
-    componentDidMount() {
+    async componentDidMount() {
       const { params } = this.props;
       const { key } = params;
       if (key) {
         const FirebaseStore = loadFirebaseStore();
-        this.getHashmap(FirebaseStore, key);
         this.getPosts(FirebaseStore, key);
+        const hashmap = await this.getDocument(FirebaseStore, 'hashmaps', key);
+        const author = await this.getDocument(
+          FirebaseStore,
+          'users',
+          hashmap.author
+        );
+        hashmap.author = author;
+        this.setState({ hashmap });
         this.setState({ key });
       }
     }
 
-    getHashmap = async (fs, key) => {
-      const snapshot = await fs()
-        .collection('hashmaps')
-        .doc(key)
-        .get();
-      const hashmap = { ...snapshot.data(), key };
-      this.setState({ hashmap });
+    getDocument = (fs, collection, key) => {
+      return new Promise((resolve, reject) => {
+        fs()
+          .collection(collection)
+          .doc(key)
+          .get()
+          .then(doc => {
+            resolve({ ...doc.data(), key });
+          })
+          .catch(reject);
+      });
     };
 
-    getPosts = async (fs, key) => {
+    getPosts = (fs, key) => {
       const ref = fs().collection(`hashmaps/${key}/posts`);
       const posts = [];
       this.postsRef = ref

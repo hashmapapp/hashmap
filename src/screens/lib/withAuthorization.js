@@ -12,7 +12,7 @@ const withAuthorization = (WrappedComponent, key) => {
         console.log(
           'Usuário não logado ou não tem permissão para esta acessar esta página'
         );
-        Router.push('/');
+        Router.push('/login');
       }
     }, []);
 

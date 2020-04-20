@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import axios from 'axios';
+// import Iframe from 'react-iframe';
 import {
   titlePostUpdate,
   subtitlePostUpdate,
@@ -13,6 +15,7 @@ import { TextArea } from 'app/components/UI/styles/styles';
 import { MdRemoveCircle } from 'react-icons/md';
 import { IoMdLink } from 'react-icons/io';
 import { FaImage } from 'react-icons/fa';
+import LinkPreview from 'app/components/UI/link-preview/link-preview';
 
 const Publication = ({
   data,
@@ -24,6 +27,34 @@ const Publication = ({
 }) => {
   const [showUploadImage, setShowUploadImage] = useState(false);
   const [showLink, setShowLink] = useState(false);
+  // const [showVideoYT, setShowVideoYT] = useState(false);
+  const [link, setLink] = useState('');
+  const [linksPreview, setLinksPreview] = useState();
+  // const [videoYT, setVideoYT] = useState();
+
+  const handlerLink = evt => {
+    console.log(evt.target.value);
+    const { value } = evt.target;
+    setLink(value);
+    if (value.includes('http://') || value.includes('https://')) {
+      console.log('Buscando...');
+      axios
+        .post('https://us-central1-hashmap-6d623.cloudfunctions.net/scraper', {
+          text: value,
+        })
+        .then(response => {
+          // handle success
+          // console.log(response.data);
+          setLinksPreview(response.data);
+        })
+        .catch(error => {
+          // handle error
+          console.log(error);
+        });
+    } else {
+      console.log(value);
+    }
+  };
 
   return (
     <>
@@ -67,6 +98,20 @@ const Publication = ({
           }}
           value={data.description}
         />
+        {/* <Iframe
+          frameborder="0"
+          allowfullscreen
+          url="https://www.youtube.com/embed/H4tAOexHdR4"
+          width="100%"
+          className="h-56 sm:h-64"
+          id="myId"
+          display="initial"
+          position="relative"
+        /> */}
+        {linksPreview &&
+          linksPreview.map(linkPreview => (
+            <LinkPreview key={linkPreview.url} data={linkPreview} />
+          ))}
         {showUploadImage && (
           <ImageUpload
             onRequestSave={(path, url) => {
@@ -91,10 +136,19 @@ const Publication = ({
             id="link"
             type="text"
             placeholder="https://seulink.com"
+            value={link}
+            onChange={handlerLink}
           />
         )}
         <div className="text-right">
           <div className="inline-flex">
+            {/* <button
+              type="button"
+              className="hover:bg-gray-300 py-2 px-4 rounded-l"
+              onClick={() => setShowLink(!showLink)}
+            >
+              <FaYoutube />
+            </button> */}
             <button
               type="button"
               className="hover:bg-gray-300 py-2 px-4 rounded-l"

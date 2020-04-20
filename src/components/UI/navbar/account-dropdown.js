@@ -37,7 +37,7 @@ const AccountDropdown = ({ user, signOut }) => {
             showNav ? 'block' : 'hidden'
           }`}
         >
-          <Link href="/profile">
+          <Link href="/settings">
             <a className="block px-4 py-2 text-gray-800 hover:bg-gray-600 hover:text-white">
               Meu Perfil
             </a>

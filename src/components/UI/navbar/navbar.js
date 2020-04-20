@@ -38,7 +38,7 @@ const NavBar = ({ typeNav, hashmapKey, handlerReset, hashmapRedux }) => {
 
   const handlerSave = evt => {
     evt.preventDefault();
-    HashmapService.saveHashmap(hashmapRedux, callback);
+    HashmapService.saveHashmap(hashmapRedux, callback, user.uid);
   };
 
   const handlerDelete = evt => {
@@ -125,14 +125,16 @@ const NavBar = ({ typeNav, hashmapKey, handlerReset, hashmapRedux }) => {
                 Criar
               </button>
             )}
-          {user && typeNav === 'view' && (
-            <Link href={`/edit?key=${hashmapKey}`}>
-              <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
-                Editar
-              </a>
-            </Link>
-          )}
-          {user && typeNav === 'edit' && (
+          {user &&
+            typeNav === 'view' &&
+            authorization(ACTIONS_AUTH.EDIT_HASHMAP_BUTTON) && (
+              <Link href={`/edit?key=${hashmapKey}`}>
+                <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
+                  Editar
+                </a>
+              </Link>
+            )}
+          {user && (typeNav === 'edit' || typeNav === 'create') && (
             <button
               onClick={handlerSave}
               type="button"
@@ -151,7 +153,7 @@ const NavBar = ({ typeNav, hashmapKey, handlerReset, hashmapRedux }) => {
             </button>
           )}
           {user && (
-            <Link href="/profile">
+            <Link href="/settings">
               <a className="md:hidden uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
                 Meu Perfil
               </a>

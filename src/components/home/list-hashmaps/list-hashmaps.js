@@ -41,7 +41,7 @@ const Item = ({ hashmap }) => {
           </Link>
           <p className="text-gray-700 text-base">{hashmap.subtitle}</p>
         </div>
-        {/* <div className="flex items-center">
+        {/* <div className="flex items-center mt-4">
           <img
             className="w-10 h-10 rounded-full mr-4"
             src="imgs/avatar/avatar.png"

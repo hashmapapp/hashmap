@@ -18,6 +18,7 @@ class AuthenticationServiceFirebase {
     callbackError = error => console.log(error.code, error.message),
     role = 'default'
   ) {
+    const username = email.split('@')[0];
     this.fb
       .createUserWithEmailAndPassword(email, password)
       .then(resolve => {
@@ -28,6 +29,9 @@ class AuthenticationServiceFirebase {
             this.httpFirebase
               .setNewItem(USERS_COLLECTION, user.uid, {
                 role,
+                displayName,
+                email,
+                username,
               })
               .then(() => {
                 localStorage.setItem('@hashmap/role', role);
