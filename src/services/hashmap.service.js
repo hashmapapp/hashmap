@@ -25,9 +25,9 @@ export class HashmapService {
     const newHashmap = { ...hashmap };
     delete newHashmap.posts;
     delete newHashmap.key;
-    delete newHashmap.createIn;
+    delete newHashmap.createdAt;
     newHashmap.author = newHashmap.author.key;
-    newHashmap.updateIn = fb.db.FieldValue.serverTimestamp();
+    newHashmap.updatedAt = fb.db.FieldValue.serverTimestamp();
     fb.updateItem(HASHMAPS_COLLECTION, hashmap.key, newHashmap).then(() => {
       console.log('Hashmap atualizado com sucesso!');
       HashmapService.updatePosts(fb, hashmap, callback);
@@ -63,8 +63,8 @@ export class HashmapService {
     const newHashmap = { ...hashmap };
     delete newHashmap.posts;
     delete newHashmap.key;
-    newHashmap.createIn = fb.db.FieldValue.serverTimestamp();
-    newHashmap.updateIn = fb.db.FieldValue.serverTimestamp();
+    newHashmap.createdAt = fb.db.FieldValue.serverTimestamp();
+    newHashmap.updatedAt = fb.db.FieldValue.serverTimestamp();
     newHashmap.author = userId;
     fb.createItem(HASHMAPS_COLLECTION, newHashmap).then(hashmapSucess => {
       console.log('Hashmap criado com sucesso!');
@@ -91,10 +91,10 @@ export class HashmapService {
     const items = posts.map(post => {
       const updatePost = { ...post };
       delete updatePost.key;
-      delete updatePost.createIn;
+      delete updatePost.createdAt;
       delete updatePost.react;
       delete updatePost.status;
-      updatePost.updateIn = fb.db.FieldValue.serverTimestamp();
+      updatePost.updatedAt = fb.db.FieldValue.serverTimestamp();
       keys.push(post.key);
       return updatePost;
     });
@@ -108,8 +108,8 @@ export class HashmapService {
       return {
         ...newPost,
         author: '',
-        createIn: fb.db.FieldValue.serverTimestamp(),
-        updateIn: fb.db.FieldValue.serverTimestamp(),
+        createdAt: fb.db.FieldValue.serverTimestamp(),
+        updatedAt: fb.db.FieldValue.serverTimestamp(),
         link: {
           image: '',
           title: '',

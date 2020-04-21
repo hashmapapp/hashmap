@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const Publication = ({ data }) => (
   <article className="rounded-lg overflow-hidden shadow-xl">
-    <div className="pt-6">
+    <div className="pt-4">
       <div className="p-4 font-sans font-bold text-xl">{data.title}</div>
       <div className="flex justify-center">
         {data.imageUrl && (

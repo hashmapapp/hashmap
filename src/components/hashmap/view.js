@@ -8,7 +8,8 @@ const SectionHashmapView = ({ hashmap, posts }) => {
   const headerData = {
     title: hashmap.title,
     subtitle: hashmap.subtitle,
-    // info: hashmap.info,
+    createdAt: hashmap.createdAt.toDate(),
+    updatedAt: hashmap.updatedAt.toDate(),
   };
   const articleData = {
     description: hashmap.description,
@@ -18,8 +19,9 @@ const SectionHashmapView = ({ hashmap, posts }) => {
   };
   const authorData = {
     displayName: hashmap.author.displayName,
-    photoUrl: hashmap.author.photoUrl,
+    photoURL: hashmap.author.photoURL,
     username: hashmap.author.username,
+    bio: hashmap.author.bio,
   };
   return (
     <>

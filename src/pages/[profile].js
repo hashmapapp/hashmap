@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-// import UINavBar from 'app/components/UI/navbar/navbar';
+import UINavBar from 'app/components/UI/navbar/navbar';
 import Profile from 'app/screens/profile/profile';
-import { loadFirebaseStore } from 'app/lib/db';
+import { loadFirebaseStore, loadFirebaseAuth } from 'app/lib/db';
+import { USERS_COLLECTION } from 'app/screens/lib/constants';
 
-const USERS_COLLECTION = 'users';
 const HASHMAPS_COLLECTION = 'hashmaps';
 
 export default function Post() {
+  const current = loadFirebaseAuth().currentUser;
   const router = useRouter();
   const [profile, setProfile] = useState();
   const [hashmaps, setHashmaps] = useState([]);
@@ -62,7 +63,7 @@ export default function Post() {
 
   return (
     <div className="h-screen ">
-      {/* <UINavBar typeNav="signup" /> */}
+      {current && <UINavBar typeNav="profile" />}
       <div className="flex justify-center items-center">
         {profile && <Profile profile={profile} hashmaps={hashmaps} />}
       </div>

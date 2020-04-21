@@ -16,8 +16,8 @@ const SignUp = () => {
   const [passwordConfirmError, setPasswordConfirmError] = useState(false);
 
   const onValidators = evt => {
-    const auth = new AuthenticationServiceFirebase();
     evt.preventDefault();
+    const auth = new AuthenticationServiceFirebase();
     const nameIsValid = name !== '';
     const emailIsValid = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email);
     const passwordIsValid = password !== '' && password.length >= 6;

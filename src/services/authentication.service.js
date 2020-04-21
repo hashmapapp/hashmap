@@ -1,7 +1,6 @@
 import { loadFirebaseAuth, loadFirebaseStore } from 'app/lib/db';
+import { USERS_COLLECTION } from 'app/screens/lib/constants';
 import { HttpWrapperFirebase } from './http-wrapper';
-
-const USERS_COLLECTION = 'users';
 
 class AuthenticationServiceFirebase {
   constructor() {
@@ -84,18 +83,44 @@ class AuthenticationServiceFirebase {
       .catch(error => console.log(error.code, error.message));
   }
 
-  updateProfile(displayName, photoURL, callback) {
+  updateProfile(
+    displayName,
+    photoURL,
+    bio,
+    facebook,
+    instagram,
+    twitter,
+    linkedin,
+    callbackSuccess = () => {
+      console.log('Profile Update');
+    },
+    callbackError = error => console.log(error.code, error.message)
+  ) {
     const user = this.fb.currentUser;
+    const profileData = {};
+    if (displayName) profileData.displayName = displayName;
+    if (photoURL) profileData.photoURL = photoURL;
+    else profileData.photoURL = '';
+
+    const profileCloud = {};
+    if (displayName) profileCloud.displayName = displayName;
+    if (photoURL) profileCloud.photoURL = photoURL;
+    else profileCloud.photoURL = '';
+    if (bio) profileCloud.bio = bio;
+    if (facebook) profileCloud.facebook = facebook;
+    if (instagram) profileCloud.instagram = instagram;
+    if (twitter) profileCloud.twitter = twitter;
+    if (linkedin) profileCloud.linkedin = linkedin;
+
     user
-      .updateProfile({
-        displayName,
-        photoURL,
-      })
+      .updateProfile(profileData)
       .then(() => {
-        console.log('Profile Update');
-        callback();
+        this.httpFirebase
+          .updateItem(USERS_COLLECTION, user.uid, profileCloud)
+          .then(callbackSuccess)
+          .catch(callbackError);
       })
-      .catch(error => console.log(error.code, error.message));
+      .catch(callbackError);
   }
 }
 

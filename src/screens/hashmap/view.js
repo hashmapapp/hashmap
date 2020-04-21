@@ -11,9 +11,7 @@ const View = ({ hashmap, posts, hashmapKey }) => {
   return (
     <>
       <UINavBar typeNav="view" hashmapKey={hashmapKey} />
-      {hashmap && posts.length > 0 && (
-        <SectionHashmapView hashmap={hashmap} posts={posts} />
-      )}
+      {hashmap && <SectionHashmapView hashmap={hashmap} posts={posts} />}
       {/* <UISectionComments /> */}
       <UISectionMoreHashMaps />
       {/* <UIFooter /> */}
