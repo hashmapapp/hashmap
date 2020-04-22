@@ -69,14 +69,15 @@ export class HashmapService {
     fb.createItem(HASHMAPS_COLLECTION, newHashmap).then(hashmapSucess => {
       console.log('Hashmap criado com sucesso!');
       const { path } = hashmapSucess;
-      HashmapService.createPosts(path, fb, hashmap, callback);
+      HashmapService.createPosts(path, fb, hashmap, callback, userId);
     });
   };
 
-  static createPosts = (path, fb, hashmap, callback) => {
+  static createPosts = (path, fb, hashmap, callback, userId) => {
     const dataCreate = HashmapService.getDataCreatePosts(
       fb,
-      hashmap.posts.filter(post => !post.key.startsWith('DELETE'))
+      hashmap.posts.filter(post => !post.key.startsWith('DELETE')),
+      userId
     );
     fb.createItems(`${path}/${POSTS_COLLECTION}`, dataCreate).then(() => {
       console.log('Posts criados com sucesso!');
@@ -101,30 +102,15 @@ export class HashmapService {
     return { keys, items };
   };
 
-  static getDataCreatePosts = (fb, posts) => {
+  static getDataCreatePosts = (fb, posts, userId) => {
     const items = posts.map(post => {
       const newPost = { ...post };
       delete newPost.key;
       return {
         ...newPost,
-        author: '',
+        author: userId,
         createdAt: fb.db.FieldValue.serverTimestamp(),
         updatedAt: fb.db.FieldValue.serverTimestamp(),
-        link: {
-          image: '',
-          title: '',
-          url: '',
-        },
-        // react: {
-        //   dissatisfied: 0,
-        //   eyes: 0,
-        //   heart: 0,
-        //   hooray: 0,
-        //   like: 0,
-        //   rocket: 0,
-        //   smiley: 0,
-        //   unlike: 0,
-        // },
         status: 'VISIBLE',
       };
     });

@@ -11,8 +11,8 @@ const STATE_CLEAN = {
   imagePath: '',
   imageUrl: '',
   textImage: '',
-  createIn: '',
-  updateIn: '',
+  createdAt: '',
+  updatedAt: '',
   posts: [],
 };
 
@@ -28,8 +28,8 @@ const HashmapReducer = (state = STATE_CLEAN, action) => {
         draft.imagePath = action.data.hashmap.imagePath;
         draft.imageUrl = action.data.hashmap.imageUrl;
         draft.textImage = action.data.hashmap.textImage;
-        draft.createIn = action.data.hashmap.createIn;
-        draft.updateIn = action.data.hashmap.updateIn;
+        draft.createdAt = action.data.hashmap.createdAt;
+        draft.updatedAt = action.data.hashmap.updatedAt;
         draft.posts = action.data.posts;
       });
     }
@@ -94,6 +94,15 @@ const HashmapReducer = (state = STATE_CLEAN, action) => {
           const index = draft.posts.indexOf(post);
           draft.posts[index].imagePath = action.path;
           draft.posts[index].imageUrl = action.url;
+        }
+      });
+    }
+    case ACTIONS.HASHMAP_POST_DATA_UPDATE: {
+      return produce(state, draft => {
+        const post = draft.posts.find(p => p.key === action.key);
+        if (post) {
+          const index = draft.posts.indexOf(post);
+          draft.posts[index][action.attribute] = action.data;
         }
       });
     }

@@ -34,12 +34,12 @@ const LinkPreview = ({ data }) => {
         </div>
         <Link href={shortLink}>
           <a target="_blank">
-            <p className="block mt-1 text-xs md:text-lg leading-tight font-semibold text-gray-900 hover:underline">
+            <p className="block mt-1 p-1 text-xs md:text-lg leading-tight font-semibold text-gray-900 hover:underline">
               {data.title}
             </p>
           </a>
         </Link>
-        <p className="md:mt-2 text-xs md:text-base text-gray-600">
+        <p className="md:mt-2 p-1 text-xs md:text-base text-gray-600">
           {data.description}
         </p>
       </div>

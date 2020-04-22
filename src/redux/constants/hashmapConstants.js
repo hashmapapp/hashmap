@@ -9,3 +9,4 @@ export const HASHMAP_DELETE_POST = '@hashmap/post/DELETE';
 export const HASHMAP_POST_TITLE_UPDATE = '@hashmap/post/title/UPDATE';
 export const HASHMAP_POST_SUBTITLE_UPDATE = '@hashmap/post/subtitle/UPDATE';
 export const HASHMAP_POST_IMAGE_UPDATE = '@hashmap/post/image/UPDATE';
+export const HASHMAP_POST_DATA_UPDATE = '@hashmap/post/data/UPDATE';

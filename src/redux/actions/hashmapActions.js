@@ -58,3 +58,10 @@ export const imgPostUpdate = (path, url, key) => ({
   url,
   key,
 });
+
+export const dataPostUpdate = (data, attribute, key) => ({
+  type: ACTIONS.HASHMAP_POST_DATA_UPDATE,
+  data,
+  attribute,
+  key,
+});

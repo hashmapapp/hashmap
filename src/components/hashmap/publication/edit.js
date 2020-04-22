@@ -9,6 +9,7 @@ import {
   subtitlePostUpdate,
   postDelete,
   imgPostUpdate,
+  dataPostUpdate,
 } from 'app/redux/actions/hashmapActions';
 import ImageUpload from 'app/components/UI/image/upload';
 import { TextArea } from 'app/components/UI/styles/styles';
@@ -24,6 +25,7 @@ const Publication = ({
   handlerSubtitle,
   handlerDelete,
   handlerImage,
+  handlerData,
 }) => {
   const [showUploadImage, setShowUploadImage] = useState(false);
   const [showLink, setShowLink] = useState(false);
@@ -33,22 +35,18 @@ const Publication = ({
   // const [videoYT, setVideoYT] = useState();
 
   const handlerLink = evt => {
-    console.log(evt.target.value);
     const { value } = evt.target;
     setLink(value);
     if (value.includes('http://') || value.includes('https://')) {
-      console.log('Buscando...');
       axios
         .post('https://us-central1-hashmap-6d623.cloudfunctions.net/scraper', {
           text: value,
         })
         .then(response => {
-          // handle success
-          // console.log(response.data);
           setLinksPreview(response.data);
+          handlerData(response.data, 'linksToPreview', temporaryKey);
         })
         .catch(error => {
-          // handle error
           console.log(error);
         });
     } else {
@@ -177,6 +175,7 @@ Publication.propTypes = {
   handlerSubtitle: PropTypes.func.isRequired,
   handlerDelete: PropTypes.func.isRequired,
   handlerImage: PropTypes.func.isRequired,
+  handlerData: PropTypes.func.isRequired,
 };
 
 Publication.defaultProps = {
@@ -190,6 +189,7 @@ const mapDispatchToProps = dispatch =>
       handlerSubtitle: subtitlePostUpdate,
       handlerDelete: postDelete,
       handlerImage: imgPostUpdate,
+      handlerData: dataPostUpdate,
     },
     dispatch
   );
