@@ -7,7 +7,10 @@ const LinkPreview = ({ data }) => {
     if (data.url.startsWith('https://' || 'http://')) {
       const urlArray = data.url.split('//');
       return {
-        domain: urlArray[1].split('.')[0],
+        domain:
+          urlArray[1].split('.')[0] !== 'www'
+            ? urlArray[1].split('.')[0]
+            : urlArray[1].split('.')[1],
         shortLink: `//${urlArray[1]}`,
       };
     }
@@ -15,31 +18,34 @@ const LinkPreview = ({ data }) => {
   }, [data]);
 
   return (
-    <div className="flex px-8 md:px-16 py-6" target="_blank">
-      <div className="flex md:flex-shrink-0 items-center border-b border-l border-t border-gray-300 rounded-l-lg">
+    <div
+      className="md:flex px-8 md:px-16 py-2 md:justify-center"
+      target="_blank"
+    >
+      <div className="flex md:flex-shrink-0  items-center justify-center ">
         <Link href={shortLink}>
           <a target="_blank">
             <img
-              className="rounded-lg w-36 md:w-56 p-2"
+              className="rounded-t-lg md:rounded-lg md:p-2"
               src={data.image}
-              alt="Woman paying for a purchase"
-              style={{ borderRadius: '1.5rem' }}
+              alt={data.title}
+              style={{ maxHeight: '10rem' }}
             />
           </a>
         </Link>
       </div>
-      <div className="py-2 md:py-4 pl-2 pr-2 md:pr-0 md:pl-6 border-b border-r border-t border-gray-300 rounded-r-lg">
-        <div className="uppercase tracking-wide text-xs md:text-sm text-indigo-600 font-bold">
+      <div className="bg-gray-100 px-1 py-2 rounded-lg">
+        <div className="px-1 uppercase tracking-wide text-xs text-indigo-600 font-bold">
           {domain}
         </div>
         <Link href={shortLink}>
           <a target="_blank">
-            <p className="block mt-1 p-1 text-xs md:text-lg leading-tight font-semibold text-gray-900 hover:underline">
+            <p className="block mt-1 px-1 text-xs md:text-sm leading-tight font-semibold text-gray-900 hover:underline">
               {data.title}
             </p>
           </a>
         </Link>
-        <p className="md:mt-2 p-1 text-xs md:text-base text-gray-600">
+        <p className="md:mt-1 p-1 text-xs md:text-sm text-gray-600">
           {data.description}
         </p>
       </div>

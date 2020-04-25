@@ -1,38 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
-// import Iframe from 'react-iframe';
+import Iframe from 'react-iframe';
 import {
   titlePostUpdate,
-  subtitlePostUpdate,
   postDelete,
   imgPostUpdate,
   dataPostUpdate,
 } from 'app/redux/actions/hashmapActions';
 import ImageUpload from 'app/components/UI/image/upload';
 import { TextArea } from 'app/components/UI/styles/styles';
-import { MdRemoveCircle } from 'react-icons/md';
+import { MdRemoveCircle, MdTextFields } from 'react-icons/md';
 import { IoMdLink } from 'react-icons/io';
-import { FaImage } from 'react-icons/fa';
+import { FaImage, FaYoutube } from 'react-icons/fa';
 import LinkPreview from 'app/components/UI/link-preview/link-preview';
 
 const Publication = ({
   data,
   temporaryKey,
   handlerTitle,
-  handlerSubtitle,
   handlerDelete,
   handlerImage,
   handlerData,
 }) => {
   const [showUploadImage, setShowUploadImage] = useState(false);
   const [showLink, setShowLink] = useState(false);
-  // const [showVideoYT, setShowVideoYT] = useState(false);
+  const [showVideoYT, setShowVideoYT] = useState(false);
+  const [showTextDescription, setShowTextDescription] = useState(false);
   const [link, setLink] = useState('');
-  const [linksPreview, setLinksPreview] = useState();
-  // const [videoYT, setVideoYT] = useState();
+  const [videoYT, setVideoYT] = useState();
+  const [urlYT, setUrlYT] = useState('');
 
   const handlerLink = evt => {
     const { value } = evt.target;
@@ -43,16 +42,45 @@ const Publication = ({
           text: value,
         })
         .then(response => {
-          setLinksPreview(response.data);
           handlerData(response.data, 'linksToPreview', temporaryKey);
         })
         .catch(error => {
           console.log(error);
         });
+    } else if (value === '') handlerData([], 'linksToPreview', temporaryKey);
+  };
+
+  const handlerVideoYT = evt => {
+    const { value } = evt.target;
+    setUrlYT(value);
+    if (value.includes('youtube') && value.includes('watch')) {
+      let videoId = value.split('v=')[1];
+      const ampersandPosition = videoId.indexOf('&');
+      if (ampersandPosition !== -1) {
+        videoId = videoId.substring(0, ampersandPosition);
+      }
+      const embed = `https://www.youtube.com/embed/${videoId}`;
+      handlerData({ value, embed }, 'videoYT', temporaryKey);
     } else {
-      console.log(value);
+      setVideoYT();
     }
   };
+
+  useMemo(() => {
+    if (data.linksToPreview) {
+      const url = data.linksToPreview.map(item => item.url).join(' ');
+      setLink(url);
+      setShowLink(true);
+    }
+    if (data.videoYT) {
+      setUrlYT(data.videoYT.value);
+      setVideoYT(data.videoYT.embed);
+      setShowVideoYT(true);
+    }
+    if (data.textDescription) {
+      setShowTextDescription(true);
+    }
+  }, [data]);
 
   return (
     <>
@@ -84,32 +112,36 @@ const Publication = ({
             </button>
           </div>
         </header>
-        <TextArea
-          className="Text"
-          rows="10"
-          type="text"
-          id="description"
-          name="description"
-          placeholder="Descrição"
-          onChange={e => {
-            handlerSubtitle(e.target.value, temporaryKey);
-          }}
-          value={data.description}
-        />
-        {/* <Iframe
-          frameborder="0"
-          allowfullscreen
-          url="https://www.youtube.com/embed/H4tAOexHdR4"
-          width="100%"
-          className="h-56 sm:h-64"
-          id="myId"
-          display="initial"
-          position="relative"
-        /> */}
-        {linksPreview &&
-          linksPreview.map(linkPreview => (
+        {showTextDescription && (
+          <TextArea
+            className="Text"
+            rows="10"
+            type="text"
+            id="description"
+            name="description"
+            placeholder="Descrição"
+            onChange={e => {
+              handlerData(e.target.value, 'textDescription', temporaryKey);
+            }}
+            value={data.textDescription || ''}
+          />
+        )}
+        {showLink && (
+          <input
+            className="appearance-none block w-full bg-gray-200 text-gray-700 
+          border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            id="link"
+            type="text"
+            placeholder="https://seulink.com"
+            value={link}
+            onChange={handlerLink}
+          />
+        )}
+        {data.linksToPreview &&
+          data.linksToPreview.map(linkPreview => (
             <LinkPreview key={linkPreview.url} data={linkPreview} />
           ))}
+
         {showUploadImage && (
           <ImageUpload
             onRequestSave={(path, url) => {
@@ -127,26 +159,55 @@ const Publication = ({
             // ]}
           />
         )}
-        {showLink && (
-          <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 
-          border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="link"
-            type="text"
-            placeholder="https://seulink.com"
-            value={link}
-            onChange={handlerLink}
-          />
+        {showVideoYT && (
+          <div className="my-8">
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 
+        border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              id="urlYt"
+              type="text"
+              placeholder="Cole o link aqui"
+              value={urlYT}
+              onChange={handlerVideoYT}
+            />
+            {!videoYT && (
+              <div className="box-border h-20 w-full p-4 border-4 border-gray-400 bg-gray-200">
+                {/* <div className="h-full w-full bg-gray-400" /> */}
+              </div>
+            )}
+            {videoYT && (
+              <Iframe
+                frameborder="0"
+                allowfullscreen
+                url={videoYT}
+                width="100%"
+                className="h-56 sm:h-64"
+                id="myId"
+                display="initial"
+                position="relative"
+              />
+            )}
+          </div>
         )}
-        <div className="text-right">
+        <div className="text-right mt-4">
           <div className="inline-flex">
-            {/* <button
+            <button
               type="button"
               className="hover:bg-gray-300 py-2 px-4 rounded-l"
-              onClick={() => setShowLink(!showLink)}
+              onClick={() => {
+                handlerData('', 'textDescription', temporaryKey);
+                setShowTextDescription(!showTextDescription);
+              }}
+            >
+              <MdTextFields />
+            </button>
+            <button
+              type="button"
+              className="hover:bg-gray-300 py-2 px-4 rounded-l"
+              onClick={() => setShowVideoYT(!showVideoYT)}
             >
               <FaYoutube />
-            </button> */}
+            </button>
             <button
               type="button"
               className="hover:bg-gray-300 py-2 px-4 rounded-l"
@@ -172,7 +233,6 @@ Publication.propTypes = {
   data: PropTypes.shape(),
   temporaryKey: PropTypes.string.isRequired,
   handlerTitle: PropTypes.func.isRequired,
-  handlerSubtitle: PropTypes.func.isRequired,
   handlerDelete: PropTypes.func.isRequired,
   handlerImage: PropTypes.func.isRequired,
   handlerData: PropTypes.func.isRequired,
@@ -186,7 +246,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       handlerTitle: titlePostUpdate,
-      handlerSubtitle: subtitlePostUpdate,
       handlerDelete: postDelete,
       handlerImage: imgPostUpdate,
       handlerData: dataPostUpdate,

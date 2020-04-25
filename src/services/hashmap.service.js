@@ -7,7 +7,7 @@ export class HashmapService {
   static saveHashmap = (hashmap, callback, userId) => {
     const fb = new HttpWrapperFirebase();
     if (hashmap.key) {
-      HashmapService.updateHashmap(fb, hashmap, callback);
+      HashmapService.updateHashmap(fb, hashmap, callback, userId);
     } else {
       HashmapService.createNewHashmap(fb, hashmap, callback, userId);
     }
@@ -21,7 +21,7 @@ export class HashmapService {
     });
   };
 
-  static updateHashmap = (fb, hashmap, callback) => {
+  static updateHashmap = (fb, hashmap, callback, userId) => {
     const newHashmap = { ...hashmap };
     delete newHashmap.posts;
     delete newHashmap.key;
@@ -30,11 +30,11 @@ export class HashmapService {
     newHashmap.updatedAt = fb.db.FieldValue.serverTimestamp();
     fb.updateItem(HASHMAPS_COLLECTION, hashmap.key, newHashmap).then(() => {
       console.log('Hashmap atualizado com sucesso!');
-      HashmapService.updatePosts(fb, hashmap, callback);
+      HashmapService.updatePosts(fb, hashmap, callback, userId);
     });
   };
 
-  static updatePosts = (fb, hashmap, callback) => {
+  static updatePosts = (fb, hashmap, callback, userId) => {
     const postsToCreate = [];
     const postsToUpdate = [];
     const postsToDelete = [];
@@ -44,8 +44,16 @@ export class HashmapService {
       else postsToUpdate.push(post);
     });
     const dataUpdate = HashmapService.getDataUpdatePosts(fb, postsToUpdate);
-    const dataCreate = HashmapService.getDataCreatePosts(fb, postsToCreate);
+    const dataCreate = HashmapService.getDataCreatePosts(
+      fb,
+      postsToCreate,
+      userId
+    );
     const dataDelete = HashmapService.getDataDeletePosts(postsToDelete);
+    console.log(dataUpdate);
+    console.log(dataCreate);
+    console.log(dataDelete);
+
     fb.updateItems(
       `${HASHMAPS_COLLECTION}/${hashmap.key}/${POSTS_COLLECTION}`,
       dataUpdate,
