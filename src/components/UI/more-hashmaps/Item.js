@@ -2,14 +2,14 @@ import React from 'react';
 
 const Item = () => {
   return (
-    <div className="bg-gray-100 max-w-sm w-full lg:max-w-auto rounded-b-lg">
+    <div className="bg-gray-200 max-w-sm w-full lg:max-w-auto rounded-b-lg">
       <img
         className="w-full h-48"
         src="https://picsum.photos/600/400"
         alt="Woman paying for a purchase"
       />
 
-      <div className="bg-gray-100 p-4 flex flex-col justify-between leading-normal rounded-b-lg">
+      <div className="bg-gray-200 p-4 flex flex-col justify-between leading-normal rounded-b-lg">
         <div className="mb-8">
           <div className="text-gray-900 font-bold text-xl">
             Can coffee make you a better developer?

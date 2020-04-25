@@ -14,7 +14,7 @@ const header = ({ data }) => {
   }, [data]);
 
   return (
-    <header style={{ backgroundColor: '#fafafa' }}>
+    <header className="bg-gray-100">
       <div className="container mx-auto px-4 md:px-64 md:py-8">
         <h1 className="font-sans text-2xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-black">
           {data.title}
