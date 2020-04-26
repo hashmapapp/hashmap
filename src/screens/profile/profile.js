@@ -10,6 +10,7 @@ import {
   FaGithubAlt,
   FaMediumM,
 } from 'react-icons/fa';
+import CircleLoader from 'app/components/UI/loader/circle';
 
 const Profile = ({ profile, hashmaps }) => {
   const [socialLinks, setSocialLinks] = useState({});
@@ -116,14 +117,40 @@ const Profile = ({ profile, hashmaps }) => {
           </div>
         </div>
       </div>
-      <div className="m-1 md:m-16 grid grid-cols-6 gap-4 ">
-        {hashmaps.length > 0 &&
-          hashmaps.map(hashmap => (
-            <div key={hashmap.key} className="col-span-6 xl:col-span-3">
-              <Item hashmap={hashmap} />
-            </div>
-          ))}
-      </div>
+
+      {!hashmaps && (
+        <div className="w-full justify-center h-64 flex items-end">
+          <CircleLoader className="flex-1" />
+        </div>
+      )}
+
+      {hashmaps &&
+        (hashmaps.length > 0 ? (
+          <div className="m-1 md:m-16 grid grid-cols-6 gap-4 ">
+            {hashmaps.map(hashmap => (
+              <div key={hashmap.key} className="col-span-6 xl:col-span-3">
+                <Item hashmap={hashmap} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="md:px-64 text-center">
+            <img
+              className="md:hidden px-24 pt-8"
+              src="imgs/icons/empty.svg"
+              alt="authentication"
+            />
+            <img
+              className="hidden md:block px-24 pt-16 w-full"
+              src="imgs/icons/empty.svg"
+              alt="authentication"
+              style={{ height: 300 }}
+            />
+            <p className="pt-4 md:pb-12 md:pt-12 font-sans text-lg text-gray-600 text-center">
+              Hashmaps incríveis em breve!
+            </p>
+          </div>
+        ))}
     </div>
   );
 };

@@ -24,7 +24,13 @@ const DivButton = styled.div`
   cursor: pointer;
 `;
 
-const NavBar = ({ typeNav, hashmapKey, handlerReset, hashmapRedux }) => {
+const NavBar = ({
+  typeNav,
+  hashmapKey,
+  handlerReset,
+  hashmapRedux,
+  authorKey,
+}) => {
   const [showNav, setShowNav] = useState(false);
   const user = loadFirebaseAuth().currentUser;
   const signOut = () => {
@@ -53,11 +59,15 @@ const NavBar = ({ typeNav, hashmapKey, handlerReset, hashmapRedux }) => {
           <div>
             <Link href="/">
               <a>
-                <img
-                  src="/imgs/logo/default-logo.png"
-                  className="h-8"
-                  alt="logo"
-                />
+                {typeNav === 'home' || typeNav === 'profile' ? (
+                  <img
+                    src="/imgs/logo/hashmapname-t.png"
+                    className="h-8"
+                    alt="logo"
+                  />
+                ) : (
+                  <img src="/imgs/logo/H.png" className="h-8" alt="logo" />
+                )}
               </a>
             </Link>
           </div>
@@ -113,7 +123,7 @@ const NavBar = ({ typeNav, hashmapKey, handlerReset, hashmapRedux }) => {
         >
           {user &&
             authorization(ACTIONS_AUTH.CREATE_HASHMAP_BUTTON) &&
-            typeNav === 'home' && (
+            (typeNav === 'home' || typeNav === 'profile') && (
               <button
                 onClick={() => {
                   handlerReset();
@@ -127,7 +137,9 @@ const NavBar = ({ typeNav, hashmapKey, handlerReset, hashmapRedux }) => {
             )}
           {user &&
             typeNav === 'view' &&
-            authorization(ACTIONS_AUTH.EDIT_HASHMAP_BUTTON) && (
+            authorization(ACTIONS_AUTH.EDIT_HASHMAP_BUTTON) &&
+            authorKey &&
+            authorKey === user.uid && (
               <Link href={`/edit?key=${hashmapKey}`}>
                 <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
                   Editar

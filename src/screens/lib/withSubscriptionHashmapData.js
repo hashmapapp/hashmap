@@ -68,7 +68,12 @@ const withSubscriptionHashmapData = WrappedComponent => {
     render() {
       const { hashmap, posts, key } = this.state;
       return (
-        <WrappedComponent hashmap={hashmap} posts={posts} hashmapKey={key} />
+        <WrappedComponent
+          hashmap={hashmap}
+          posts={posts}
+          hashmapKey={key}
+          authorId={hashmap ? hashmap.author : undefined}
+        />
       );
     }
   }

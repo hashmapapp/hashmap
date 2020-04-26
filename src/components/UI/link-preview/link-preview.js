@@ -6,15 +6,19 @@ const LinkPreview = ({ data }) => {
   const { domain, shortLink } = useMemo(() => {
     if (data.url.startsWith('https://' || 'http://')) {
       const urlArray = data.url.split('//');
-      return {
-        domain:
-          urlArray[1].split('.')[0] !== 'www'
-            ? urlArray[1].split('.')[0]
-            : urlArray[1].split('.')[1],
-        shortLink: `//${urlArray[1]}`,
-      };
+      const s1 = urlArray[1].split('.')[0];
+      const s2 = urlArray[1].split('.')[1];
+      let nameDomain = s1;
+      if (s1 === 'www' || s1 === 'pt') {
+        nameDomain = s2;
+      }
+      if (urlArray[1].split('.')[0] !== 'www')
+        return {
+          domain: nameDomain,
+          shortLink: `//${urlArray[1]}`,
+        };
     }
-    return { domain: 'Link', shortLink: '' };
+    return { domain: '', shortLink: '' };
   }, [data]);
 
   return (

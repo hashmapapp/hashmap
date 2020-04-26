@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import UINavBar from 'app/components/UI/navbar/navbar';
 import HomeComponent from 'app/components/home/home';
 import { loadFirebaseStore } from 'app/lib/db';
+import HourglasLoader from 'app/components/UI/loader/hourglass';
 
 class home extends Component {
   state = {
@@ -42,7 +43,13 @@ class home extends Component {
     return (
       <>
         <UINavBar typeNav="home" />
-        <HomeComponent hashmaps={hashmaps} />
+        {hashmaps.length === 0 ? (
+          <div className="w-full justify-center h-64 flex items-end">
+            <HourglasLoader className="flex-1" />
+          </div>
+        ) : (
+          <HomeComponent hashmaps={hashmaps} />
+        )}
       </>
     );
   }

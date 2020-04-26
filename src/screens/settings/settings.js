@@ -175,14 +175,16 @@ const Settings = () => {
                   {userFirestore.displayName}
                 </h2>
                 <h2 className="text-sm text-gray-600">
-                  @{userFirestore.username}
+                  {`@${userFirestore.username}`}
                 </h2>
                 <h2 className="mb-4 text-sm text-gray-600">
                   {userFirestore.email}
                 </h2>
-                <p className="italic font-sans text-base text-gray-700 p-4 ">
-                  &quot;{userFirestore.bio}&quot;
-                </p>
+                {userFirestore.bio && (
+                  <p className="italic font-sans text-base text-gray-700 p-4 ">
+                    &quot;{userFirestore.bio}&quot;
+                  </p>
+                )}
                 <div>
                   {userFirestore.instagram && (
                     <Link href={`${socialLinks.instagram}`}>
