@@ -1,9 +1,4 @@
 import React from 'react';
+import ScreenHome from 'app/screens/home/home';
 
-export default () => {
-  return (
-    <>
-      <p>Hello, HashMap!</p>
-    </>
-  );
-};
+export default () => <ScreenHome />;
