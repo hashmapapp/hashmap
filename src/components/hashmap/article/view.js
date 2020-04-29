@@ -13,10 +13,16 @@ const article = ({ data }) => {
   return (
     <>
       <article className="bg-gray-100">
-        <div className="container mx-auto py-4">
-          <div className="px-4 md:px-24 flex justify-center">
+        <div className="container mx-auto pt-4 pb-2">
+          <div className="px-2 md:px-24 flex justify-center">
             <img
-              className="shadow"
+              className="md:hidden shadow"
+              src={data.urlImage}
+              alt={data.textImage}
+              style={{ maxHeight: '12rem' }}
+            />
+            <img
+              className="hidden md:block shadow"
               src={data.urlImage}
               alt={data.textImage}
               style={{ maxHeight: '32rem' }}
@@ -28,11 +34,11 @@ const article = ({ data }) => {
             )}
           </div>
           {pDescription.length > 0 && (
-            <div className="py-8">
+            <div className="py-8 px-10 md:px-64">
               {pDescription.map((p, index) => (
                 <p
                   key={index.toString()}
-                  className="font-sans text-base md:text-lg text-gray-800 py-2 px-4 md:px-64"
+                  className="font-sans text-lg md:text-xl text-gray-800 py-2"
                 >
                   {p}
                 </p>
@@ -42,7 +48,7 @@ const article = ({ data }) => {
         </div>
       </article>
       <article className="bg-gray-100">
-        <div className="container mx-auto px-4 md:px-64 py-8">
+        <div className="container mx-auto md:px-64 py-2">
           {data.posts.map(post => (
             <PublicationView key={post.key} data={post} />
           ))}

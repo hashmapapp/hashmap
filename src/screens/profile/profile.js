@@ -16,7 +16,13 @@ const Profile = ({ profile, hashmaps }) => {
   const [socialLinks, setSocialLinks] = useState({});
 
   const replaceLink = link => {
-    return link ? `//${link.split('//')[1]}` : undefined;
+    if (link) {
+      if (link.startsWith('http://') || link.startsWith('https://')) {
+        return `//${link.split('//')[1]}`;
+      }
+      return `//${link}`;
+    }
+    return link;
   };
 
   useMemo(() => {
