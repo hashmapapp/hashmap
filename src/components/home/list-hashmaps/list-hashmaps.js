@@ -16,9 +16,9 @@ const ImageWrapper = styled.div`
 
 const Item = ({ hashmap }) => {
   return (
-    <Wrapper className="md:max-w-sm w-full md:max-w-full md:flex h-full">
+    <Wrapper className="md:max-w-sm w-full md:max-w-full md:flex h-full px-4 py-2">
       <ImageWrapper
-        className="h-48 md:h-auto md:w-64 flex-none bg-cover rounded-t-md md:rounded-l-lg 
+        className="h-48 md:h-auto md:w-64 flex-none bg-cover rounded-t-lg md:rounded-l-lg 
         text-center overflow-hidden md:w-56"
         style={{ backgroundImage: `url('${hashmap.imageUrl}')` }}
         title={hashmap.textImage}
@@ -28,18 +28,20 @@ const Item = ({ hashmap }) => {
       />
 
       <div
-        className="md:rounded-r-lg p-4 flex flex-col justify-between 
+        className="md:rounded-r-lg p-4 flex flex-col justify-between rounded-b-lg
       leading-normal shadow-xl w-full bg-white"
       >
         <div className="">
           <Link href={`/view?key=${hashmap.key}`}>
             <a>
-              <div className="text-gray-900 font-bold text-xl mb-2">
+              <div className="leading-snug font-medium text-gray-900 text-xl mb-2">
                 {hashmap.title}
               </div>
             </a>
           </Link>
-          <p className="text-gray-700 text-base">{hashmap.subtitle}</p>
+          <p className="leading-snug font-light text-gray-700 text-base">
+            {hashmap.subtitle}
+          </p>
         </div>
         <div className="flex items-center mt-4">
           <img
