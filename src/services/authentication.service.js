@@ -99,13 +99,14 @@ class AuthenticationServiceFirebase {
     const user = this.fb.currentUser;
     const profileData = {};
     if (displayName) profileData.displayName = displayName;
-    if (photoURL) profileData.photoURL = photoURL;
+    if (photoURL.path && photoURL.url) profileData.photoURL = photoURL.url;
     else profileData.photoURL = '';
 
     const profileCloud = {};
     if (displayName) profileCloud.displayName = displayName;
-    if (photoURL) profileCloud.photoURL = photoURL;
-    else profileCloud.photoURL = '';
+    if (photoURL.path && photoURL.url)
+      profileCloud.photoURL = { path: photoURL.path, url: photoURL.url };
+    else profileCloud.photoURL = {};
     if (bio) profileCloud.bio = bio;
     if (facebook) profileCloud.facebook = facebook;
     if (instagram) profileCloud.instagram = instagram;

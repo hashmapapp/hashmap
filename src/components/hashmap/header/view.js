@@ -6,7 +6,7 @@ const header = ({ data }) => {
   const [info, setInfo] = useState('');
   useMemo(() => {
     moment.locale('pt-br');
-    if (data.createdAt !== data.updatedAt) {
+    if (data.createdAt < data.updatedAt) {
       setInfo(`Atualizada em ${moment(data.updatedAt).format('LL')}`);
     } else {
       setInfo(`${moment(data.createdAt).format('LL')}`);

@@ -73,14 +73,14 @@ const ProfileImageUpload = ({
           console.log(url);
           // fetch the actual image using the download URL
           // and provide the blob to FilePond using the load callback
-          // const xhr = new XMLHttpRequest();
-          // xhr.responseType = 'blob';
-          // xhr.onload = () => {
-          //   const blob = xhr.response;
-          //   load(blob);
-          // };
-          // xhr.open('GET', url);
-          // xhr.send();
+          const xhr = new XMLHttpRequest();
+          xhr.responseType = 'blob';
+          xhr.onload = () => {
+            const blob = xhr.response;
+            load(blob);
+          };
+          xhr.open('GET', url);
+          xhr.send();
         })
         .catch(err => {
           error(err.message);

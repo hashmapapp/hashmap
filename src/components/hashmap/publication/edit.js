@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -16,6 +16,12 @@ import { MdRemoveCircle, MdTextFields } from 'react-icons/md';
 import { IoMdLink } from 'react-icons/io';
 import { FaImage, FaYoutube } from 'react-icons/fa';
 import LinkPreview from 'app/components/UI/link-preview/link-preview';
+import styled from 'styled-components';
+
+const AnimationLoader = styled.div`
+  -webkit-animation: ${prop => prop.play && 'spin 1s linear infinite'};
+  animation: ${prop => prop.play && 'spin 1s linear infinite'};
+`;
 
 const Publication = ({
   data,
@@ -29,23 +35,28 @@ const Publication = ({
   const [showLink, setShowLink] = useState(false);
   const [showVideoYT, setShowVideoYT] = useState(false);
   const [showTextDescription, setShowTextDescription] = useState(false);
+  const [loaderLink, setLoaderLink] = useState(false);
   const [link, setLink] = useState('');
   const [videoYT, setVideoYT] = useState();
   const [urlYT, setUrlYT] = useState('');
+  const [defaultFiles, setDefaultFiles] = useState([]);
 
   const handlerLink = evt => {
     const { value } = evt.target;
     setLink(value);
     if (value.includes('http://') || value.includes('https://')) {
+      setLoaderLink(true);
       axios
         .post('https://us-central1-hashmap-6d623.cloudfunctions.net/scraper', {
           text: value,
         })
         .then(response => {
           handlerData(response.data, 'linksToPreview', temporaryKey);
+          setLoaderLink(false);
         })
         .catch(error => {
           console.log(error);
+          setLoaderLink(false);
         });
     } else if (value === '') handlerData([], 'linksToPreview', temporaryKey);
   };
@@ -66,8 +77,8 @@ const Publication = ({
     }
   };
 
-  useMemo(() => {
-    if (data.linksToPreview) {
+  useEffect(() => {
+    if (data.linksToPreview && data.linksToPreview.length) {
       const url = data.linksToPreview.map(item => item.url).join(' ');
       setLink(url);
       setShowLink(true);
@@ -80,27 +91,38 @@ const Publication = ({
     if (data.textDescription) {
       setShowTextDescription(true);
     }
-  }, [data]);
+    if (data.imagePath && data.imagePath !== '') {
+      setDefaultFiles([
+        {
+          source: data.imagePath,
+          options: {
+            type: 'local',
+          },
+        },
+      ]);
+      setShowUploadImage(true);
+    }
+  }, []);
 
   return (
     <>
-      <div className="p-2 m-4 shadow">
+      <div className="p-2 my-4 shadow">
         <header className="grid grid-cols-6 gap-4 flex">
-          <div className="col-span-4 md:col-span-5 flex-shrink h-12">
+          <div className="col-span-5 md:col-span-5 flex-shrink h-12">
             <TextArea
               className="Text"
               rows="1"
               type="text"
               id="title"
               name="title"
-              placeholder="Título"
+              placeholder="Nome da Seção"
               onChange={e => {
                 handlerTitle(e.target.value, temporaryKey);
               }}
               value={data.title}
             />
           </div>
-          <div className="col-span-2 md:col-span-1 text-right flex-shrink">
+          <div className="col-span-1 md:col-span-1 text-right flex-shrink">
             <button
               type="button"
               className="hover:bg-red-300 py-2 px-4 rounded"
@@ -112,6 +134,21 @@ const Publication = ({
             </button>
           </div>
         </header>
+        {showUploadImage && (
+          <div className="pt-4">
+            <ImageUpload
+              onRequestSave={(path, url) => {
+                handlerImage(path, url, temporaryKey);
+              }}
+              onRequestClear={() => {
+                setDefaultFiles([]);
+                handlerImage('', '', temporaryKey);
+              }}
+              storageName="posts"
+              defaultFiles={defaultFiles}
+            />
+          </div>
+        )}
         {showTextDescription && (
           <TextArea
             className="Text"
@@ -129,7 +166,7 @@ const Publication = ({
         {showLink && (
           <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 
-          border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+          border rounded py-3 px-4 my-3 leading-tight focus:outline-none focus:bg-white"
             id="link"
             type="text"
             placeholder="https://seulink.com"
@@ -142,25 +179,8 @@ const Publication = ({
             <LinkPreview key={linkPreview.url} data={linkPreview} />
           ))}
 
-        {showUploadImage && (
-          <ImageUpload
-            onRequestSave={(path, url) => {
-              handlerImage(path, url, temporaryKey);
-            }}
-            onRequestClear={() => console.log('Clear')}
-            storageName="posts"
-            // defaultFiles={[
-            //   {
-            //     source: 'hashmaps/f0xudwabp',
-            //     options: {
-            //       type: 'local',
-            //     },
-            //   },
-            // ]}
-          />
-        )}
         {showVideoYT && (
-          <div className="my-8">
+          <div className="my-4">
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 
         border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
@@ -170,11 +190,6 @@ const Publication = ({
               value={urlYT}
               onChange={handlerVideoYT}
             />
-            {!videoYT && (
-              <div className="box-border h-20 w-full p-4 border-4 border-gray-400 bg-gray-200">
-                {/* <div className="h-full w-full bg-gray-400" /> */}
-              </div>
-            )}
             {videoYT && (
               <Iframe
                 frameborder="0"
@@ -193,7 +208,18 @@ const Publication = ({
           <div className="inline-flex">
             <button
               type="button"
-              className="hover:bg-gray-300 py-2 px-4 rounded-l"
+              className={`${showUploadImage &&
+                'bg-gray-300'} hover:bg-gray-400 py-2 px-4 rounded-l`}
+              onClick={() => {
+                setShowUploadImage(!showUploadImage);
+              }}
+            >
+              <FaImage />
+            </button>
+            <button
+              type="button"
+              className={`${showTextDescription &&
+                'bg-gray-300'} hover:bg-gray-400 py-2 px-4`}
               onClick={() => {
                 handlerData('', 'textDescription', temporaryKey);
                 setShowTextDescription(!showTextDescription);
@@ -203,24 +229,29 @@ const Publication = ({
             </button>
             <button
               type="button"
-              className="hover:bg-gray-300 py-2 px-4 rounded-l"
-              onClick={() => setShowVideoYT(!showVideoYT)}
+              className={`${showLink &&
+                'bg-gray-300'} hover:bg-gray-400 py-2 px-4`}
+              onClick={() => {
+                handlerData([], 'linksToPreview', temporaryKey);
+                setLink('');
+                setShowLink(!showLink);
+              }}
+            >
+              <AnimationLoader play={loaderLink}>
+                <IoMdLink />
+              </AnimationLoader>
+            </button>
+            <button
+              type="button"
+              className={`${showVideoYT &&
+                'bg-gray-300'} hover:bg-gray-400 py-2 px-4 rounded-r`}
+              onClick={() => {
+                setUrlYT('');
+                handlerData({}, 'videoYT', temporaryKey);
+                setShowVideoYT(!showVideoYT);
+              }}
             >
               <FaYoutube />
-            </button>
-            <button
-              type="button"
-              className="hover:bg-gray-300 py-2 px-4 rounded-l"
-              onClick={() => setShowLink(!showLink)}
-            >
-              <IoMdLink />
-            </button>
-            <button
-              type="button"
-              className="hover:bg-gray-300 py-2 px-4 rounded-r"
-              onClick={() => setShowUploadImage(!showUploadImage)}
-            >
-              <FaImage />
             </button>
           </div>
         </div>

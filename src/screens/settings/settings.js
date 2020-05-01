@@ -24,6 +24,20 @@ const Settings = () => {
   const [role, setRole] = useState();
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [defaultFiles, setDefaultFiles] = useState([]);
+
+  useMemo(() => {
+    if (edit && userFirestore.photoURL && userFirestore.photoURL.path) {
+      setDefaultFiles([
+        {
+          source: userFirestore.photoURL.path,
+          options: {
+            type: 'local',
+          },
+        },
+      ]);
+    }
+  }, [edit]);
 
   const handlerChangeForm = (attribute, value) => {
     const dataCurrent = { ...userFirestore };
@@ -45,6 +59,8 @@ const Settings = () => {
   const onSubmit = () => {
     const auth = new AuthenticationServiceFirebase();
     setLoading(true);
+    console.log(userFirestore.photoURL);
+
     auth.updateProfile(
       userFirestore.displayName,
       userFirestore.photoURL,
@@ -117,10 +133,11 @@ const Settings = () => {
         <div className="container mx-auto md:px-64">
           <div className="rounded-lg">
             {!edit &&
-              (userFirestore.photoURL ? (
+              userFirestore.photoURL &&
+              (userFirestore.photoURL.url ? (
                 <img
                   className="my-8 h-32 w-32 rounded-full mx-auto"
-                  src={userFirestore.photoURL}
+                  src={userFirestore.photoURL.url}
                   alt="Perfil"
                 />
               ) : (
@@ -135,11 +152,12 @@ const Settings = () => {
                 <ProfileImageUpload
                   storageName="users"
                   onRequestSave={(path, url) => {
-                    handlerChangeForm('photoURL', url);
+                    handlerChangeForm('photoURL', { path, url });
                   }}
                   onRequestClear={() => {
-                    handlerChangeForm('photoURL', undefined);
+                    handlerChangeForm('photoURL', {});
                   }}
+                  defaultFiles={defaultFiles}
                 />
               </div>
             )}

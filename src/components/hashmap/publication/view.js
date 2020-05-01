@@ -19,7 +19,7 @@ const Publication = ({ data }) => {
             {data.title}
           </div>
         )}
-        <div className="flex justify-center">
+        <div className="flex justify-center pb-2">
           {data.imageUrl && (
             <>
               <img
@@ -45,6 +45,10 @@ const Publication = ({ data }) => {
             {p}
           </p>
         ))}
+        {data.linksToPreview &&
+          data.linksToPreview.map(link => (
+            <LinkPreview key={link.url} data={link} />
+          ))}
         {data.videoYT && (
           <>
             <div className="hidden sm:block" style={{ height: 480 }}>
@@ -73,14 +77,7 @@ const Publication = ({ data }) => {
             </div>
           </>
         )}
-        {data.linksToPreview &&
-          data.linksToPreview.map(link => (
-            <LinkPreview key={link.url} data={link} />
-          ))}
       </div>
-      {/* <div className="p-4 flex justify-end md:justify-start">
-        <Star rating={0} />
-      </div> */}
     </article>
   );
 };
