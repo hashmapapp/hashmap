@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -14,6 +14,7 @@ import { authorization } from 'app/screens/lib/authorization';
 import { hashmapReset } from 'app/redux/actions/hashmapActions';
 import { HashmapService } from 'app/services/hashmap.service';
 import AccountDropdown from './account-dropdown';
+import { UserService } from 'app/services/user.service';
 
 const Avatar = styled.img`
   max-width: 100%;
@@ -32,14 +33,16 @@ const NavBar = ({
   authorKey,
 }) => {
   const [showNav, setShowNav] = useState(false);
+  const [userData, setUserData] = useState();
   const user = loadFirebaseAuth().currentUser;
+
   const signOut = () => {
     const auth = new AuthenticationServiceFirebase();
     auth.signOut(() => Router.push('/login'));
   };
 
   const callback = () => {
-    Router.push('/');
+    Router.push(`/${userData.username}`);
   };
 
   const handlerSave = evt => {
@@ -51,6 +54,23 @@ const NavBar = ({
     evt.preventDefault();
     HashmapService.deleteHashmap(hashmapKey, callback);
   };
+
+  useEffect(() => {
+    async function getUserByUid(uid) {
+      const userService = new UserService();
+      try {
+        const data = await userService.getUserById(uid);
+        setUserData(data);
+        // console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if (user && user.uid && (typeNav === 'edit' || typeNav === 'create')) {
+      getUserByUid(user.uid);
+    }
+  }, [user]);
 
   return (
     <header className="shadow-lg bg-gray-100">

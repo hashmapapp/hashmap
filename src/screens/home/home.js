@@ -3,6 +3,7 @@ import UINavBar from 'app/components/UI/navbar/navbar';
 import HomeComponent from 'app/components/home/home';
 import { loadFirebaseStore } from 'app/lib/db';
 import HourglasLoader from 'app/components/UI/loader/hourglass';
+import { HOME_HASHMAP_COLLECTION } from '../lib/constants';
 
 class home extends Component {
   state = {
@@ -16,7 +17,9 @@ class home extends Component {
 
   componentDidMount() {
     const FirebaseStore = loadFirebaseStore();
-    this.hashmapsRef = FirebaseStore().collection('hashmaps');
+    this.hashmapsRef = FirebaseStore()
+      .collection(HOME_HASHMAP_COLLECTION)
+      .orderBy('createdAt', 'desc');
     this.unsubscribe = this.hashmapsRef.onSnapshot(this.onCollectionUpdate);
   }
 

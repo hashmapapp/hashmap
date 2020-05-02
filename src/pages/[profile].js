@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import UINavBar from 'app/components/UI/navbar/navbar';
 import Profile from 'app/screens/profile/profile';
-import { loadFirebaseStore, loadFirebaseAuth } from 'app/lib/db';
+import { loadFirebaseStore } from 'app/lib/db';
 import { USERS_COLLECTION } from 'app/screens/lib/constants';
 import HourglasLoader from 'app/components/UI/loader/hourglass';
+import DynamicHead from 'app/components/UI/head/dynamic-head';
 
 const HASHMAPS_COLLECTION = 'hashmaps';
 
 export default function Post() {
-  const current = loadFirebaseAuth().currentUser;
+  // const current = loadFirebaseAuth().currentUser;
   const router = useRouter();
   const [profile, setProfile] = useState();
   const [hashmaps, setHashmaps] = useState();
@@ -68,6 +69,15 @@ export default function Post() {
 
   return (
     <>
+      {profile ? (
+        <DynamicHead
+          titleText={`${profile.displayName} - Hashmap`}
+          description={profile.bio}
+          imageUrl={profile.imageUrl}
+        />
+      ) : (
+        <DynamicHead />
+      )}
       {!notFoundUser ? (
         <div className="h-screen">
           <UINavBar typeNav="profile" />

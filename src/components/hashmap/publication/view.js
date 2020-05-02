@@ -72,7 +72,7 @@ const Publication = ({ data }) => {
                 id="myId"
                 display="initial"
                 position="relative"
-                allowFullScreen
+                // allowFullScreen
               />
             </div>
           </>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 
 const footer = ({ data }) => (
-  <div className="bg-gray-200">
+  <div className="bg-gray-200 mt-8">
     <div className="container mx-auto sm:py-8 md:px-24">
       <div className="md:flex bg-gray-200 rounded-lg p-6">
         <Link href={`/${data.username}`}>
