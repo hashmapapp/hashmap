@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -13,6 +13,7 @@ import * as ACTIONS_AUTH from 'app/screens/lib/constants';
 import { authorization } from 'app/screens/lib/authorization';
 import { hashmapReset } from 'app/redux/actions/hashmapActions';
 import { HashmapService } from 'app/services/hashmap.service';
+import { UserService } from 'app/services/user.service';
 import AccountDropdown from './account-dropdown';
 
 const Avatar = styled.img`
@@ -32,25 +33,49 @@ const NavBar = ({
   authorKey,
 }) => {
   const [showNav, setShowNav] = useState(false);
-  const user = loadFirebaseAuth().currentUser;
+  const [userData, setUserData] = useState();
+  const [currentUser, setCurrentUser] = useState();
+
   const signOut = () => {
     const auth = new AuthenticationServiceFirebase();
     auth.signOut(() => Router.push('/login'));
   };
 
   const callback = () => {
-    Router.push('/');
+    Router.push(`/${userData.username}`);
   };
 
   const handlerSave = evt => {
     evt.preventDefault();
-    HashmapService.saveHashmap(hashmapRedux, callback, user.uid);
+    // console.log(hashmapRedux);
+    HashmapService.saveHashmap(hashmapRedux, callback, currentUser.uid);
   };
 
   const handlerDelete = evt => {
     evt.preventDefault();
     HashmapService.deleteHashmap(hashmapKey, callback);
   };
+
+  useEffect(() => {
+    async function getUserByUid(uid) {
+      const userService = new UserService();
+      try {
+        const data = await userService.getUserById(uid);
+        setUserData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    loadFirebaseAuth().onAuthStateChanged(user => {
+      if (user) {
+        setCurrentUser(user);
+        if (typeNav === 'edit' || typeNav === 'create') {
+          getUserByUid(user.uid);
+        }
+      }
+    });
+  }, []);
 
   return (
     <header className="shadow-lg bg-gray-100">
@@ -71,7 +96,7 @@ const NavBar = ({
               </a>
             </Link>
           </div>
-          {user ? (
+          {currentUser ? (
             <div className="sm:hidden">
               <button
                 type="button"
@@ -80,10 +105,10 @@ const NavBar = ({
                   setShowNav(!showNav);
                 }}
               >
-                {user.photoURL ? (
+                {currentUser.photoURL ? (
                   <Avatar
                     className="h-8 w-8 rounded-full mx-auto"
-                    src={user.photoURL}
+                    src={currentUser.photoURL}
                   />
                 ) : (
                   <Avatar
@@ -94,7 +119,7 @@ const NavBar = ({
               </button>
             </div>
           ) : (
-            <div className="hidden">
+            <div className="sm:hidden">
               <button
                 type="button"
                 className="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
@@ -121,7 +146,7 @@ const NavBar = ({
             showNav ? 'block' : 'hidden'
           }`}
         >
-          {user &&
+          {currentUser &&
             authorization(ACTIONS_AUTH.CREATE_HASHMAP_BUTTON) &&
             (typeNav === 'home' || typeNav === 'profile') && (
               <button
@@ -135,18 +160,18 @@ const NavBar = ({
                 Criar
               </button>
             )}
-          {user &&
+          {currentUser &&
             typeNav === 'view' &&
             authorization(ACTIONS_AUTH.EDIT_HASHMAP_BUTTON) &&
             authorKey &&
-            authorKey === user.uid && (
+            authorKey === currentUser.uid && (
               <Link href={`/edit?key=${hashmapKey}`}>
                 <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
                   Editar
                 </a>
               </Link>
             )}
-          {user && (typeNav === 'edit' || typeNav === 'create') && (
+          {currentUser && (typeNav === 'edit' || typeNav === 'create') && (
             <button
               onClick={handlerSave}
               type="button"
@@ -155,7 +180,7 @@ const NavBar = ({
               Salvar
             </button>
           )}
-          {user && typeNav === 'edit' && (
+          {currentUser && typeNav === 'edit' && (
             <button
               type="button"
               onClick={handlerDelete}
@@ -164,14 +189,14 @@ const NavBar = ({
               Deletar
             </button>
           )}
-          {user && (
+          {currentUser && (
             <Link href="/settings">
               <a className="md:hidden uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
                 Meu Perfil
               </a>
             </Link>
           )}
-          {user && (
+          {currentUser && (
             <DivButton
               onClick={signOut}
               className="md:hidden uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2"
@@ -179,21 +204,23 @@ const NavBar = ({
               Sair
             </DivButton>
           )}
-          {/* {!user && typeNav === 'signin' && (
+          {!currentUser && typeNav !== 'signup' && (
             <Link href="/login">
               <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-100 sm:mt-0 sm:ml-2">
                 Entrar
               </a>
             </Link>
           )}
-          {!user && typeNav === 'signup' && (
+          {!currentUser && typeNav === 'signup' && (
             <Link href="/sign-up">
               <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-100 sm:mt-0 sm:ml-2">
                 Criar Conta
               </a>
             </Link>
-          )} */}
-          {user && <AccountDropdown user={user} signOut={signOut} />}
+          )}
+          {currentUser && (
+            <AccountDropdown user={currentUser} signOut={signOut} />
+          )}
         </nav>
       </div>
     </header>

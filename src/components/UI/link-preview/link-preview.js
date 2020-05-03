@@ -26,24 +26,26 @@ const LinkPreview = ({ data }) => {
       className="md:flex px-8 md:px-16 py-2 md:justify-center"
       target="_blank"
     >
-      <div className="flex md:flex-shrink-0  items-center justify-center ">
-        <Link href={shortLink}>
-          <a target="_blank">
-            <img
-              className="hidden md:block rounded-lg "
-              src={data.image}
-              alt={data.title}
-              style={{ maxHeight: '10rem', maxWidth: '14rem' }}
-            />
-            <img
-              className="block md:hidden rounded-lg pb-1"
-              src={data.image}
-              alt={data.title}
-              style={{ maxHeight: '10rem' }}
-            />
-          </a>
-        </Link>
-      </div>
+      {data.image && (
+        <div className="flex md:flex-shrink-0  items-center justify-center ">
+          <Link href={shortLink}>
+            <a target="_blank">
+              <img
+                className="hidden md:block rounded-lg "
+                src={data.image}
+                alt={data.title}
+                style={{ maxHeight: '10rem', maxWidth: '14rem' }}
+              />
+              <img
+                className="block md:hidden rounded-lg pb-1"
+                src={data.image}
+                alt={data.title}
+                style={{ maxHeight: '10rem' }}
+              />
+            </a>
+          </Link>
+        </div>
+      )}
       <div className="bg-gray-100 md:mx-2 py-2 rounded-lg">
         <div className="px-1 uppercase tracking-wide text-xs text-indigo-600 font-bold">
           {domain}

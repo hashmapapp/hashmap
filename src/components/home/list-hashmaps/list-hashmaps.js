@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Router from 'next/router';
+import moment from 'moment';
 
 const Wrapper = styled.div`
   a {
@@ -15,43 +16,72 @@ const ImageWrapper = styled.div`
 `;
 
 const Item = ({ hashmap }) => {
+  const [info, setInfo] = useState('');
+  useMemo(() => {
+    moment.locale('pt-br');
+    if (hashmap.createdAt)
+      setInfo(`${moment(hashmap.createdAt.toDate()).format('LL')}`);
+  }, [hashmap]);
+
   return (
-    <Wrapper className="p-1 max-w-sm w-full md:max-w-full md:flex h-full">
+    <Wrapper className="md:max-w-sm w-full md:max-w-full md:flex h-full px-4 py-2">
       <ImageWrapper
-        className="h-48 md:h-auto md:w-64 flex-none bg-cover rounded-t-lg
-         md:rounded-l-lg text-center overflow-hidden md:w-56"
+        className="h-48 md:h-auto md:w-64 flex-none bg-cover rounded-t-lg md:rounded-l-lg 
+        text-center overflow-hidden md:w-56"
         style={{ backgroundImage: `url('${hashmap.imageUrl}')` }}
-        title={hashmap.textImage}
+        title={hashmap.title}
         onClick={() => {
           Router.push(`/view?key=${hashmap.key}`);
         }}
       />
 
       <div
-        className="rounded-b-lg md:rounded-r-lg p-4 flex flex-col justify-between 
-        leading-normal shadow-xl w-full bg-white"
+        className="md:rounded-r-lg p-4 flex flex-col justify-between rounded-b-lg
+      leading-normal shadow-xl w-full bg-white"
       >
         <div className="">
           <Link href={`/view?key=${hashmap.key}`}>
             <a>
-              <div className="text-gray-900 font-bold text-xl mb-2">
+              <div className="leading-snug font-medium text-gray-900 text-xl mb-2">
                 {hashmap.title}
               </div>
             </a>
           </Link>
-          <p className="text-gray-700 text-base">{hashmap.subtitle}</p>
+          <p className="leading-snug font-light text-gray-700 text-base">
+            {hashmap.subtitle}
+          </p>
         </div>
-        {/* <div className="flex items-center mt-4">
-          <img
-            className="w-10 h-10 rounded-full mr-4"
-            src="imgs/avatar/avatar.png"
-            alt="Avatar of Jonathan Reinink"
-          />
-          <div className="text-sm">
-            <p className="text-gray-900 leading-none">Jonathan Reinink</p>
-            <p className="text-gray-600">Aug 18</p>
+        {hashmap.authorData && hashmap.authorData.username && (
+          <div className="flex items-center mt-4">
+            <Link href={`/${hashmap.authorData.username}`}>
+              <a>
+                {hashmap.authorData.imageUrl ? (
+                  <img
+                    className="w-10 h-10 rounded-full mr-4"
+                    src={hashmap.authorData.imageUrl}
+                    alt={`Avatar de ${hashmap.authorData.name}`}
+                  />
+                ) : (
+                  <img
+                    className="w-10 h-10 rounded-full mr-4"
+                    src="imgs/avatar/avatar.png"
+                    alt={`Avatar de ${hashmap.authorData.name}`}
+                  />
+                )}
+              </a>
+            </Link>
+            <div className="text-sm">
+              <Link href={`/${hashmap.authorData.username}`}>
+                <a>
+                  <p className="text-gray-900 leading-none">
+                    {hashmap.authorData.name}
+                  </p>
+                </a>
+              </Link>
+              <p className="pt-1 text-xs text-gray-600">{info}</p>
+            </div>
           </div>
-        </div> */}
+        )}
       </div>
     </Wrapper>
   );

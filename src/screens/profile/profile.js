@@ -16,7 +16,13 @@ const Profile = ({ profile, hashmaps }) => {
   const [socialLinks, setSocialLinks] = useState({});
 
   const replaceLink = link => {
-    return link ? `//${link.split('//')[1]}` : undefined;
+    if (link) {
+      if (link.startsWith('http://') || link.startsWith('https://')) {
+        return `//${link.split('//')[1]}`;
+      }
+      return `//${link}`;
+    }
+    return link;
   };
 
   useMemo(() => {
@@ -31,11 +37,19 @@ const Profile = ({ profile, hashmaps }) => {
   return (
     <div className="container mx-auto">
       <div className="rounded-lg">
-        <img
-          className="mt-8 mb-6 h-32 w-32 rounded-full mx-auto"
-          src={profile.photoURL}
-          alt="Perfil"
-        />
+        {profile.photoURL && profile.photoURL.url ? (
+          <img
+            className="mt-8 mb-6 h-32 w-32 rounded-full mx-auto"
+            src={profile.photoURL.url}
+            alt="Perfil"
+          />
+        ) : (
+          <img
+            className="mt-8 mb-6 h-32 w-32 rounded-full mx-auto"
+            src="imgs/avatar/avatar.jpg"
+            alt="Perfil"
+          />
+        )}
         <div className="text-center p-4">
           <h2 className="font-bold text-lg">{profile.displayName}</h2>
           <div className="font-bold text-purple-500 text-xs">

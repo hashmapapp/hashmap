@@ -46,13 +46,6 @@ export const titlePostUpdate = (text, key) => ({
   key,
 });
 
-export const imgPostUpdate = (path, url, key) => ({
-  type: ACTIONS.HASHMAP_POST_IMAGE_UPDATE,
-  path,
-  url,
-  key,
-});
-
 export const dataPostUpdate = (data, attribute, key) => ({
   type: ACTIONS.HASHMAP_POST_DATA_UPDATE,
   data,

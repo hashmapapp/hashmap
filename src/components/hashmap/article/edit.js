@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,36 +18,66 @@ const article = ({
   handlerDescription,
   handlerCrete,
   handlerImage,
-  // imagePath,
+  imagePath,
 }) => {
   const handlerNewPost = evt => {
     evt.preventDefault();
     handlerCrete();
   };
+  const [defaultFiles, setDefaultFiles] = useState([]);
+  const [loadImage, setLoadImage] = useState(false);
+  useEffect(() => {
+    if (imagePath && imagePath !== '') {
+      setDefaultFiles([
+        {
+          source: imagePath,
+          options: {
+            type: 'local',
+          },
+        },
+      ]);
+      setLoadImage(true);
+    }
+  }, [imagePath]);
   return (
     <article className="container mx-auto px-4 md:px-64 md:py-8">
-      <ImageUpload
-        onRequestSave={(path, url) => {
-          handlerImage(path, url);
-        }}
-        onRequestClear={() => console.log('Clear')}
-        storageName="hashmaps"
-        // defaultFiles={[
-        //   {
-        //     source: imagePath,
-        //     options: {
-        //       type: 'local',
-        //     },
-        //   },
-        // ]}
-      />
+      <h6 className="px-2 font-sans text-lg text-gray-500">Capa</h6>
+      {!loadImage && (
+        <ImageUpload
+          onRequestSave={(path, url) => {
+            handlerImage(path, url);
+          }}
+          onRequestClear={() => {
+            handlerImage('', '');
+            console.log('Clear');
+            setDefaultFiles([]);
+          }}
+          storageName="hashmaps"
+        />
+      )}
+      {loadImage && (
+        <ImageUpload
+          onRequestSave={(path, url) => {
+            handlerImage(path, url);
+          }}
+          onRequestClear={() => {
+            handlerImage('', '');
+            console.log('Clear');
+            setDefaultFiles([]);
+          }}
+          storageName="hashmaps"
+          defaultFiles={defaultFiles}
+        />
+      )}
+      <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">Descrição</h6>
       <TextArea
         className="Text"
         rows="5"
         type="text"
         id="description"
         name="description"
-        placeholder="Descrição"
+        placeholder="Aqui você pode descrever com mais detalhes sobre o que é o
+        seu hashmap, falando por exemplo, o motivo da criação dele."
         onChange={e => {
           handlerDescription(e.target.value);
         }}
@@ -55,8 +85,16 @@ const article = ({
       />
       {posts
         .filter(post => !post.key.startsWith('DELETE'))
-        .map(post => (
-          <PublicationEdit data={post} key={post.key} temporaryKey={post.key} />
+        .map((post, index) => (
+          <div key={post.key} className="mt-4">
+            <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">{`#${index +
+              1}`}</h6>
+            <PublicationEdit
+              data={post}
+              temporaryKey={post.key}
+              index={index}
+            />
+          </div>
         ))}
       <NewPublicationButton onAction={handlerNewPost} />
     </article>
@@ -92,7 +130,7 @@ const mapDispatchToProps = dispatch =>
 
 const mapStateToProps = state => ({
   description: state.hashmap.description,
-  image: state.hashmap.image,
+  imagePath: state.hashmap.imagePath,
   posts: state.hashmap.posts,
 });
 

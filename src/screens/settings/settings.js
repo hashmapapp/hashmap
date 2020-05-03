@@ -18,12 +18,26 @@ import ProfileImageUpload from 'app/components/UI/image/profile-upload';
 import AuthenticationServiceFirebase from 'app/services/authentication.service';
 
 const Settings = () => {
-  const current = loadFirebaseAuth().currentUser;
   const [userFirestore, setUserFirestore] = useState({});
   const [socialLinks, setSocialLinks] = useState({});
   const [role, setRole] = useState();
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [defaultFiles, setDefaultFiles] = useState([]);
+  const [currentUser, setCurrentUser] = useState();
+
+  useMemo(() => {
+    if (edit && userFirestore.photoURL && userFirestore.photoURL.path) {
+      setDefaultFiles([
+        {
+          source: userFirestore.photoURL.path,
+          options: {
+            type: 'local',
+          },
+        },
+      ]);
+    }
+  }, [edit]);
 
   const handlerChangeForm = (attribute, value) => {
     const dataCurrent = { ...userFirestore };
@@ -64,25 +78,28 @@ const Settings = () => {
   };
 
   useEffect(() => {
-    if (current) {
-      const fb = loadFirebaseStore();
-      const userRef = fb()
-        .collection(USERS_COLLECTION)
-        .doc(current.uid);
-      userRef
-        .get()
-        .then(userDoc => {
-          if (!userDoc.exists) {
-            console.log('No such document!');
-          } else {
-            setUserFirestore(userDoc.data());
-          }
-        })
-        .catch(err => {
-          console.log('Error getting document', err);
-        });
-    }
-  }, [current]);
+    loadFirebaseAuth().onAuthStateChanged(user => {
+      if (user) {
+        setCurrentUser(user);
+        const fb = loadFirebaseStore();
+        const userRef = fb()
+          .collection(USERS_COLLECTION)
+          .doc(user.uid);
+        userRef
+          .get()
+          .then(userDoc => {
+            if (!userDoc.exists) {
+              console.log('No such document!');
+            } else {
+              setUserFirestore(userDoc.data());
+            }
+          })
+          .catch(err => {
+            console.log('Error getting document', err);
+          });
+      }
+    });
+  }, []);
 
   const replaceLink = link => {
     return link ? `//${link.split('//')[1]}` : undefined;
@@ -98,7 +115,7 @@ const Settings = () => {
           setRole('Administrador');
           break;
         default:
-          setRole('Padrão');
+          setRole('Novato');
           break;
       }
 
@@ -113,14 +130,38 @@ const Settings = () => {
 
   return (
     <>
-      {current && userFirestore && (
+      {currentUser && userFirestore && (
         <div className="container mx-auto md:px-64">
+          {userFirestore.role === 'default' && (
+            <div
+              className="mb-16 mx-4 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md"
+              role="alert"
+            >
+              <div className="flex">
+                <div className="py-1">
+                  <svg
+                    className="fill-current h-6 w-6 text-teal-500 mr-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-bold">
+                    Seja muito bem vind@, {userFirestore.displayName}!
+                  </p>
+                  <p className="text-sm">Ainda estamos em uma versão beta.</p>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="rounded-lg">
             {!edit &&
-              (userFirestore.photoURL ? (
+              (userFirestore.photoURL && userFirestore.photoURL.url ? (
                 <img
                   className="my-8 h-32 w-32 rounded-full mx-auto"
-                  src={userFirestore.photoURL}
+                  src={userFirestore.photoURL.url}
                   alt="Perfil"
                 />
               ) : (
@@ -135,11 +176,12 @@ const Settings = () => {
                 <ProfileImageUpload
                   storageName="users"
                   onRequestSave={(path, url) => {
-                    handlerChangeForm('photoURL', url);
+                    handlerChangeForm('photoURL', { path, url });
                   }}
                   onRequestClear={() => {
-                    handlerChangeForm('photoURL', undefined);
+                    handlerChangeForm('photoURL', {});
                   }}
+                  defaultFiles={defaultFiles}
                 />
               </div>
             )}

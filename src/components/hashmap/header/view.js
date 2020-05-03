@@ -6,7 +6,7 @@ const header = ({ data }) => {
   const [info, setInfo] = useState('');
   useMemo(() => {
     moment.locale('pt-br');
-    if (data.createdAt !== data.updatedAt) {
+    if (data.createdAt < data.updatedAt) {
       setInfo(`Atualizada em ${moment(data.updatedAt).format('LL')}`);
     } else {
       setInfo(`${moment(data.createdAt).format('LL')}`);
@@ -15,8 +15,8 @@ const header = ({ data }) => {
 
   return (
     <header className="bg-gray-100">
-      <div className="container mx-auto px-4 md:px-64 md:py-8">
-        <h1 className="font-sans text-2xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-black">
+      <div className="container mx-auto px-10 md:px-64 md:py-8">
+        <h1 className="font-sans leading-tight text-3xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-black">
           {data.title}
         </h1>
         {data.subtitle && (
