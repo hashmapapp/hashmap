@@ -3,6 +3,7 @@ import HeaderView from 'app/components/hashmap/header/view';
 import ArticleView from 'app/components/hashmap/article/view';
 import Footer from 'app/components/hashmap/footer/footer';
 import PropTypes from 'prop-types';
+import ShareButtons from '../UI/share-buttons/share-buttons';
 
 const SectionHashmapView = ({ hashmap, posts }) => {
   const headerData = {
@@ -27,6 +28,7 @@ const SectionHashmapView = ({ hashmap, posts }) => {
     <div className="bg-gray-100">
       <HeaderView data={headerData} />
       <ArticleView data={articleData} />
+      <ShareButtons title={hashmap.title} summary={hashmap.subtitle} />
       <Footer data={authorData} />
     </div>
   );

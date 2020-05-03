@@ -151,7 +151,7 @@ const SignUp = () => {
         </div>
       </form>
       <p className="text-center text-gray-500 text-xs">
-        &copy;2020 Kleyson Morias. Todos os direitos reservados.
+        &copy;2020 Hashmap. Todos os direitos reservados.
       </p>
     </div>
   );

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 const withSubscriptionHashmapData = WrappedComponent => {
   class Component extends React.Component {
+    isMounted = false;
+
     state = {
       posts: [],
     };
@@ -14,6 +16,7 @@ const withSubscriptionHashmapData = WrappedComponent => {
     }
 
     async componentDidMount() {
+      this.isMounted = true;
       const { params } = this.props;
       const { key } = params;
       if (key) {
@@ -26,9 +29,15 @@ const withSubscriptionHashmapData = WrappedComponent => {
           hashmap.author
         );
         hashmap.author = author;
-        this.setState({ hashmap });
-        this.setState({ key });
+        if (this.isMounted) {
+          this.setState({ hashmap });
+          this.setState({ key });
+        }
       }
+    }
+
+    componentWillUnmount() {
+      this.isMounted = false;
     }
 
     getDocument = (fs, collection, key) => {
@@ -57,9 +66,11 @@ const withSubscriptionHashmapData = WrappedComponent => {
               key: doc.id,
             });
           });
-          this.setState({
-            posts,
-          });
+          if (this.isMounted) {
+            this.setState({
+              posts,
+            });
+          }
         })
         .catch(err => {
           console.log('Error getting posts', err);

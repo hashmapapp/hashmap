@@ -70,7 +70,7 @@ const ProfileImageUpload = ({
         .child(source)
         .getDownloadURL()
         .then(url => {
-          console.log(url);
+          // console.log(url);
           // fetch the actual image using the download URL
           // and provide the blob to FilePond using the load callback
           const xhr = new XMLHttpRequest();
@@ -118,19 +118,19 @@ const ProfileImageUpload = ({
 ProfileImageUpload.propTypes = {
   onRequestSave: PropTypes.func.isRequired,
   onRequestClear: PropTypes.func.isRequired,
-  defaultFiles: PropTypes.arrayOf(
-    PropTypes.shape({
-      source: PropTypes.string.isRequired,
-      options: {
-        type: PropTypes.string.isRequired,
-      },
-    })
-  ),
+  // defaultFiles: PropTypes.arrayOf(
+  //   PropTypes.shape({
+  //     source: PropTypes.string.isRequired,
+  //     options: {
+  //       type: PropTypes.string.isRequired,
+  //     },
+  //   })
+  // ),
   storageName: PropTypes.string,
 };
 
 ProfileImageUpload.defaultProps = {
-  defaultFiles: [],
+  // defaultFiles: [],
   storageName: 'imagens',
 };
 

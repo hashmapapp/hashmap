@@ -119,7 +119,7 @@ const NavBar = ({
               </button>
             </div>
           ) : (
-            <div className="hidden">
+            <div className="sm:hidden">
               <button
                 type="button"
                 className="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
@@ -204,20 +204,20 @@ const NavBar = ({
               Sair
             </DivButton>
           )}
-          {/* {!user && typeNav === 'signin' && (
+          {!currentUser && typeNav !== 'signup' && (
             <Link href="/login">
               <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-100 sm:mt-0 sm:ml-2">
                 Entrar
               </a>
             </Link>
           )}
-          {!user && typeNav === 'signup' && (
+          {!currentUser && typeNav === 'signup' && (
             <Link href="/sign-up">
               <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-100 sm:mt-0 sm:ml-2">
                 Criar Conta
               </a>
             </Link>
-          )} */}
+          )}
           {currentUser && (
             <AccountDropdown user={currentUser} signOut={signOut} />
           )}
