@@ -48,6 +48,7 @@ const withSubscriptionHashmapData = WrappedComponent => {
       const ref = fs().collection(`hashmaps/${key}/posts`);
       const posts = [];
       this.postsRef = ref
+        .orderBy('index')
         .get()
         .then(snapshot => {
           snapshot.forEach(doc => {

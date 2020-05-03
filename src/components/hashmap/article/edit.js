@@ -85,8 +85,16 @@ const article = ({
       />
       {posts
         .filter(post => !post.key.startsWith('DELETE'))
-        .map(post => (
-          <PublicationEdit data={post} key={post.key} temporaryKey={post.key} />
+        .map((post, index) => (
+          <div key={post.key} className="mt-4">
+            <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">{`#${index +
+              1}`}</h6>
+            <PublicationEdit
+              data={post}
+              temporaryKey={post.key}
+              index={index}
+            />
+          </div>
         ))}
       <NewPublicationButton onAction={handlerNewPost} />
     </article>

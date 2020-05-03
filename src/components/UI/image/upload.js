@@ -17,7 +17,7 @@ const ImageUpload = ({
   defaultFiles,
   storageName,
 }) => {
-  // const [files, setFiles] = React.useState(defaultFiles);
+  const [files, setFiles] = React.useState(defaultFiles);
   const server = {
     // this uploads the image using firebase
     process: (fieldName, file, metadata, load, error, progress) => {
@@ -79,13 +79,14 @@ const ImageUpload = ({
 
   return (
     <FilePond
-      files={defaultFiles}
+      files={files}
       allowMultiple={false}
       // maxFiles={1}
       onupdatefiles={fileItems => {
         if (fileItems.length === 0) {
           onRequestClear();
         }
+        setFiles(fileItems.map(fileItem => fileItem.file));
       }}
       server={server}
       labelIdle="Represente visualmente seu hashmap, com uma imagem ou GIF"

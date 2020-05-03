@@ -18,13 +18,13 @@ import ProfileImageUpload from 'app/components/UI/image/profile-upload';
 import AuthenticationServiceFirebase from 'app/services/authentication.service';
 
 const Settings = () => {
-  const current = loadFirebaseAuth().currentUser;
   const [userFirestore, setUserFirestore] = useState({});
   const [socialLinks, setSocialLinks] = useState({});
   const [role, setRole] = useState();
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [defaultFiles, setDefaultFiles] = useState([]);
+  const [currentUser, setCurrentUser] = useState();
 
   useMemo(() => {
     if (edit && userFirestore.photoURL && userFirestore.photoURL.path) {
@@ -59,8 +59,6 @@ const Settings = () => {
   const onSubmit = () => {
     const auth = new AuthenticationServiceFirebase();
     setLoading(true);
-    console.log(userFirestore.photoURL);
-
     auth.updateProfile(
       userFirestore.displayName,
       userFirestore.photoURL,
@@ -80,25 +78,28 @@ const Settings = () => {
   };
 
   useEffect(() => {
-    if (current) {
-      const fb = loadFirebaseStore();
-      const userRef = fb()
-        .collection(USERS_COLLECTION)
-        .doc(current.uid);
-      userRef
-        .get()
-        .then(userDoc => {
-          if (!userDoc.exists) {
-            console.log('No such document!');
-          } else {
-            setUserFirestore(userDoc.data());
-          }
-        })
-        .catch(err => {
-          console.log('Error getting document', err);
-        });
-    }
-  }, [current]);
+    loadFirebaseAuth().onAuthStateChanged(user => {
+      if (user) {
+        setCurrentUser(user);
+        const fb = loadFirebaseStore();
+        const userRef = fb()
+          .collection(USERS_COLLECTION)
+          .doc(user.uid);
+        userRef
+          .get()
+          .then(userDoc => {
+            if (!userDoc.exists) {
+              console.log('No such document!');
+            } else {
+              setUserFirestore(userDoc.data());
+            }
+          })
+          .catch(err => {
+            console.log('Error getting document', err);
+          });
+      }
+    });
+  }, []);
 
   const replaceLink = link => {
     return link ? `//${link.split('//')[1]}` : undefined;
@@ -129,12 +130,11 @@ const Settings = () => {
 
   return (
     <>
-      {current && userFirestore && (
+      {currentUser && userFirestore && (
         <div className="container mx-auto md:px-64">
           <div className="rounded-lg">
             {!edit &&
-              userFirestore.photoURL &&
-              (userFirestore.photoURL.url ? (
+              (userFirestore.photoURL && userFirestore.photoURL.url ? (
                 <img
                   className="my-8 h-32 w-32 rounded-full mx-auto"
                   src={userFirestore.photoURL.url}

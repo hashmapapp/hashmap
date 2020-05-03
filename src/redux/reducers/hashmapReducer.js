@@ -78,16 +78,6 @@ const HashmapReducer = (state = STATE_CLEAN, action) => {
         }
       });
     }
-    case ACTIONS.HASHMAP_POST_IMAGE_UPDATE: {
-      return produce(state, draft => {
-        const post = draft.posts.find(p => p.key === action.key);
-        if (post) {
-          const index = draft.posts.indexOf(post);
-          draft.posts[index].imagePath = action.path;
-          draft.posts[index].imageUrl = action.url;
-        }
-      });
-    }
     case ACTIONS.HASHMAP_POST_DATA_UPDATE: {
       return produce(state, draft => {
         const post = draft.posts.find(p => p.key === action.key);

@@ -7,7 +7,6 @@ import Iframe from 'react-iframe';
 import {
   titlePostUpdate,
   postDelete,
-  imgPostUpdate,
   dataPostUpdate,
 } from 'app/redux/actions/hashmapActions';
 import ImageUpload from 'app/components/UI/image/upload';
@@ -28,8 +27,8 @@ const Publication = ({
   temporaryKey,
   handlerTitle,
   handlerDelete,
-  handlerImage,
   handlerData,
+  index,
 }) => {
   const [showUploadImage, setShowUploadImage] = useState(false);
   const [showLink, setShowLink] = useState(false);
@@ -37,7 +36,7 @@ const Publication = ({
   const [showTextDescription, setShowTextDescription] = useState(false);
   const [loaderLink, setLoaderLink] = useState(false);
   const [link, setLink] = useState('');
-  const [videoYT, setVideoYT] = useState();
+  const [videoYT, setVideoYT] = useState('');
   const [urlYT, setUrlYT] = useState('');
   const [defaultFiles, setDefaultFiles] = useState([]);
 
@@ -72,8 +71,9 @@ const Publication = ({
       }
       const embed = `https://www.youtube.com/embed/${videoId}`;
       handlerData({ value, embed }, 'videoYT', temporaryKey);
+      setVideoYT(embed);
     } else {
-      setVideoYT();
+      setVideoYT('');
     }
   };
 
@@ -83,7 +83,7 @@ const Publication = ({
       setLink(url);
       setShowLink(true);
     }
-    if (data.videoYT) {
+    if (data.videoYT && data.videoYT.value && data.videoYT.embed) {
       setUrlYT(data.videoYT.value);
       setVideoYT(data.videoYT.embed);
       setShowVideoYT(true);
@@ -104,9 +104,13 @@ const Publication = ({
     }
   }, []);
 
+  useEffect(() => {
+    handlerData(index, 'index', temporaryKey);
+  }, [index]);
+
   return (
     <>
-      <div className="p-2 my-4 shadow">
+      <div className="p-2 mb-4 shadow">
         <header className="grid grid-cols-6 gap-4 flex">
           <div className="col-span-5 md:col-span-5 flex-shrink h-12">
             <TextArea
@@ -138,11 +142,15 @@ const Publication = ({
           <div className="pt-4">
             <ImageUpload
               onRequestSave={(path, url) => {
-                handlerImage(path, url, temporaryKey);
+                // console.log('onRequestSave');
+                handlerData(path, 'imagePath', temporaryKey);
+                handlerData(url, 'imageUrl', temporaryKey);
               }}
               onRequestClear={() => {
+                // console.log('onRequestClear');
                 setDefaultFiles([]);
-                handlerImage('', '', temporaryKey);
+                handlerData('', 'imagePath', temporaryKey);
+                handlerData('', 'imageUrl', temporaryKey);
               }}
               storageName="posts"
               defaultFiles={defaultFiles}
@@ -211,6 +219,9 @@ const Publication = ({
               className={`${showUploadImage &&
                 'bg-gray-300'} hover:bg-gray-400 py-2 px-4 rounded-l`}
               onClick={() => {
+                setDefaultFiles([]);
+                handlerData('', 'imagePath', temporaryKey);
+                handlerData('', 'imageUrl', temporaryKey);
                 setShowUploadImage(!showUploadImage);
               }}
             >
@@ -247,6 +258,7 @@ const Publication = ({
                 'bg-gray-300'} hover:bg-gray-400 py-2 px-4 rounded-r`}
               onClick={() => {
                 setUrlYT('');
+                setVideoYT('');
                 handlerData({}, 'videoYT', temporaryKey);
                 setShowVideoYT(!showVideoYT);
               }}
@@ -265,7 +277,6 @@ Publication.propTypes = {
   temporaryKey: PropTypes.string.isRequired,
   handlerTitle: PropTypes.func.isRequired,
   handlerDelete: PropTypes.func.isRequired,
-  handlerImage: PropTypes.func.isRequired,
   handlerData: PropTypes.func.isRequired,
 };
 
@@ -278,7 +289,6 @@ const mapDispatchToProps = dispatch =>
     {
       handlerTitle: titlePostUpdate,
       handlerDelete: postDelete,
-      handlerImage: imgPostUpdate,
       handlerData: dataPostUpdate,
     },
     dispatch
