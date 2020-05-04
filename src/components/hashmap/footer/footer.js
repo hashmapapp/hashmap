@@ -6,7 +6,7 @@ const footer = ({ data }) => (
   <div className="bg-gray-200 mt-8">
     <div className="container mx-auto sm:py-8 md:px-24">
       <div className="md:flex bg-gray-200 rounded-lg p-6">
-        <Link href={`/${data.username}`}>
+        <Link href="/[profile]" as={`/${data.username}`}>
           <a>
             {data.photoURL &&
               (data.photoURL.url ? (
@@ -25,17 +25,21 @@ const footer = ({ data }) => (
           </a>
         </Link>
         <div className="text-center md:text-left md:w-2/3 pt-2">
-          <Link href={`/${data.username}`}>
+          <Link href="/[profile]" as={`/${data.username}`}>
             <a>
               <h2 className="font-bold text-lg">{data.displayName}</h2>
             </a>
           </Link>
-          <div className="font-bold text-purple-500 text-xs">
-            @{data.username}
-          </div>
-          <div className="pt-2 italic font-sans text-sm text-gray-600 text-center md:text-left md:w-auto">
+          <Link href="/[profile]" as={`/${data.username}`}>
+            <a>
+              <span className="font-bold text-purple-500 text-xs">
+                @{data.username}
+              </span>
+            </a>
+          </Link>
+          <p className="pt-2 italic font-sans text-sm text-gray-600 text-center md:text-left md:w-auto">
             {data.bio}
-          </div>
+          </p>
         </div>
       </div>
     </div>

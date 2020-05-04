@@ -3,11 +3,12 @@ import { useRouter } from 'next/router';
 import UINavBar from 'app/components/UI/navbar/navbar';
 import Profile from 'app/screens/profile/profile';
 import { loadFirebaseStore } from 'app/lib/db';
-import { USERS_COLLECTION } from 'app/screens/lib/constants';
+import {
+  USERS_COLLECTION,
+  HASHMAPS_COLLECTION,
+} from 'app/screens/lib/constants';
 import HourglasLoader from 'app/components/UI/loader/hourglass';
 import DynamicHead from 'app/components/UI/head/dynamic-head';
-
-const HASHMAPS_COLLECTION = 'hashmaps';
 
 export default function Post() {
   // const current = loadFirebaseAuth().currentUser;

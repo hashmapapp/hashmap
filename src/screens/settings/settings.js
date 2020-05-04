@@ -187,7 +187,7 @@ const Settings = () => {
             )}
             <div className="flex justify-center pt-2">
               <div className="text-center">
-                <Link href={`/${userFirestore.username}`}>
+                <Link href="/[profile]" as={`/${userFirestore.username}`}>
                   <a>
                     <div
                       className="p-2 bg-indigo-100 items-center leading-none rounded-full flex mb-4"

@@ -19,8 +19,7 @@ const Item = ({ hashmap }) => {
   const [info, setInfo] = useState('');
   useMemo(() => {
     moment.locale('pt-br');
-    if (hashmap.createdAt)
-      setInfo(`${moment(hashmap.createdAt.toDate()).format('LL')}`);
+    if (hashmap.createdAt) setInfo(`${moment(hashmap.createdAt).format('LL')}`);
   }, [hashmap]);
 
   return (
@@ -53,7 +52,7 @@ const Item = ({ hashmap }) => {
         </div>
         {hashmap.authorData && hashmap.authorData.username && (
           <div className="flex items-center mt-4">
-            <Link href={`/${hashmap.authorData.username}`}>
+            <Link href="/[profile]" as={`/${hashmap.authorData.username}`}>
               <a>
                 {hashmap.authorData.imageUrl ? (
                   <img
@@ -71,7 +70,7 @@ const Item = ({ hashmap }) => {
               </a>
             </Link>
             <div className="text-sm">
-              <Link href={`/${hashmap.authorData.username}`}>
+              <Link href="/[profile]" as={`/${hashmap.authorData.username}`}>
                 <a>
                   <p className="text-gray-900 leading-none">
                     {hashmap.authorData.name}

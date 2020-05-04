@@ -11,7 +11,7 @@ import { CREATE_HASHMAP } from 'app/screens/lib/constants';
 
 const Edit = ({ hashmap, posts, handlerHashmap, hashmapKey }) => {
   useEffect(() => {
-    if (hashmap && posts.length > 0) handlerHashmap({ hashmap, posts });
+    if (hashmap) handlerHashmap({ hashmap, posts });
   }, [hashmap, posts]);
 
   return (
