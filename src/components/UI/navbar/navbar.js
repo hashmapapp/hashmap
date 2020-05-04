@@ -42,7 +42,7 @@ const NavBar = ({
   };
 
   const callback = () => {
-    Router.push(`/${userData.username}`);
+    Router.push('/[profile]', `/${userData.username}`);
   };
 
   const handlerSave = evt => {
