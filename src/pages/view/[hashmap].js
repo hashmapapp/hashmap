@@ -2,10 +2,14 @@ import React from 'react';
 import ScreenHashmapView from 'app/screens/hashmap/view';
 import DynamicHead from 'app/components/UI/head/dynamic-head';
 import { getAllHashmapsKeys } from 'app/lib/hashmaps';
-import { HASHMAPS_COLLECTION } from 'app/screens/lib/constants';
+import {
+  HASHMAPS_COLLECTION,
+  USERS_COLLECTION,
+  POSTS_COLLECTION,
+} from 'app/screens/lib/constants';
 import { loadFirebaseStore } from 'app/lib/db';
 
-export default ({ hashmap, posts, hashmapKey }) => {
+export default ({ hashmap, posts, hashmapKey, authorId }) => {
   return (
     <>
       <DynamicHead
@@ -17,6 +21,7 @@ export default ({ hashmap, posts, hashmapKey }) => {
         hashmap={hashmap}
         posts={posts}
         hashmapKey={hashmapKey}
+        authorId={authorId}
       />
     </>
   );
@@ -24,20 +29,36 @@ export default ({ hashmap, posts, hashmapKey }) => {
 
 export async function getStaticProps({ params }) {
   let hashmap;
+  const posts = [];
   const FirebaseStore = loadFirebaseStore();
   const hashmapKey = params.hashmap;
   try {
-    const data = await FirebaseStore()
+    const dataHashmap = await FirebaseStore()
       .collection(HASHMAPS_COLLECTION)
       .doc(hashmapKey)
       .get();
-    hashmap = { ...data.data(), key: hashmapKey };
+    hashmap = { ...dataHashmap.data(), key: hashmapKey };
     hashmap.createdAt = hashmap.createdAt.toDate().toISOString();
     hashmap.updatedAt = hashmap.updatedAt.toDate().toISOString();
+    const dataAuthor = await FirebaseStore()
+      .collection(USERS_COLLECTION)
+      .doc(hashmap.author)
+      .get();
+    hashmap.author = { ...dataAuthor.data(), key: hashmap.author };
+    const dataPosts = await FirebaseStore()
+      .collection(`${HASHMAPS_COLLECTION}/${hashmapKey}/${POSTS_COLLECTION}`)
+      .orderBy('index')
+      .get();
+    dataPosts.forEach(doc => {
+      const aux = { ...doc.data(), key: doc.id };
+      aux.createdAt = aux.createdAt.toDate().toISOString();
+      aux.updatedAt = aux.updatedAt.toDate().toISOString();
+      posts.push(aux);
+    });
   } catch (err) {
     console.error(err);
   }
-  return { props: { hashmap, posts: [], hashmapKey } };
+  return { props: { hashmap, posts, hashmapKey, authorId: hashmap.author } };
 }
 
 export async function getStaticPaths() {

@@ -5,3 +5,4 @@ export const EDIT_HASHMAP = '@hashmap/EDIT';
 export const USERS_COLLECTION = 'users';
 export const HOME_HASHMAP_COLLECTION = 'home_hashmap';
 export const HASHMAPS_COLLECTION = 'hashmaps';
+export const POSTS_COLLECTION = 'posts';
