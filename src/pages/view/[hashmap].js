@@ -9,9 +9,9 @@ export default ({ hashmap, posts, hashmapKey }) => {
   return (
     <>
       <DynamicHead
-        titleText={hashmap.title}
-        description={hashmap.subtitle}
-        imageUrl={hashmap.imageUrl}
+        titleText={hashmap ? hashmap.title : undefined}
+        description={hashmap ? hashmap.subtitle : undefined}
+        imageUrl={hashmap ? hashmap.imageUrl : undefined}
       />
       <ScreenHashmapView
         hashmap={hashmap}
