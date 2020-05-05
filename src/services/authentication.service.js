@@ -76,7 +76,7 @@ class AuthenticationServiceFirebase {
     this.fb
       .signOut()
       .then(() => {
-        console.log('Saiu com Sucesso');
+        // console.log('Saiu com Sucesso');
         localStorage.setItem('@hashmap/role', undefined);
         callback();
       })

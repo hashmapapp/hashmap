@@ -48,4 +48,4 @@ View.defaultProps = {
   hashmapKey: undefined,
 };
 
-export default withSubscriptionHashmapData(View);
+export default View;

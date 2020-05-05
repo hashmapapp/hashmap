@@ -16,7 +16,7 @@ export class HashmapService {
   static deleteHashmap = (key, callback) => {
     const fb = new HttpWrapperFirebase();
     fb.deleteItem(HASHMAPS_COLLECTION, key).then(() => {
-      console.log(`Hashmap ${key} removido com sucesso`);
+      // console.log(`Hashmap ${key} removido com sucesso`);
       callback();
     });
   };
@@ -29,7 +29,7 @@ export class HashmapService {
     newHashmap.author = newHashmap.author.key;
     newHashmap.updatedAt = fb.db.FieldValue.serverTimestamp();
     fb.updateItem(HASHMAPS_COLLECTION, hashmap.key, newHashmap).then(() => {
-      console.log('Hashmap atualizado com sucesso!');
+      // console.log('Hashmap atualizado com sucesso!');
       HashmapService.updatePosts(fb, hashmap, callback, userId);
     });
   };
@@ -50,9 +50,9 @@ export class HashmapService {
       userId
     );
     const dataDelete = HashmapService.getDataDeletePosts(postsToDelete);
-    console.log(dataUpdate);
-    console.log(dataCreate);
-    console.log(dataDelete);
+    // console.log(dataUpdate);
+    // console.log(dataCreate);
+    // console.log(dataDelete);
 
     fb.updateItems(
       `${HASHMAPS_COLLECTION}/${hashmap.key}/${POSTS_COLLECTION}`,
@@ -60,7 +60,7 @@ export class HashmapService {
       dataCreate,
       dataDelete
     ).then(() => {
-      console.log('Posts atualizados com sucesso!');
+      // console.log('Posts atualizados com sucesso!');
       callback();
     });
   };
@@ -75,7 +75,7 @@ export class HashmapService {
     newHashmap.updatedAt = fb.db.FieldValue.serverTimestamp();
     newHashmap.author = userId;
     fb.createItem(HASHMAPS_COLLECTION, newHashmap).then(hashmapSucess => {
-      console.log('Hashmap criado com sucesso!');
+      // console.log('Hashmap criado com sucesso!');
       const { path } = hashmapSucess;
       HashmapService.createPosts(path, fb, hashmap, callback, userId);
     });
@@ -88,7 +88,7 @@ export class HashmapService {
       userId
     );
     fb.createItems(`${path}/${POSTS_COLLECTION}`, dataCreate).then(() => {
-      console.log('Posts criados com sucesso!');
+      // console.log('Posts criados com sucesso!');
       callback();
     });
   };

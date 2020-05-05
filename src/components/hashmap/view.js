@@ -9,8 +9,8 @@ const SectionHashmapView = ({ hashmap, posts }) => {
   const headerData = {
     title: hashmap.title,
     subtitle: hashmap.subtitle,
-    createdAt: hashmap.createdAt.toDate(),
-    updatedAt: hashmap.updatedAt.toDate(),
+    createdAt: hashmap.createdAt,
+    updatedAt: hashmap.updatedAt,
   };
   const articleData = {
     description: hashmap.description,
