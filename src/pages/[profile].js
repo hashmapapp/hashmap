@@ -8,7 +8,6 @@ import {
 } from 'app/screens/lib/constants';
 import HourglasLoader from 'app/components/UI/loader/hourglass';
 import DynamicHead from 'app/components/UI/head/dynamic-head';
-import { getAllUsernames } from 'app/lib/hashmaps';
 
 export default ({ profile, hashmaps }) => {
   return (
@@ -54,7 +53,7 @@ export default ({ profile, hashmaps }) => {
   );
 };
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const fb = loadFirebaseStore();
   const profileRef = fb().collection(USERS_COLLECTION);
   let profile;
@@ -87,12 +86,4 @@ export async function getStaticProps({ params }) {
     console.log(error);
   }
   return { props: { profile, hashmaps } };
-}
-
-export async function getStaticPaths() {
-  const usernames = await getAllUsernames();
-  return {
-    paths: usernames,
-    fallback: true,
-  };
 }

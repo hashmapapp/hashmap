@@ -11,7 +11,7 @@ export default ({ hashmaps }) => (
   </>
 );
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const hashmaps = [];
   const fb = loadFirebaseStore();
   try {

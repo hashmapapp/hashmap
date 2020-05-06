@@ -1,7 +1,4 @@
-import {
-  HASHMAPS_COLLECTION,
-  USERS_COLLECTION,
-} from 'app/screens/lib/constants';
+import { HASHMAPS_COLLECTION } from 'app/screens/lib/constants';
 import { loadFirebaseStore } from './db';
 
 export async function getAllHashmapsKeys() {
@@ -22,24 +19,4 @@ export async function getAllHashmapsKeys() {
     console.error(err);
   }
   return hashmaps;
-}
-
-export async function getAllUsernames() {
-  const usernames = [];
-  const fb = loadFirebaseStore();
-  try {
-    const data = await fb()
-      .collection(USERS_COLLECTION)
-      .get();
-    data.forEach(doc => {
-      usernames.push({
-        params: {
-          profile: doc.data().username,
-        },
-      });
-    });
-  } catch (err) {
-    console.error(err);
-  }
-  return usernames;
 }
