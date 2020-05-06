@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 import UINavBar from 'app/components/UI/navbar/navbar';
 import Profile from 'app/screens/profile/profile';
 import { loadFirebaseStore } from 'app/lib/db';
@@ -9,65 +8,9 @@ import {
 } from 'app/screens/lib/constants';
 import HourglasLoader from 'app/components/UI/loader/hourglass';
 import DynamicHead from 'app/components/UI/head/dynamic-head';
+import { getAllUsernames } from 'app/lib/hashmaps';
 
-export default function Post() {
-  // const current = loadFirebaseAuth().currentUser;
-  const router = useRouter();
-  const [profile, setProfile] = useState();
-  const [hashmaps, setHashmaps] = useState();
-  const [notFoundUser, setNotFoundUser] = useState();
-
-  useEffect(() => {
-    if (router && router.query.profile) {
-      const fb = loadFirebaseStore();
-      const profileRef = fb().collection(USERS_COLLECTION);
-      profileRef
-        .where('username', '==', router.query.profile)
-        .get()
-        .then(snapshot => {
-          if (snapshot.empty) {
-            console.log('No matching users. ', router.query.profile);
-            setNotFoundUser(router.query.profile);
-            return;
-          }
-
-          if (snapshot.size === 1) {
-            snapshot.forEach(doc => {
-              const key = doc.id;
-              setProfile({ ...doc.data(), key });
-              const hashmpasRef = fb().collection(HASHMAPS_COLLECTION);
-              hashmpasRef
-                .where('author', '==', key)
-                .orderBy('updatedAt', 'desc')
-                .get()
-                .then(snapshots => {
-                  if (snapshots.empty) {
-                    console.log('No matching hashmaps.');
-                    setHashmaps([]);
-                    return;
-                  }
-                  if (snapshots.size > 0) {
-                    const maps = [];
-                    snapshots.forEach(snap => {
-                      maps.push({ ...snap.data(), key: snap.id });
-                    });
-                    setHashmaps(maps);
-                  } else {
-                    setHashmaps([]);
-                  }
-                })
-                .catch(err => {
-                  console.log('Error getting documents', err);
-                });
-            });
-          }
-        })
-        .catch(err => {
-          console.log('Error getting documents', err);
-        });
-    }
-  }, [router]);
-
+export default ({ profile, hashmaps }) => {
   return (
     <>
       {profile ? (
@@ -79,7 +22,7 @@ export default function Post() {
       ) : (
         <DynamicHead />
       )}
-      {!notFoundUser ? (
+      {profile ? (
         <div className="h-screen">
           <UINavBar typeNav="profile" />
           <div className="flex justify-center items-center">
@@ -99,14 +42,57 @@ export default function Post() {
             <img
               className="px-24 pt-8"
               src="imgs/icons/page_not_found.svg"
-              alt="authentication"
+              alt="not found page"
             />
             <p className="pt-8 md:pb-12 md:pt-12 font-sans text-lg text-gray-600 text-center">
-              Usuário @{notFoundUser} não foi encontrado
+              Página não encontrada :(
             </p>
           </div>
         </div>
       )}
     </>
   );
+};
+
+export async function getStaticProps({ params }) {
+  const fb = loadFirebaseStore();
+  const profileRef = fb().collection(USERS_COLLECTION);
+  let profile;
+  const hashmaps = [];
+  try {
+    const dataProfile = await profileRef
+      .where('username', '==', params.profile)
+      .get();
+    if (dataProfile.size === 1) {
+      let key;
+      dataProfile.forEach(p => {
+        key = p.id;
+        profile = { ...p.data(), key: p.id };
+      });
+      const hashmpasRef = fb().collection(HASHMAPS_COLLECTION);
+      const hashmapData = await hashmpasRef
+        .where('author', '==', key)
+        .orderBy('updatedAt', 'desc')
+        .get();
+      if (hashmapData.size > 0) {
+        hashmapData.forEach(doc => {
+          const aux = { ...doc.data(), key: doc.id };
+          aux.createdAt = aux.createdAt.toDate().toISOString();
+          aux.updatedAt = aux.updatedAt.toDate().toISOString();
+          hashmaps.push(aux);
+        });
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  return { props: { profile, hashmaps } };
+}
+
+export async function getStaticPaths() {
+  const usernames = await getAllUsernames();
+  return {
+    paths: usernames,
+    fallback: true,
+  };
 }

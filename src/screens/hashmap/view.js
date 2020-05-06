@@ -5,7 +5,6 @@ import SectionHashmapView from 'app/components/hashmap/view';
 // import UISectionComments from 'app/components/UI/comments/comments';
 // import UISectionMoreHashMaps from 'app/components/UI/more-hashmaps/more-hashmaps';
 import PropTypes from 'prop-types';
-import HourglasLoader from 'app/components/UI/loader/hourglass';
 
 const View = ({ hashmap, posts, hashmapKey, authorId }) => {
   return (
@@ -21,8 +20,15 @@ const View = ({ hashmap, posts, hashmapKey, authorId }) => {
           {/* <UISectionMoreHashMaps /> */}
         </>
       ) : (
-        <div className="w-full justify-center h-64 flex items-end">
-          <HourglasLoader className="flex-1" />
+        <div className="md:px-64 text-center pt-16 md:pt-32">
+          <img
+            className="px-24 pt-8"
+            src="../imgs/icons/page_not_found.svg"
+            alt="not found page"
+          />
+          <p className="pt-8 md:pb-12 md:pt-12 font-sans text-lg text-gray-600 text-center">
+            Página não encontrada :(
+          </p>
         </div>
       )}
       {/* <UISectionComments /> */}
@@ -33,12 +39,12 @@ const View = ({ hashmap, posts, hashmapKey, authorId }) => {
 
 View.propTypes = {
   hashmap: PropTypes.shape(),
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string,
-    })
-  ).isRequired,
+  // posts: PropTypes.arrayOf(
+  //   PropTypes.shape({
+  //     title: PropTypes.string.isRequired,
+  //     description: PropTypes.string,
+  //   })
+  // ).isRequired,
   hashmapKey: PropTypes.string,
 };
 
