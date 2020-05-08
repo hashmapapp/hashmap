@@ -57,28 +57,33 @@ const NavBar = ({
   };
 
   useEffect(() => {
-    async function getUserByUid(uid) {
-      const userService = new UserService();
-      try {
-        const data = await userService.getUserById(uid);
-        setUserData(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
+    let mounted = true;
     loadFirebaseAuth().onAuthStateChanged(user => {
       if (user) {
-        setCurrentUser(user);
+        if (mounted) {
+          setCurrentUser(user);
+        }
         if (typeNav === 'edit' || typeNav === 'create') {
-          getUserByUid(user.uid);
+          const { uid } = user;
+          const userService = new UserService();
+          userService
+            .getUserById(uid)
+            .then(resolve => {
+              if (resolve && mounted) {
+                setUserData(resolve.data());
+              }
+              console.error('User not found');
+            })
+            .catch(error => console.error(error));
         }
       }
     });
+    // eslint-disable-next-line
+    return () => (mounted = false);
   }, []);
 
   return (
-    <header className="shadow-lg bg-gray-100">
+    <header className="shadow-lg">
       <div className="container mx-auto sm:px-24 sm:flex sm:justify-between sm:items:center sm:px-4 sm:py-3">
         <div className="flex items-center justify-between px-4 py-3 sm:p-0">
           <div>
@@ -192,7 +197,7 @@ const NavBar = ({
           {currentUser && (
             <Link href="/settings">
               <a className="md:hidden uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
-                Meu Perfil
+                Perfil
               </a>
             </Link>
           )}

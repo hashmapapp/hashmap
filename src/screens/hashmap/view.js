@@ -1,9 +1,7 @@
 import React from 'react';
 import UINavBar from 'app/components/UI/navbar/navbar';
-// import UIFooter from 'app/components/UI/footer/footer';
+import Footer from 'app/components/UI/footer/footer';
 import SectionHashmapView from 'app/components/hashmap/view';
-// import UISectionComments from 'app/components/UI/comments/comments';
-// import UISectionMoreHashMaps from 'app/components/UI/more-hashmaps/more-hashmaps';
 import PropTypes from 'prop-types';
 
 const View = ({ hashmap, posts, hashmapKey, authorId }) => {
@@ -17,7 +15,6 @@ const View = ({ hashmap, posts, hashmapKey, authorId }) => {
       {hashmap ? (
         <>
           <SectionHashmapView hashmap={hashmap} posts={posts} />
-          {/* <UISectionMoreHashMaps /> */}
         </>
       ) : (
         <div className="md:px-64 text-center pt-16 md:pt-32">
@@ -31,8 +28,7 @@ const View = ({ hashmap, posts, hashmapKey, authorId }) => {
           </p>
         </div>
       )}
-      {/* <UISectionComments /> */}
-      {/* <UIFooter /> */}
+      <Footer />
     </>
   );
 };

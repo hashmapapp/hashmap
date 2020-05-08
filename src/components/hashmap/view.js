@@ -25,12 +25,12 @@ const SectionHashmapView = ({ hashmap, posts }) => {
     bio: hashmap.author.bio,
   };
   return (
-    <div className="bg-gray-100">
+    <>
       <HeaderView data={headerData} />
       <ArticleView data={articleData} />
       <ShareButtons title={hashmap.title} summary={hashmap.subtitle} />
       <Footer data={authorData} />
-    </div>
+    </>
   );
 };
 

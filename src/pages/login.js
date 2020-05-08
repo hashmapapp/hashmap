@@ -16,7 +16,7 @@ export default () => {
   return (
     <>
       <DynamicHead titleText="Login - Hashmap" />
-      <div className="h-screen bg-gray-100">
+      <div className="h-screen">
         <UINavBar typeNav="signup" />
         <div className="py-6 md:pt-32 flex justify-center items-center">
           <SignIn />

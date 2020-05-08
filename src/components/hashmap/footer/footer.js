@@ -43,7 +43,6 @@ const footer = ({ data }) => (
         </div>
       </div>
     </div>
-    <hr className="container mx-auto md:px-24" />
   </div>
 );
 

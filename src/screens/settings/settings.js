@@ -78,9 +78,12 @@ const Settings = () => {
   };
 
   useEffect(() => {
+    let mounted = true;
     loadFirebaseAuth().onAuthStateChanged(user => {
       if (user) {
-        setCurrentUser(user);
+        if (mounted) {
+          setCurrentUser(user);
+        }
         const fb = loadFirebaseStore();
         const userRef = fb()
           .collection(USERS_COLLECTION)
@@ -88,9 +91,7 @@ const Settings = () => {
         userRef
           .get()
           .then(userDoc => {
-            if (!userDoc.exists) {
-              console.log('No such document!');
-            } else {
+            if (userDoc.exists && mounted) {
               setUserFirestore(userDoc.data());
             }
           })
@@ -99,6 +100,9 @@ const Settings = () => {
           });
       }
     });
+
+    // eslint-disable-next-line
+    return () => (mounted = false);
   }, []);
 
   const replaceLink = link => {
@@ -109,13 +113,13 @@ const Settings = () => {
     if (userFirestore) {
       switch (userFirestore.role) {
         case 'productor':
-          setRole('Produtor');
+          setRole('criador');
           break;
         case 'admin':
-          setRole('Administrador');
+          setRole('administrador');
           break;
         default:
-          setRole('Novato');
+          setRole('principiante');
           break;
       }
 
@@ -151,7 +155,11 @@ const Settings = () => {
                   <p className="font-bold">
                     Seja muito bem vind@, {userFirestore.displayName}!
                   </p>
-                  <p className="text-sm">Ainda estamos em uma versão beta.</p>
+                  <p className="text-sm">
+                    Ainda estamos em uma versão beta. Mas se você desejar, pode
+                    fazer parte do nosso <strong>Grupo Secreto</strong> e se
+                    tornar um <strong>CRIADOR</strong> de Hashmaps.
+                  </p>
                 </div>
               </div>
             </div>
