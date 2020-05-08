@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -15,6 +15,7 @@ import { hashmapReset } from 'app/redux/actions/hashmapActions';
 import { HashmapService } from 'app/services/hashmap.service';
 import { UserService } from 'app/services/user.service';
 import AccountDropdown from './account-dropdown';
+import { useOutsideAlerter } from '../lib/use-outside-alerter';
 
 const Avatar = styled.img`
   max-width: 100%;
@@ -35,6 +36,8 @@ const NavBar = ({
   const [showNav, setShowNav] = useState(false);
   const [userData, setUserData] = useState();
   const [currentUser, setCurrentUser] = useState();
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setShowNav);
 
   const signOut = () => {
     const auth = new AuthenticationServiceFirebase();
@@ -78,8 +81,9 @@ const NavBar = ({
         }
       }
     });
-    // eslint-disable-next-line
-    return () => (mounted = false);
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   return (
@@ -150,6 +154,7 @@ const NavBar = ({
           className={`px-2 pt-2 pb-4 sm:flex sm:p-0 ${
             showNav ? 'block' : 'hidden'
           }`}
+          ref={wrapperRef}
         >
           {currentUser &&
             authorization(ACTIONS_AUTH.CREATE_HASHMAP_BUTTON) &&

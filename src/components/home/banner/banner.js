@@ -45,14 +45,14 @@ const Banner = () => {
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:text-center">
             <p className="text-base leading-6 text-indigo-600 font-semibold tracking-wide uppercase">
-              Transactions
+              Hashmap
             </p>
             <h3 className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
-              A better way to send money
+              Ensine menos, recomende mais.
             </h3>
-            <p className="mt-4 max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto">
-              Lorem ipsum dolor sit amet consect adipisicing elit. Possimus
-              magnam voluptatum cupiditate veritatis in accusamus quisquam.
+            <p className="mt-4 max-w-2xl text-xl leading-7 text-gray-600 lg:mx-auto">
+              Adicione vídeos, imagens, livros, textos, links externos sobre o
+              que você quiser falar.
             </p>
           </div>
 
@@ -61,7 +61,7 @@ const Banner = () => {
               <li>
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-black text-white">
                       <svg
                         className="h-6 w-6"
                         stroke="currentColor"
@@ -79,12 +79,12 @@ const Banner = () => {
                   </div>
                   <div className="ml-4">
                     <h5 className="text-lg leading-6 font-medium text-gray-900">
-                      Competitive exchange rates
+                      Combinatividade
                     </h5>
-                    <p className="mt-2 text-base leading-6 text-gray-500">
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                      Maiores impedit perferendis suscipit eaque, iste dolor
-                      cupiditate blanditiis ratione.
+                    <p className="mt-2 text-base leading-6 text-gray-600">
+                      Descubra que é possível criar conteúdos inéditos apenas
+                      combinando-os, ouse nos temas, misture e recicle bons
+                      conteúdos que foram perdidos no tempo e espaço.
                     </p>
                   </div>
                 </div>
@@ -92,7 +92,7 @@ const Banner = () => {
               <li className="mt-10 md:mt-0">
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-black text-white">
                       <svg
                         className="h-6 w-6"
                         stroke="currentColor"
@@ -110,12 +110,11 @@ const Banner = () => {
                   </div>
                   <div className="ml-4">
                     <h5 className="text-lg leading-6 font-medium text-gray-900">
-                      No hidden fees
+                      Customização
                     </h5>
-                    <p className="mt-2 text-base leading-6 text-gray-500">
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                      Maiores impedit perferendis suscipit eaque, iste dolor
-                      cupiditate blanditiis ratione.
+                    <p className="mt-2 text-base leading-6 text-gray-600">
+                      Organize seus conteúdos, seja para estudo, aprendizado,
+                      entretenimento ou o que der na teia.
                     </p>
                   </div>
                 </div>
@@ -123,7 +122,7 @@ const Banner = () => {
               <li className="mt-10 md:mt-0">
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-black text-white">
                       <svg
                         className="h-6 w-6"
                         stroke="currentColor"
@@ -141,12 +140,13 @@ const Banner = () => {
                   </div>
                   <div className="ml-4">
                     <h5 className="text-lg leading-6 font-medium text-gray-900">
-                      Transfers are instant
+                      Comunidade
                     </h5>
-                    <p className="mt-2 text-base leading-6 text-gray-500">
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                      Maiores impedit perferendis suscipit eaque, iste dolor
-                      cupiditate blanditiis ratione.
+                    <p className="mt-2 text-base leading-6 text-gray-600">
+                      Permita que outras pessoas também aprendam e descubram
+                      novas experiências baseadas nas suas recomendações. Uma
+                      boa recomendação é uma possibilidade de expandir a sua
+                      satisfação em um outro ser humano.
                     </p>
                   </div>
                 </div>
@@ -154,7 +154,7 @@ const Banner = () => {
               <li className="mt-10 md:mt-0">
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-black text-white">
                       <svg
                         className="h-6 w-6"
                         stroke="currentColor"
@@ -172,12 +172,13 @@ const Banner = () => {
                   </div>
                   <div className="ml-4">
                     <h5 className="text-lg leading-6 font-medium text-gray-900">
-                      Mobile notifications
+                      Curadoria
                     </h5>
-                    <p className="mt-2 text-base leading-6 text-gray-500">
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                      Maiores impedit perferendis suscipit eaque, iste dolor
-                      cupiditate blanditiis ratione.
+                    <p className="mt-2 text-base leading-6 text-gray-600">
+                      O mundo está cheio de algoritmos que escolhem aquilo que
+                      você deveria ver, ouvir e sentir, monte você mesmo boas
+                      recomendações de conteúdos sobre o tema que preferir e
+                      permita que outras pessoas possam também encontrá-los.
                     </p>
                   </div>
                 </div>

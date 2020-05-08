@@ -101,8 +101,9 @@ const Settings = () => {
       }
     });
 
-    // eslint-disable-next-line
-    return () => (mounted = false);
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const replaceLink = link => {
