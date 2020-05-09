@@ -125,6 +125,19 @@ class AuthenticationServiceFirebase {
       })
       .catch(callbackError);
   }
+
+  requesterGroup(
+    callbackSuccess = () => {
+      console.log('Requester Success');
+    },
+    callbackError = error => console.log(error.code, error.message)
+  ) {
+    const user = this.fb.currentUser;
+    this.httpFirebase
+      .updateItem(USERS_COLLECTION, user.uid, { groupMember: true })
+      .then(callbackSuccess)
+      .catch(callbackError);
+  }
 }
 
 export default AuthenticationServiceFirebase;

@@ -20,7 +20,9 @@ const header = ({ title, subtitle, handlerTitle, handlerSubtitle }) => {
         }}
         value={title}
       />
-      <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">Subtítulo</h6>
+      <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">
+        Subtítulo (Opcional)
+      </h6>
       <TextArea
         className="Text"
         rows="4"

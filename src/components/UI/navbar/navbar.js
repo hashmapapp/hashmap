@@ -75,7 +75,6 @@ const NavBar = ({
               if (resolve && mounted) {
                 setUserData(resolve.data());
               }
-              console.error('User not found');
             })
             .catch(error => console.error(error));
         }

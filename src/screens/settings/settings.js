@@ -23,6 +23,7 @@ const Settings = () => {
   const [role, setRole] = useState();
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingRequester, setLoadingRequester] = useState(false);
   const [defaultFiles, setDefaultFiles] = useState([]);
   const [currentUser, setCurrentUser] = useState();
 
@@ -48,7 +49,6 @@ const Settings = () => {
   const updateSuccess = () => {
     setLoading(false);
     setEdit(false);
-    console.log('Profile Update');
   };
 
   const updateError = error => {
@@ -70,6 +70,15 @@ const Settings = () => {
       updateSuccess,
       updateError
     );
+  };
+
+  const handlerRequestSecretGroup = () => {
+    setLoadingRequester(true);
+    const auth = new AuthenticationServiceFirebase();
+    auth.requesterGroup(() => {
+      handlerChangeForm('groupMember', true);
+      setLoadingRequester(false);
+    });
   };
 
   const onValidators = evt => {
@@ -139,28 +148,99 @@ const Settings = () => {
         <div className="container mx-auto md:px-64">
           {userFirestore.role === 'default' && (
             <div
-              className="mb-16 mx-4 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md"
+              className={`mb-16 mx-4 ${
+                userFirestore.groupMember
+                  ? 'bg-teal-100 border-teal-500'
+                  : 'bg-blue-100 border-blue-500'
+              } border-t-4 
+              rounded-b text-teal-900 px-4 py-3 shadow-md`}
               role="alert"
             >
               <div className="flex">
                 <div className="py-1">
                   <svg
-                    className="fill-current h-6 w-6 text-teal-500 mr-4"
+                    className={`fill-current h-6 w-6 ${
+                      userFirestore.groupMember
+                        ? 'text-teal-500'
+                        : 'text-blue-500'
+                    } mr-4`}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                   >
                     <path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
                   </svg>
                 </div>
-                <div>
-                  <p className="font-bold">
-                    Seja muito bem vind@, {userFirestore.displayName}!
-                  </p>
-                  <p className="text-sm">
-                    Ainda estamos em uma versão beta. Mas se você desejar, pode
-                    fazer parte do nosso <strong>Grupo Secreto</strong> e se
-                    tornar um <strong>CRIADOR</strong> de Hashmaps.
-                  </p>
+                <div className="w-full">
+                  {userFirestore.groupMember ? (
+                    <>
+                      <p className="font-bold">
+                        Você solicitou participação ao Grupo Secreto!
+                      </p>
+                      <p className="text-sm">
+                        Mantenha o seu perfil atualizado, entraremos em contato.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="font-bold">
+                        Seja muito bem vind@, {userFirestore.displayName}!
+                      </p>
+                      <p className="text-sm">
+                        Ainda estamos em uma versão beta. Mas se você desejar,
+                        pode fazer parte do nosso <strong>Grupo Secreto</strong>{' '}
+                        e se tornar um <strong>CRIADOR</strong> de Hashmaps.
+                      </p>
+                    </>
+                  )}
+                  <div className="flex overflow-hidden pt-4 justify-between">
+                    <div>
+                      <img
+                        className="inline-block h-10 w-10 rounded-full text-white shadow-solid"
+                        src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt=""
+                      />
+                      <img
+                        className="-ml-2 inline-block h-10 w-10 rounded-full text-white shadow-solid"
+                        src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt=""
+                      />
+                      <img
+                        className="-ml-2 inline-block h-10 w-10 rounded-full text-white shadow-solid"
+                        src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+                        alt=""
+                      />
+                      <img
+                        className="-ml-2 inline-block h-10 w-10 rounded-full text-white shadow-solid"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt=""
+                      />
+                      {userFirestore.groupMember &&
+                        userFirestore.photoURL &&
+                        userFirestore.photoURL.url && (
+                          <img
+                            className="-ml-2 inline-block h-10 w-10 rounded-full text-white shadow-solid"
+                            src={userFirestore.photoURL.url}
+                            alt="Perfil"
+                          />
+                        )}
+                    </div>
+                    {!userFirestore.groupMember &&
+                      (loadingRequester ? (
+                        <div className="flex justify-end">
+                          <div className="bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold py-2 px-4 border border-blue-500 rounded shadow w-24 flex justify-center">
+                            <Loader />
+                          </div>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={handlerRequestSecretGroup}
+                          type="button"
+                          className="bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold py-2 px-4 border border-blue-500 rounded shadow"
+                        >
+                          Solicitar
+                        </button>
+                      ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -222,20 +302,6 @@ const Settings = () => {
             </div>
             {!edit && (
               <div className="text-center">
-                <h2 className="my-4 text-gray-900 font-bold text-xl mb-2">
-                  {userFirestore.displayName}
-                </h2>
-                <h2 className="text-sm text-gray-600">
-                  {`@${userFirestore.username}`}
-                </h2>
-                <h2 className="mb-4 text-sm text-gray-600">
-                  {userFirestore.email}
-                </h2>
-                {userFirestore.bio && (
-                  <p className="italic font-sans text-base text-gray-700 p-4 ">
-                    &quot;{userFirestore.bio}&quot;
-                  </p>
-                )}
                 <div>
                   {userFirestore.instagram && (
                     <Link href={`${socialLinks.instagram}`}>
@@ -316,6 +382,52 @@ const Settings = () => {
                       <span>Medium</span>
                     </button>
                   )}
+                </div>
+              </div>
+            )}
+
+            {!edit && (
+              <div className="mt-4 bg-gray-100 md:shadow-lg overflow-hidden sm:rounded-lg md:mb-24">
+                <div className="px-4 py-5 border-b border-gray-200 sm:px-6">
+                  <h3 className="text-lg leading-6 font-medium text-gray-900">
+                    Meu Perfil
+                  </h3>
+                </div>
+                <div>
+                  <dl>
+                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm leading-5 font-medium text-gray-500">
+                        Nome
+                      </dt>
+                      <dd className="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        {userFirestore.displayName}
+                      </dd>
+                    </div>
+                    <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm leading-5 font-medium text-gray-500">
+                        Usuário
+                      </dt>
+                      <dd className="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        {`@${userFirestore.username}`}
+                      </dd>
+                    </div>
+                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm leading-5 font-medium text-gray-500">
+                        E-mail
+                      </dt>
+                      <dd className="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        {userFirestore.email}
+                      </dd>
+                    </div>
+                    <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm leading-5 font-medium text-gray-500">
+                        Bio
+                      </dt>
+                      <dd className="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                        {userFirestore.bio}
+                      </dd>
+                    </div>
+                  </dl>
                 </div>
               </div>
             )}

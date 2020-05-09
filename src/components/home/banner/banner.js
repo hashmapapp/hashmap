@@ -21,8 +21,8 @@ const animate = keyframes`
 `;
 
 const ImageAnimation = styled.div`
-  -webkit-animation: ${animate} 5s linear infinite;
-  animation: ${animate} 5s linear infinite;
+  -webkit-animation: ${animate} 4s linear infinite;
+  animation: ${animate} 4s linear infinite;
 `;
 
 const Banner = () => {
@@ -30,18 +30,18 @@ const Banner = () => {
     <>
       <UINavBar />
       <div className="md:px-64 text-center pt-16 md:pt-16 md:pt-32">
-        <ImageAnimation className="flex justify-center">
+        <ImageAnimation className="md:flex md:justify-center">
           <img
             className="px-24 xl:w-2/4"
             src="imgs/icons/wait.svg"
             alt="Thank You"
           />
         </ImageAnimation>
-        <p className="px-24 pt-8 md:pb-12 md:pt-12 font-sans text-lg text-gray-600 text-center">
+        <p className="px-24 py-8 md:py-12 font-sans text-lg text-gray-600 text-center">
           Os melhores <strong>Hashmaps</strong> aqui, em breve.
         </p>
       </div>
-      <div className="py-12 bg-white">
+      <div className="pt-8 pb-12 bg-white">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:text-center">
             <p className="text-base leading-6 text-indigo-600 font-semibold tracking-wide uppercase">
@@ -62,19 +62,7 @@ const Banner = () => {
                 <div className="flex">
                   <div className="flex-shrink-0">
                     <div className="flex items-center justify-center h-12 w-12 rounded-md bg-black text-white">
-                      <svg
-                        className="h-6 w-6"
-                        stroke="currentColor"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                        />
-                      </svg>
+                      <img src="imgs/icons/puzzle.svg" alt="" className="p-2" />
                     </div>
                   </div>
                   <div className="ml-4">
@@ -93,19 +81,11 @@ const Banner = () => {
                 <div className="flex">
                   <div className="flex-shrink-0">
                     <div className="flex items-center justify-center h-12 w-12 rounded-md bg-black text-white">
-                      <svg
-                        className="h-6 w-6"
-                        stroke="currentColor"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
-                        />
-                      </svg>
+                      <img
+                        src="imgs/icons/computador.svg"
+                        alt=""
+                        className="p-2"
+                      />
                     </div>
                   </div>
                   <div className="ml-4">
@@ -123,19 +103,11 @@ const Banner = () => {
                 <div className="flex">
                   <div className="flex-shrink-0">
                     <div className="flex items-center justify-center h-12 w-12 rounded-md bg-black text-white">
-                      <svg
-                        className="h-6 w-6"
-                        stroke="currentColor"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M13 10V3L4 14h7v7l9-11h-7z"
-                        />
-                      </svg>
+                      <img
+                        src="imgs/icons/comunidade.svg"
+                        alt=""
+                        className="p-2"
+                      />
                     </div>
                   </div>
                   <div className="ml-4">
@@ -155,19 +127,7 @@ const Banner = () => {
                 <div className="flex">
                   <div className="flex-shrink-0">
                     <div className="flex items-center justify-center h-12 w-12 rounded-md bg-black text-white">
-                      <svg
-                        className="h-6 w-6"
-                        stroke="currentColor"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                        />
-                      </svg>
+                      <img src="imgs/icons/sinais.svg" alt="" className="p-2" />
                     </div>
                   </div>
                   <div className="ml-4">

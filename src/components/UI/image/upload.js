@@ -89,7 +89,7 @@ const ImageUpload = ({
         setFiles(fileItems.map(fileItem => fileItem.file));
       }}
       server={server}
-      labelIdle="Represente visualmente seu hashmap, com uma imagem ou GIF"
+      labelIdle="Selecione uma Imagem"
     />
   );
 };
