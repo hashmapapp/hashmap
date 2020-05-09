@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -15,6 +15,7 @@ import { hashmapReset } from 'app/redux/actions/hashmapActions';
 import { HashmapService } from 'app/services/hashmap.service';
 import { UserService } from 'app/services/user.service';
 import AccountDropdown from './account-dropdown';
+import { useOutsideAlerter } from '../lib/use-outside-alerter';
 
 const Avatar = styled.img`
   max-width: 100%;
@@ -35,6 +36,8 @@ const NavBar = ({
   const [showNav, setShowNav] = useState(false);
   const [userData, setUserData] = useState();
   const [currentUser, setCurrentUser] = useState();
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setShowNav);
 
   const signOut = () => {
     const auth = new AuthenticationServiceFirebase();
@@ -57,28 +60,33 @@ const NavBar = ({
   };
 
   useEffect(() => {
-    async function getUserByUid(uid) {
-      const userService = new UserService();
-      try {
-        const data = await userService.getUserById(uid);
-        setUserData(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
+    let mounted = true;
     loadFirebaseAuth().onAuthStateChanged(user => {
       if (user) {
-        setCurrentUser(user);
+        if (mounted) {
+          setCurrentUser(user);
+        }
         if (typeNav === 'edit' || typeNav === 'create') {
-          getUserByUid(user.uid);
+          const { uid } = user;
+          const userService = new UserService();
+          userService
+            .getUserById(uid)
+            .then(resolve => {
+              if (resolve && mounted) {
+                setUserData(resolve.data());
+              }
+            })
+            .catch(error => console.error(error));
         }
       }
     });
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   return (
-    <header className="shadow-lg bg-gray-100">
+    <header className="shadow-lg">
       <div className="container mx-auto sm:px-24 sm:flex sm:justify-between sm:items:center sm:px-4 sm:py-3">
         <div className="flex items-center justify-between px-4 py-3 sm:p-0">
           <div>
@@ -145,6 +153,7 @@ const NavBar = ({
           className={`px-2 pt-2 pb-4 sm:flex sm:p-0 ${
             showNav ? 'block' : 'hidden'
           }`}
+          ref={wrapperRef}
         >
           {currentUser &&
             authorization(ACTIONS_AUTH.CREATE_HASHMAP_BUTTON) &&
@@ -192,7 +201,7 @@ const NavBar = ({
           {currentUser && (
             <Link href="/settings">
               <a className="md:hidden uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
-                Meu Perfil
+                Perfil
               </a>
             </Link>
           )}

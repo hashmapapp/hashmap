@@ -76,7 +76,7 @@ class AuthenticationServiceFirebase {
     this.fb
       .signOut()
       .then(() => {
-        console.log('Saiu com Sucesso');
+        // console.log('Saiu com Sucesso');
         localStorage.setItem('@hashmap/role', undefined);
         callback();
       })
@@ -98,21 +98,23 @@ class AuthenticationServiceFirebase {
   ) {
     const user = this.fb.currentUser;
     const profileData = {};
-    if (displayName) profileData.displayName = displayName;
-    if (photoURL.path && photoURL.url) profileData.photoURL = photoURL.url;
-    else profileData.photoURL = '';
-
     const profileCloud = {};
-    if (displayName) profileCloud.displayName = displayName;
-    if (photoURL.path && photoURL.url)
+    if (displayName) {
+      profileData.displayName = displayName;
+      profileCloud.displayName = displayName;
+    }
+    if (photoURL && photoURL.path && photoURL.url) {
+      profileData.photoURL = photoURL.url;
       profileCloud.photoURL = { path: photoURL.path, url: photoURL.url };
-    else profileCloud.photoURL = {};
+    } else {
+      profileData.photoURL = '';
+      profileCloud.photoURL = {};
+    }
     if (bio) profileCloud.bio = bio;
     if (facebook) profileCloud.facebook = facebook;
     if (instagram) profileCloud.instagram = instagram;
     if (twitter) profileCloud.twitter = twitter;
     if (linkedin) profileCloud.linkedin = linkedin;
-
     user
       .updateProfile(profileData)
       .then(() => {
@@ -121,6 +123,19 @@ class AuthenticationServiceFirebase {
           .then(callbackSuccess)
           .catch(callbackError);
       })
+      .catch(callbackError);
+  }
+
+  requesterGroup(
+    callbackSuccess = () => {
+      console.log('Requester Success');
+    },
+    callbackError = error => console.log(error.code, error.message)
+  ) {
+    const user = this.fb.currentUser;
+    this.httpFirebase
+      .updateItem(USERS_COLLECTION, user.uid, { groupMember: true })
+      .then(callbackSuccess)
       .catch(callbackError);
   }
 }

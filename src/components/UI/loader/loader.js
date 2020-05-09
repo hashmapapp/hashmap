@@ -1,5 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const animate = keyframes`
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+`;
 
 const Loading = styled.div`
   border: 3px solid #f3f3f3;
@@ -7,27 +16,8 @@ const Loading = styled.div`
   border-radius: 50%;
   width: 24px;
   height: 24px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
-
-  /* Safari */
-  @-webkit-keyframes spin {
-    0% {
-      -webkit-transform: rotate(0deg);
-    }
-    100% {
-      -webkit-transform: rotate(360deg);
-    }
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
+  -webkit-animation: ${animate} 2s linear infinite; /* Safari */
+  animation: ${animate} 2s linear infinite;
 `;
 
 const Loader = () => <Loading />;

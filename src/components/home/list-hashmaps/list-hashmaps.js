@@ -30,7 +30,7 @@ const Item = ({ hashmap }) => {
         style={{ backgroundImage: `url('${hashmap.imageUrl}')` }}
         title={hashmap.title}
         onClick={() => {
-          Router.push(`/view?key=${hashmap.key}`);
+          Router.push('/view/[hashmap]', `/view/${hashmap.key}`);
         }}
       />
 
@@ -39,7 +39,7 @@ const Item = ({ hashmap }) => {
       leading-normal shadow-xl w-full bg-white"
       >
         <div className="">
-          <Link href={`/view?key=${hashmap.key}`}>
+          <Link href="/view/[hashmap]" as={`/view/${hashmap.key}`}>
             <a>
               <div className="leading-snug font-medium text-gray-900 text-xl mb-2">
                 {hashmap.title}

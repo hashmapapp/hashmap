@@ -46,7 +46,7 @@ const LinkPreview = ({ data }) => {
           </Link>
         </div>
       )}
-      <div className="bg-gray-100 md:mx-2 py-2 rounded-lg">
+      <div className="md:mx-2 py-2 rounded-lg">
         <div className="px-1 uppercase tracking-wide text-xs text-indigo-600 font-bold">
           {domain}
         </div>

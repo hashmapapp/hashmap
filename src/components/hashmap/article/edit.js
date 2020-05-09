@@ -69,7 +69,9 @@ const article = ({
           defaultFiles={defaultFiles}
         />
       )}
-      <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">Descrição</h6>
+      <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">
+        Descrição (Opcional)
+      </h6>
       <TextArea
         className="Text"
         rows="5"

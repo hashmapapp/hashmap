@@ -37,7 +37,7 @@ const SignUp = () => {
     ) {
       setLoading(true);
       auth.createAccount(name, email, password, () => {
-        Router.push('/');
+        Router.push('/settings');
       });
     }
   };

@@ -12,7 +12,7 @@ const article = ({ data }) => {
 
   return (
     <>
-      <article className="bg-gray-100">
+      <article>
         <div className="container mx-auto pt-4 pb-2">
           <div className="px-2 md:px-24 flex justify-center">
             <img
@@ -47,7 +47,7 @@ const article = ({ data }) => {
           )}
         </div>
       </article>
-      <article className="bg-gray-100">
+      <article>
         <div className="container mx-auto md:px-64 py-2">
           {data.posts.map(post => (
             <PublicationView key={post.key} data={post} />

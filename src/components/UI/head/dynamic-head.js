@@ -34,7 +34,7 @@ DynamicHead.propTypes = {
 
 DynamicHead.defaultProps = {
   titleText: 'Hashmap',
-  description: 'Um lugar onde o conhecimento se contrói com referências.',
+  description: 'Ensine menos, recomende mais.',
   url: 'https://hashmap.now.sh/',
   imageUrl: 'https://hashmap-nx3c6ypit.now.sh/imgs/logo/H.png',
 };

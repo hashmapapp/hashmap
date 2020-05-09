@@ -6,14 +6,15 @@ import { loadFirebaseAuth } from 'app/lib/db';
 const withAuthorization = (WrappedComponent, key) => {
   const Component = props => {
     useEffect(() => {
-      const user = loadFirebaseAuth().currentUser;
-      const auth = authorization(key);
-      if (!user || !auth) {
-        console.log(
-          'Usuário não logado ou não tem permissão para esta acessar esta página'
-        );
-        Router.push('/login');
-      }
+      loadFirebaseAuth().onAuthStateChanged(user => {
+        const auth = authorization(key);
+        if (!user || !auth) {
+          console.log(
+            'Usuário não logado ou não tem permissão para esta acessar esta página'
+          );
+          Router.push('/login');
+        }
+      });
     }, []);
 
     return <WrappedComponent {...props} />;

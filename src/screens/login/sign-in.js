@@ -91,14 +91,14 @@ const SignIn = () => {
           )}
         </div>
         <div className="flex items-center justify-between">
-          <Link href="/">
+          {/* <Link href="/">
             <a
               className="inline-block align-baseline font-bold text-sm 
                 text-blue-500 hover:text-blue-800"
             >
               Esqueceu a senha?
             </a>
-          </Link>
+          </Link> */}
           {!loading && (
             <button
               className="w-24 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 
