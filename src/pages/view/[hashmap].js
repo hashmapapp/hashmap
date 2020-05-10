@@ -27,7 +27,7 @@ export default ({ hashmap, posts, hashmapKey, authorId }) => {
   );
 };
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   let hashmap;
   const posts = [];
   const FirebaseStore = loadFirebaseStore();
@@ -61,10 +61,10 @@ export async function getStaticProps({ params }) {
   return { props: { hashmap, posts, hashmapKey, authorId: hashmap.author } };
 }
 
-export async function getStaticPaths() {
-  const hashmapKeys = await getAllHashmapsKeys();
-  return {
-    paths: hashmapKeys,
-    fallback: true,
-  };
-}
+// export async function getStaticPaths() {
+//   const hashmapKeys = await getAllHashmapsKeys();
+//   return {
+//     paths: hashmapKeys,
+//     fallback: true,
+//   };
+// }

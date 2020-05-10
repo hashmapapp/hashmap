@@ -26,9 +26,7 @@ const ImageUpload = ({
 
       // upload the image to firebase
       const path = `${storageName}/${id}`;
-      const task = storage.child(path).put(file, {
-        contentType: 'image/jpeg',
-      });
+      const task = storage.child(path).put(file);
 
       // monitor the task to provide updates to FilePond
       task.on(

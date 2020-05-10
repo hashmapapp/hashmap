@@ -17,7 +17,11 @@ const ShareButtons = ({ title, summary }) => {
     <>
       {url && (
         <div className="container mx-auto px-4 md:px-64 pt-8">
-          <WhatsappShareButton title={title} url={url} className="ml-2">
+          <WhatsappShareButton
+            title={`Veja só essas recomendações: ${title}`}
+            url={url}
+            className="ml-2"
+          >
             <WhatsappIcon size={32} round />
           </WhatsappShareButton>
           <LinkedinShareButton
