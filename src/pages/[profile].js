@@ -12,15 +12,15 @@ import DynamicHead from 'app/components/UI/head/dynamic-head';
 export default ({ profile, hashmaps }) => {
   return (
     <>
-      {profile ? (
-        <DynamicHead
-          titleText={`${profile.displayName} - Hashmap`}
-          description={profile.bio}
-          imageUrl={profile.imageUrl}
-        />
-      ) : (
-        <DynamicHead />
-      )}
+      <DynamicHead
+        titleText={profile ? `${profile.displayName} - Hashmap` : undefined}
+        description={profile ? profile.bio : undefined}
+        imageUrl={
+          profile && profile.photoUrl && profile.photoUrl.url
+            ? profile.photoUrl.url
+            : undefined
+        }
+      />
       {profile ? (
         <div className="h-screen">
           <UINavBar typeNav="profile" />
