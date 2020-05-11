@@ -16,8 +16,8 @@ export default ({ profile, hashmaps }) => {
         titleText={profile ? `${profile.displayName} - Hashmap` : undefined}
         description={profile ? profile.bio : undefined}
         imageUrl={
-          profile && profile.photoUrl && profile.photoUrl.url
-            ? profile.photoUrl.url
+          profile && profile.photoURL && profile.photoURL.url
+            ? profile.photoURL.url
             : undefined
         }
       />

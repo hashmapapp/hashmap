@@ -19,13 +19,14 @@ const header = ({ title, subtitle, handlerTitle, handlerSubtitle }) => {
           handlerTitle(evt.target.value);
         }}
         value={title}
+        maxLength="50"
       />
       <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">
         Subtítulo (Opcional)
       </h6>
       <TextArea
         className="Text"
-        rows="4"
+        rows="2"
         type="text"
         id="subtitle"
         name="subtitle"
@@ -34,6 +35,7 @@ const header = ({ title, subtitle, handlerTitle, handlerSubtitle }) => {
           handlerSubtitle(evt.target.value);
         }}
         value={subtitle}
+        maxLength="150"
       />
     </header>
   );
