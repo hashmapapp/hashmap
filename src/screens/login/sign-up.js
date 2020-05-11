@@ -64,6 +64,7 @@ const SignUp = () => {
               placeholder="Como quer ser chamad@?"
               value={name}
               onChange={evt => setName(evt.target.value)}
+              maxLength="50"
             />
           </label>
         </div>
@@ -82,6 +83,7 @@ const SignUp = () => {
               placeholder="Será seu nome de usuário"
               value={email}
               onChange={evt => setEmail(evt.target.value)}
+              maxLength="150"
             />
           </label>
         </div>
@@ -100,6 +102,7 @@ const SignUp = () => {
               placeholder="******************"
               value={password}
               onChange={evt => setPassword(evt.target.value)}
+              maxLength="50"
             />
           </label>
           {/* <p className="text-red-500 text-xs italic">
@@ -121,6 +124,7 @@ const SignUp = () => {
               placeholder="******************"
               value={passwordConfirm}
               onChange={evt => setPasswordConfirm(evt.target.value)}
+              maxLength="50"
             />
           </label>
         </div>

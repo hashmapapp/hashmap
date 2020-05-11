@@ -450,6 +450,7 @@ const Settings = () => {
                       onChange={evt => {
                         handlerChangeForm('displayName', evt.target.value);
                       }}
+                      maxLength="50"
                     />
                   </label>
                 </div>
@@ -491,7 +492,7 @@ const Settings = () => {
                   >
                     Bio
                     <textarea
-                      rows="5"
+                      rows="4"
                       className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                       id="bio"
                       type="text"
@@ -499,6 +500,7 @@ const Settings = () => {
                       onChange={evt => {
                         handlerChangeForm('bio', evt.target.value);
                       }}
+                      maxLength="200"
                     />
                   </label>
                 </div>

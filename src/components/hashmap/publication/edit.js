@@ -124,6 +124,7 @@ const Publication = ({
                 handlerTitle(e.target.value, temporaryKey);
               }}
               value={data.title}
+              maxLength="50"
             />
           </div>
           <div className="col-span-1 md:col-span-1 text-right flex-shrink">
@@ -160,7 +161,7 @@ const Publication = ({
         {showTextDescription && (
           <TextArea
             className="Text"
-            rows="10"
+            rows="5"
             type="text"
             id="description"
             name="description"
@@ -169,6 +170,7 @@ const Publication = ({
               handlerData(e.target.value, 'textDescription', temporaryKey);
             }}
             value={data.textDescription || ''}
+            maxLength="500"
           />
         )}
         {showLink && (

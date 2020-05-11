@@ -84,6 +84,7 @@ const article = ({
           handlerDescription(e.target.value);
         }}
         value={description}
+        maxLength="500"
       />
       {posts
         .filter(post => !post.key.startsWith('DELETE'))
