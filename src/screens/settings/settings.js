@@ -16,6 +16,7 @@ import { IoMdLink } from 'react-icons/io';
 import Loader from 'app/components/UI/loader/loader';
 import ProfileImageUpload from 'app/components/UI/image/profile-upload';
 import AuthenticationServiceFirebase from 'app/services/authentication.service';
+import { replaceLink } from '../lib/replaceLinks';
 
 const Settings = () => {
   const [userFirestore, setUserFirestore] = useState({});
@@ -115,10 +116,6 @@ const Settings = () => {
     };
   }, []);
 
-  const replaceLink = link => {
-    return link ? `//${link.split('//')[1]}` : undefined;
-  };
-
   useMemo(() => {
     if (userFirestore) {
       switch (userFirestore.role) {
@@ -134,10 +131,10 @@ const Settings = () => {
       }
 
       const links = {};
-      links.instagram = replaceLink(userFirestore.instagram);
-      links.twitter = replaceLink(userFirestore.twitter);
-      links.linkedin = replaceLink(userFirestore.linkedin);
-      links.facebook = replaceLink(userFirestore.facebook);
+      links.instagram = replaceLink(userFirestore.instagram, 'instagram');
+      links.twitter = replaceLink(userFirestore.twitter, 'twitter');
+      links.linkedin = replaceLink(userFirestore.linkedin, 'linkedin');
+      links.facebook = replaceLink(userFirestore.facebook, 'facebook');
       setSocialLinks(links);
     }
   }, [userFirestore]);

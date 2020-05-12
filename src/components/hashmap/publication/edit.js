@@ -72,6 +72,12 @@ const Publication = ({
       const embed = `https://www.youtube.com/embed/${videoId}`;
       handlerData({ value, embed }, 'videoYT', temporaryKey);
       setVideoYT(embed);
+    } else if (value.includes('youtu.be')) {
+      const url = value.replace('https://', '').replace('http://', '');
+      const videoId = url.split('/')[1];
+      const embed = `https://www.youtube.com/embed/${videoId}`;
+      handlerData({ value, embed }, 'videoYT', temporaryKey);
+      setVideoYT(embed);
     } else {
       setVideoYT('');
     }

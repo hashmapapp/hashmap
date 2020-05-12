@@ -11,26 +11,17 @@ import {
   FaMediumM,
 } from 'react-icons/fa';
 import CircleLoader from 'app/components/UI/loader/circle';
+import { replaceLink } from '../lib/replaceLinks';
 
 const Profile = ({ profile, hashmaps }) => {
   const [socialLinks, setSocialLinks] = useState({});
 
-  const replaceLink = link => {
-    if (link) {
-      if (link.startsWith('http://') || link.startsWith('https://')) {
-        return `//${link.split('//')[1]}`;
-      }
-      return `//${link}`;
-    }
-    return link;
-  };
-
   useMemo(() => {
     const links = {};
-    links.instagram = replaceLink(profile.instagram);
-    links.twitter = replaceLink(profile.twitter);
-    links.linkedin = replaceLink(profile.linkedin);
-    links.facebook = replaceLink(profile.facebook);
+    links.instagram = replaceLink(profile.instagram, 'instagram');
+    links.twitter = replaceLink(profile.twitter, 'twitter');
+    links.linkedin = replaceLink(profile.linkedin, 'linkedin');
+    links.facebook = replaceLink(profile.facebook, 'facebook');
     setSocialLinks(links);
   }, [profile]);
 

@@ -111,6 +111,7 @@ const ProfileImageUpload = ({
       styleProgressIndicatorPosition="right bottom"
       styleButtonRemoveItemPosition="left bottom"
       styleButtonProcessItemPosition="right bottom"
+      acceptedFileTypes={['image/png', 'image/jpg', 'image/jpeg']}
     />
   );
 };
