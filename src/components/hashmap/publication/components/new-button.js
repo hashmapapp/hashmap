@@ -9,7 +9,7 @@ const NewPublication = ({ onAction }) => (
     border border-gray-400 rounded-full shadow"
       onClick={onAction}
     >
-      + Nova Seção
+      + Adicionar
     </button>
   </div>
 );

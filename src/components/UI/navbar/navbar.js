@@ -30,7 +30,7 @@ const NavBar = ({
   typeNav,
   hashmapKey,
   handlerReset,
-  hashmapRedux,
+  // hashmapRedux,
   authorKey,
 }) => {
   const [showNav, setShowNav] = useState(false);
@@ -48,11 +48,11 @@ const NavBar = ({
     Router.push('/[profile]', `/${userData.username}`);
   };
 
-  const handlerSave = evt => {
-    evt.preventDefault();
-    // console.log(hashmapRedux);
-    HashmapService.saveHashmap(hashmapRedux, callback, currentUser.uid);
-  };
+  // const handlerSave = evt => {
+  //   evt.preventDefault();
+  //   // console.log(hashmapRedux);
+  //   HashmapService.saveHashmap(hashmapRedux, callback, currentUser.uid);
+  // };
 
   const handlerDelete = evt => {
     evt.preventDefault();
@@ -180,7 +180,7 @@ const NavBar = ({
                 </a>
               </Link>
             )}
-          {currentUser && (typeNav === 'edit' || typeNav === 'create') && (
+          {/* {currentUser && (typeNav === 'edit' || typeNav === 'create') && (
             <button
               onClick={handlerSave}
               type="button"
@@ -188,7 +188,7 @@ const NavBar = ({
             >
               Salvar
             </button>
-          )}
+          )} */}
           {currentUser && typeNav === 'edit' && (
             <button
               type="button"
@@ -239,7 +239,7 @@ const NavBar = ({
 NavBar.propTypes = {
   typeNav: PropTypes.string,
   hashmapKey: PropTypes.string,
-  hashmapRedux: PropTypes.shape().isRequired,
+  // hashmapRedux: PropTypes.shape().isRequired,
   handlerReset: PropTypes.func.isRequired,
 };
 
@@ -248,11 +248,11 @@ NavBar.defaultProps = {
   hashmapKey: undefined,
 };
 
-const mapStateToProps = state => ({
-  hashmapRedux: state.hashmap,
-});
+// const mapStateToProps = state => ({
+//   hashmapRedux: state.hashmap,
+// });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ handlerReset: hashmapReset }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default connect(null, mapDispatchToProps)(NavBar);

@@ -12,7 +12,7 @@ const animate = keyframes`
 
 const Loading = styled.div`
   border: 3px solid #f3f3f3;
-  border-top: 3px solid #3498db;
+  border-top: 3px solid ${props => (props.color ? props.color : '#3498db')};
   border-radius: 50%;
   width: 24px;
   height: 24px;
@@ -20,6 +20,6 @@ const Loading = styled.div`
   animation: ${animate} 2s linear infinite;
 `;
 
-const Loader = () => <Loading />;
+const Loader = ({ color }) => <Loading color={color} />;
 
 export default Loader;

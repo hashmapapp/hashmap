@@ -2,12 +2,17 @@ import React from 'react';
 import shortid from 'shortid';
 import { FilePond, registerPlugin } from 'react-filepond';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import { loadFirebaseStorage, loadFirebaseApp } from 'app/lib/db';
 import PropTypes from 'prop-types';
 import { getUrlImage } from '../lib/getUrlImage';
 
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+registerPlugin(
+  FilePondPluginImageExifOrientation,
+  FilePondPluginImagePreview,
+  FilePondPluginFileValidateType
+);
 const storage = loadFirebaseStorage();
 const firebase = loadFirebaseApp();
 
@@ -88,6 +93,7 @@ const ImageUpload = ({
       }}
       server={server}
       labelIdle="Selecione uma Imagem"
+      acceptedFileTypes={['image/png', 'image/jpg', 'image/jpeg', 'image/gif']}
     />
   );
 };
