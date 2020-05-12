@@ -8,7 +8,7 @@ import { TextArea } from 'app/components/UI/styles/styles';
 const header = ({ title, subtitle, handlerTitle, handlerSubtitle }) => {
   return (
     <header className="container mx-auto px-4 md:px-64 py-8">
-      <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">Título</h6>
+      <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">Título *</h6>
       <TextArea
         className="Title"
         rows="2"

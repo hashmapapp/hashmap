@@ -12,7 +12,6 @@ import {
 } from 'app/redux/actions/hashmapActions';
 import ImageUpload from 'app/components/UI/image/upload';
 import { TextArea } from 'app/components/UI/styles/styles';
-import UIModal from 'app/components/UI/modal/modal';
 
 const article = ({
   posts,
@@ -44,7 +43,7 @@ const article = ({
   return (
     <>
       <article className="container mx-auto px-4 md:px-64 md:py-8">
-        <h6 className="px-2 font-sans text-lg text-gray-500">Capa</h6>
+        <h6 className="px-2 font-sans text-lg text-gray-500">Capa *</h6>
         {!loadImage && (
           <ImageUpload
             onRequestSave={(path, url) => {
@@ -104,8 +103,7 @@ const article = ({
           ))}
         <NewPublicationButton onAction={handlerNewPost} />
       </article>
-      {/* <UIModal /> */}
-      {/* <ButtonBar /> */}
+      <ButtonBar />
     </>
   );
 };

@@ -125,7 +125,7 @@ const Publication = ({
               type="text"
               id="title"
               name="title"
-              placeholder="Nome da Seção"
+              placeholder="Título"
               onChange={e => {
                 handlerTitle(e.target.value, temporaryKey);
               }}

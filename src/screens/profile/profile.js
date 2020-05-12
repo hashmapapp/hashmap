@@ -52,9 +52,9 @@ const Profile = ({ profile, hashmaps }) => {
                 <a target="_blank">
                   <button
                     type="button"
-                    className="m-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                    className="m-1 bg-gray-100 border hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center"
                   >
-                    <FaInstagram />
+                    <FaInstagram size={22} />
                   </button>
                 </a>
               </Link>
@@ -64,9 +64,9 @@ const Profile = ({ profile, hashmaps }) => {
                 <a target="_blank">
                   <button
                     type="button"
-                    className="m-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                    className="m-1 bg-gray-100 border hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center"
                   >
-                    <FaLinkedin />
+                    <FaLinkedin size={22} />
                   </button>
                 </a>
               </Link>
@@ -74,9 +74,9 @@ const Profile = ({ profile, hashmaps }) => {
             {profile.youtube && (
               <button
                 type="button"
-                className="m-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                className="m-1 bg-gray-100 border hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center"
               >
-                <FaYoutube />
+                <FaYoutube size={22} />
               </button>
             )}
             {profile.facebook && (
@@ -84,9 +84,9 @@ const Profile = ({ profile, hashmaps }) => {
                 <a target="_blank">
                   <button
                     type="button"
-                    className="m-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                    className="m-1 bg-gray-100 border hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center"
                   >
-                    <FaFacebookF />
+                    <FaFacebookF size={22} />
                   </button>
                 </a>
               </Link>
@@ -96,9 +96,9 @@ const Profile = ({ profile, hashmaps }) => {
                 <a target="_blank">
                   <button
                     type="button"
-                    className="m-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                    className="m-1 bg-gray-100 border hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center"
                   >
-                    <FaTwitter />
+                    <FaTwitter size={22} />
                   </button>
                 </a>
               </Link>
@@ -106,17 +106,17 @@ const Profile = ({ profile, hashmaps }) => {
             {profile.github && (
               <button
                 type="button"
-                className="m-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                className="m-1 bg-gray-100 border hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center"
               >
-                <FaGithubAlt />
+                <FaGithubAlt size={22} />
               </button>
             )}
             {profile.medium && (
               <button
                 type="button"
-                className="m-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                className="m-1 bg-gray-100 border hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center"
               >
-                <FaMediumM />
+                <FaMediumM size={22} />
               </button>
             )}
           </div>
