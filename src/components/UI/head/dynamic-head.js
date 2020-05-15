@@ -42,7 +42,8 @@ DynamicHead.propTypes = {
 
 DynamicHead.defaultProps = {
   titleText: 'Hashmap',
-  description: 'Ensine menos, recomende mais.',
+  description:
+    'O Hashmap reúne uma comunidade de pessoas focadas em descobrir, compartilhar e criar as melhores recomendações baseadas em suas próprias experiências.',
   imageUrl: 'https://hashmap-nx3c6ypit.now.sh/imgs/logo/H.png',
 };
 

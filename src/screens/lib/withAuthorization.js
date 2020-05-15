@@ -15,6 +15,11 @@ const withAuthorization = (WrappedComponent, key) => {
           Router.push('/login');
         }
       });
+      window.onbeforeunload = e => {
+        e = e || window.event;
+        if (e) e.returnValue = 'Sure?';
+        return 'Sure?';
+      };
     }, []);
 
     return <WrappedComponent {...props} />;

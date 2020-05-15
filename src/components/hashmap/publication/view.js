@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import LinkPreview from 'app/components/UI/link-preview/link-preview';
+import InstagramEmbed from 'react-instagram-embed';
 import Iframe from 'react-iframe';
 
 const Publication = ({ data }) => {
@@ -49,7 +50,7 @@ const Publication = ({ data }) => {
           data.linksToPreview.map(link => (
             <LinkPreview key={link.url} data={link} />
           ))}
-        {data.videoYT && (
+        {data.videoYT && data.videoYT.embed && (
           <>
             <div className="hidden sm:block" style={{ height: 480 }}>
               <Iframe
@@ -72,10 +73,22 @@ const Publication = ({ data }) => {
                 id="myId"
                 display="initial"
                 position="relative"
-                // allowFullScreen
               />
             </div>
           </>
+        )}
+
+        {data.instragramPreview && data.instragramPreview.value && (
+          <div className="px-2 md:flex md:justify-center">
+            <InstagramEmbed
+              maxWidth={480}
+              url={data.instragramPreview.value}
+              hideCaption={false}
+              containerTagName="article"
+              protocol=""
+              injectScript
+            />
+          </div>
         )}
       </div>
     </article>
