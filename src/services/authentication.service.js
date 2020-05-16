@@ -15,7 +15,7 @@ class AuthenticationServiceFirebase {
     password,
     callbackSuccess = () => {},
     callbackError = error => console.log(error.code, error.message),
-    role = 'default'
+    role = 'productor'
   ) {
     const username = email.split('@')[0];
     this.fb
