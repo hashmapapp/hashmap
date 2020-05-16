@@ -7,7 +7,7 @@ const footer = ({ data }) => (
     <div className="container mx-auto sm:py-8 md:px-24">
       <div className="md:flex bg-gray-200 rounded-lg p-6">
         <Link href="/[profile]" as={`/${data.username}`}>
-          <a>
+          <a className="h-16 w-16 md:h-24 md:w-24 rounded-full mx-auto md:mx-0 md:mr-4">
             {data.photoURL &&
               (data.photoURL.url ? (
                 <img
@@ -27,12 +27,14 @@ const footer = ({ data }) => (
         <div className="text-center md:text-left md:w-2/3 pt-2">
           <Link href="/[profile]" as={`/${data.username}`}>
             <a>
-              <h2 className="font-bold text-lg">{data.displayName}</h2>
+              <h2 className="font-bold text-lg w-auto inline-block">
+                {data.displayName}
+              </h2>
             </a>
           </Link>
           <Link href="/[profile]" as={`/${data.username}`}>
             <a>
-              <span className="font-bold text-purple-500 text-xs">
+              <span className="font-bold text-purple-500 text-xs block">
                 @{data.username}
               </span>
             </a>

@@ -35,7 +35,10 @@ const SaveModal = ({ closeModal, hashmapRedux }) => {
         list.forEach(post => {
           if (
             !(
-              (post.instragramPreview && post.instragramPreview.value) ||
+              (post.instragramPostPreview &&
+                post.instragramPostPreview.value) ||
+              (post.instragramProfilePreview &&
+                post.instragramProfilePreview.value) ||
               (post.linksToPreview && post.linksToPreview.length) ||
               post.textDescription ||
               post.title ||
@@ -45,7 +48,11 @@ const SaveModal = ({ closeModal, hashmapRedux }) => {
             validInput.posts = false;
           }
         });
+      } else {
+        validInput.posts = false;
       }
+    } else {
+      validInput.posts = false;
     }
     setValidators(validInput);
     return validInput.title && validInput.image && validInput.posts;

@@ -15,6 +15,7 @@ import { MdRemoveCircle, MdTextFields } from 'react-icons/md';
 import { IoMdLink } from 'react-icons/io';
 import { FaImage } from 'react-icons/fa';
 import LinkPreview from 'app/components/UI/link-preview/link-preview';
+import InstagramProfilePreview from 'app/components/UI/link-preview/instagram-profile-preview';
 import styled from 'styled-components';
 import { loadLink } from './lib/loadLink';
 
@@ -42,7 +43,8 @@ const Publication = ({
   const clearLinkPreviews = () => {
     handlerData([], 'linksToPreview', temporaryKey);
     handlerData({}, 'videoYT', temporaryKey);
-    handlerData({}, 'instragramPreview', temporaryKey);
+    handlerData({}, 'instragramPostPreview', temporaryKey);
+    handlerData({}, 'instragramProfilePreview', temporaryKey);
   };
 
   const clearInputLink = () => {
@@ -60,7 +62,6 @@ const Publication = ({
     loadLink(value)
       .then(loadData => {
         if (loadData && loadData.type) {
-          console.log(loadData);
           handlerData(loadData.preview, loadData.type, temporaryKey);
           setLoaderLink(false);
         } else {
@@ -84,8 +85,15 @@ const Publication = ({
       const url = data.videoYT.value;
       setLink(url);
       setShowLink(true);
-    } else if (data.instragramPreview) {
-      const url = data.instragramPreview.value;
+    } else if (data.instragramPostPreview && data.instragramPostPreview.value) {
+      const url = data.instragramPostPreview.value;
+      setLink(url);
+      setShowLink(true);
+    } else if (
+      data.instragramProfilePreview &&
+      data.instragramProfilePreview.value
+    ) {
+      const url = data.instragramProfilePreview.value;
       setLink(url);
       setShowLink(true);
     }
@@ -157,6 +165,28 @@ const Publication = ({
             />
           </div>
         )}
+
+        {data.instragramPostPreview && data.instragramPostPreview.value && (
+          <div className="my-4 flex justify-center">
+            <InstagramEmbed
+              url={data.instragramPostPreview.value}
+              hideCaption={false}
+              containerTagName="div"
+              protocol=""
+              injectScript
+              // onLoading={() => {}}
+              // onSuccess={() => {}}
+              // onAfterRender={() => {}}
+              // onFailure={() => {}}
+            />
+          </div>
+        )}
+
+        {data.instragramProfilePreview &&
+          data.instragramProfilePreview.value && (
+            <InstagramProfilePreview data={data.instragramProfilePreview} />
+          )}
+
         {showTextDescription && (
           <TextArea
             className="Text"
@@ -200,22 +230,6 @@ const Publication = ({
               id="myId"
               display="initial"
               position="relative"
-            />
-          </div>
-        )}
-
-        {data.instragramPreview && data.instragramPreview.value && (
-          <div className="my-4 flex justify-center">
-            <InstagramEmbed
-              url={data.instragramPreview.value}
-              hideCaption={false}
-              containerTagName="div"
-              protocol=""
-              injectScript
-              // onLoading={() => {}}
-              // onSuccess={() => {}}
-              // onAfterRender={() => {}}
-              // onFailure={() => {}}
             />
           </div>
         )}
