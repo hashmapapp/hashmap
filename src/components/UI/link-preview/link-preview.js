@@ -12,13 +12,12 @@ const LinkPreview = ({ data }) => {
       if (s1 === 'www' || s1 === 'pt') {
         nameDomain = s2;
       }
-      if (urlArray[1].split('.')[0] !== 'www')
-        return {
-          domain: nameDomain,
-          shortLink: `//${urlArray[1]}`,
-        };
+      return {
+        domain: nameDomain,
+        shortLink: `//${urlArray[1]}`,
+      };
     }
-    return { domain: '', shortLink: '' };
+    return { domain: '', shortLink: `//${data.url}` };
   }, [data]);
 
   return (
