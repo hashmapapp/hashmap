@@ -21,7 +21,7 @@ const SaveModal = ({ closeModal, hashmapRedux }) => {
     const validInput = {
       title: false,
       image: false,
-      posts: false,
+      posts: true,
     };
     if (hm.title) {
       validInput.title = true;
@@ -29,8 +29,30 @@ const SaveModal = ({ closeModal, hashmapRedux }) => {
     if (hm.imagePath && hm.imageUrl) {
       validInput.image = true;
     }
-    if (hm.posts && hm.posts.length > 0) {
-      validInput.posts = true;
+    if (hm.posts && hm.posts.length) {
+      const list = hm.posts.filter(post => !post.key.startsWith('DELETE'));
+      if (list.length) {
+        list.forEach(post => {
+          if (
+            !(
+              (post.instragramPostPreview &&
+                post.instragramPostPreview.value) ||
+              (post.instragramProfilePreview &&
+                post.instragramProfilePreview.value) ||
+              (post.linksToPreview && post.linksToPreview.length) ||
+              post.textDescription ||
+              post.title ||
+              (post.videoYT && post.videoYT.value)
+            )
+          ) {
+            validInput.posts = false;
+          }
+        });
+      } else {
+        validInput.posts = false;
+      }
+    } else {
+      validInput.posts = false;
     }
     setValidators(validInput);
     return validInput.title && validInput.image && validInput.posts;
@@ -136,7 +158,7 @@ const SaveModal = ({ closeModal, hashmapRedux }) => {
                           aria-label="Título"
                           className="leading-5 text-gray-800"
                         >
-                          Recomendação {validators.posts ? '😍' : '😱'}
+                          Recomendação {validators.posts ? '😍' : 'Vazia 😱'}
                         </span>
                       </li>
                     </ul>

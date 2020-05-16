@@ -1,7 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import LinkPreview from 'app/components/UI/link-preview/link-preview';
+import InstagramEmbed from 'react-instagram-embed';
 import Iframe from 'react-iframe';
+import InstagramProfilePreview from 'app/components/UI/link-preview/instagram-profile-preview';
 
 const Publication = ({ data }) => {
   const [pDescription, setPDescription] = useState([]);
@@ -15,7 +17,7 @@ const Publication = ({ data }) => {
     <article className="my-4 bg-white md:rounded-lg overflow-hidden shadow-xl">
       <div className="pt-4">
         {data.title && (
-          <div className="px-10 font-sans font-bold text-2xl pb-4 text-gray-800">
+          <div className="px-10 font-sans font-bold text-2xl text-gray-800">
             {data.title}
           </div>
         )}
@@ -37,6 +39,25 @@ const Publication = ({ data }) => {
             </>
           )}
         </div>
+
+        {data.instragramPostPreview && data.instragramPostPreview.value && (
+          <div className="px-2 md:flex md:justify-center">
+            <InstagramEmbed
+              maxWidth={480}
+              url={data.instragramPostPreview.value}
+              hideCaption={false}
+              containerTagName="article"
+              protocol=""
+              injectScript
+            />
+          </div>
+        )}
+
+        {data.instragramProfilePreview &&
+          data.instragramProfilePreview.value && (
+            <InstagramProfilePreview data={data.instragramProfilePreview} />
+          )}
+
         {pDescription.map((p, index) => (
           <p
             key={index.toString()}
@@ -49,7 +70,7 @@ const Publication = ({ data }) => {
           data.linksToPreview.map(link => (
             <LinkPreview key={link.url} data={link} />
           ))}
-        {data.videoYT && (
+        {data.videoYT && data.videoYT.embed && (
           <>
             <div className="hidden sm:block" style={{ height: 480 }}>
               <Iframe
@@ -72,7 +93,6 @@ const Publication = ({ data }) => {
                 id="myId"
                 display="initial"
                 position="relative"
-                // allowFullScreen
               />
             </div>
           </>

@@ -1,7 +1,7 @@
 import React from 'react';
 import ScreenHashmapView from 'app/screens/hashmap/view';
 import DynamicHead from 'app/components/UI/head/dynamic-head';
-import { getAllHashmapsKeys } from 'app/lib/hashmaps';
+// import { getAllHashmapsKeys } from 'app/lib/hashmaps';
 import {
   HASHMAPS_COLLECTION,
   USERS_COLLECTION,

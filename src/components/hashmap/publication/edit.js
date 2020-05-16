@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import Iframe from 'react-iframe';
+import InstagramEmbed from 'react-instagram-embed';
 import {
   titlePostUpdate,
   postDelete,
@@ -13,9 +13,11 @@ import ImageUpload from 'app/components/UI/image/upload';
 import { TextArea } from 'app/components/UI/styles/styles';
 import { MdRemoveCircle, MdTextFields } from 'react-icons/md';
 import { IoMdLink } from 'react-icons/io';
-import { FaImage, FaYoutube } from 'react-icons/fa';
+import { FaImage } from 'react-icons/fa';
 import LinkPreview from 'app/components/UI/link-preview/link-preview';
+import InstagramProfilePreview from 'app/components/UI/link-preview/instagram-profile-preview';
 import styled from 'styled-components';
+import { loadLink } from './lib/loadLink';
 
 const AnimationLoader = styled.div`
   -webkit-animation: ${prop => prop.play && 'spin 1s linear infinite'};
@@ -32,55 +34,46 @@ const Publication = ({
 }) => {
   const [showUploadImage, setShowUploadImage] = useState(false);
   const [showLink, setShowLink] = useState(false);
-  const [showVideoYT, setShowVideoYT] = useState(false);
   const [showTextDescription, setShowTextDescription] = useState(false);
   const [loaderLink, setLoaderLink] = useState(false);
   const [link, setLink] = useState('');
-  const [videoYT, setVideoYT] = useState('');
-  const [urlYT, setUrlYT] = useState('');
+  const [loadLinkError, setLoadLinkError] = useState(false);
   const [defaultFiles, setDefaultFiles] = useState([]);
 
-  const handlerLink = evt => {
-    const { value } = evt.target;
-    setLink(value);
-    if (value.includes('http://') || value.includes('https://')) {
-      setLoaderLink(true);
-      axios
-        .post('https://us-central1-hashmap-6d623.cloudfunctions.net/scraper', {
-          text: value,
-        })
-        .then(response => {
-          handlerData(response.data, 'linksToPreview', temporaryKey);
-          setLoaderLink(false);
-        })
-        .catch(error => {
-          console.log(error);
-          setLoaderLink(false);
-        });
-    } else if (value === '') handlerData([], 'linksToPreview', temporaryKey);
+  const clearLinkPreviews = () => {
+    handlerData([], 'linksToPreview', temporaryKey);
+    handlerData({}, 'videoYT', temporaryKey);
+    handlerData({}, 'instragramPostPreview', temporaryKey);
+    handlerData({}, 'instragramProfilePreview', temporaryKey);
   };
 
-  const handlerVideoYT = evt => {
-    const { value } = evt.target;
-    setUrlYT(value);
-    if (value.includes('youtube') && value.includes('watch')) {
-      let videoId = value.split('v=')[1];
-      const ampersandPosition = videoId.indexOf('&');
-      if (ampersandPosition !== -1) {
-        videoId = videoId.substring(0, ampersandPosition);
-      }
-      const embed = `https://www.youtube.com/embed/${videoId}`;
-      handlerData({ value, embed }, 'videoYT', temporaryKey);
-      setVideoYT(embed);
-    } else if (value.includes('youtu.be')) {
-      const url = value.replace('https://', '').replace('http://', '');
-      const videoId = url.split('/')[1];
-      const embed = `https://www.youtube.com/embed/${videoId}`;
-      handlerData({ value, embed }, 'videoYT', temporaryKey);
-      setVideoYT(embed);
-    } else {
-      setVideoYT('');
-    }
+  const clearInputLink = () => {
+    setLink('');
+    setShowLink(!showLink);
+  };
+
+  const handlerLink = evt => {
+    let { value } = evt.target;
+    value = value.split(' ').join('');
+    setLink(value);
+    setLoaderLink(true);
+    setLoadLinkError(false);
+    clearLinkPreviews();
+    loadLink(value)
+      .then(loadData => {
+        if (loadData && loadData.type) {
+          handlerData(loadData.preview, loadData.type, temporaryKey);
+          setLoaderLink(false);
+        } else {
+          setLoaderLink(false);
+          setLoadLinkError(true);
+        }
+      })
+      .catch(error => {
+        setLoaderLink(false);
+        setLoadLinkError(true);
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -88,11 +81,21 @@ const Publication = ({
       const url = data.linksToPreview.map(item => item.url).join(' ');
       setLink(url);
       setShowLink(true);
-    }
-    if (data.videoYT && data.videoYT.value && data.videoYT.embed) {
-      setUrlYT(data.videoYT.value);
-      setVideoYT(data.videoYT.embed);
-      setShowVideoYT(true);
+    } else if (data.videoYT && data.videoYT.value) {
+      const url = data.videoYT.value;
+      setLink(url);
+      setShowLink(true);
+    } else if (data.instragramPostPreview && data.instragramPostPreview.value) {
+      const url = data.instragramPostPreview.value;
+      setLink(url);
+      setShowLink(true);
+    } else if (
+      data.instragramProfilePreview &&
+      data.instragramProfilePreview.value
+    ) {
+      const url = data.instragramProfilePreview.value;
+      setLink(url);
+      setShowLink(true);
     }
     if (data.textDescription) {
       setShowTextDescription(true);
@@ -149,12 +152,10 @@ const Publication = ({
           <div className="pt-4">
             <ImageUpload
               onRequestSave={(path, url) => {
-                // console.log('onRequestSave');
                 handlerData(path, 'imagePath', temporaryKey);
                 handlerData(url, 'imageUrl', temporaryKey);
               }}
               onRequestClear={() => {
-                // console.log('onRequestClear');
                 setDefaultFiles([]);
                 handlerData('', 'imagePath', temporaryKey);
                 handlerData('', 'imageUrl', temporaryKey);
@@ -164,6 +165,28 @@ const Publication = ({
             />
           </div>
         )}
+
+        {data.instragramPostPreview && data.instragramPostPreview.value && (
+          <div className="my-4 flex justify-center">
+            <InstagramEmbed
+              url={data.instragramPostPreview.value}
+              hideCaption={false}
+              containerTagName="div"
+              protocol=""
+              injectScript
+              // onLoading={() => {}}
+              // onSuccess={() => {}}
+              // onAfterRender={() => {}}
+              // onFailure={() => {}}
+            />
+          </div>
+        )}
+
+        {data.instragramProfilePreview &&
+          data.instragramProfilePreview.value && (
+            <InstagramProfilePreview data={data.instragramProfilePreview} />
+          )}
+
         {showTextDescription && (
           <TextArea
             className="Text"
@@ -181,12 +204,13 @@ const Publication = ({
         )}
         {showLink && (
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 
-          border rounded py-3 px-4 my-3 leading-tight focus:outline-none focus:bg-white"
+            className={`appearance-none block w-full text-gray-700 
+            border ${loadLinkError &&
+              'border-red-500'} rounded py-3 px-4 my-3 leading-tight focus:outline-none focus:bg-white`}
             id="link"
             type="text"
             placeholder="https://seulink.com"
-            value={link}
+            value={link || ''}
             onChange={handlerLink}
           />
         )}
@@ -195,31 +219,21 @@ const Publication = ({
             <LinkPreview key={linkPreview.url} data={linkPreview} />
           ))}
 
-        {showVideoYT && (
+        {data.videoYT && data.videoYT.embed && (
           <div className="my-4">
-            <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 
-        border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-              id="urlYt"
-              type="text"
-              placeholder="Cole o link aqui"
-              value={urlYT}
-              onChange={handlerVideoYT}
+            <Iframe
+              frameborder="0"
+              allowfullscreen
+              url={data.videoYT.embed}
+              width="100%"
+              className="h-56 sm:h-64"
+              id="myId"
+              display="initial"
+              position="relative"
             />
-            {videoYT && (
-              <Iframe
-                frameborder="0"
-                allowfullscreen
-                url={videoYT}
-                width="100%"
-                className="h-56 sm:h-64"
-                id="myId"
-                display="initial"
-                position="relative"
-              />
-            )}
           </div>
         )}
+
         <div className="text-right mt-4">
           <div className="inline-flex">
             <button
@@ -251,27 +265,13 @@ const Publication = ({
               className={`${showLink &&
                 'bg-gray-300'} hover:bg-gray-400 py-2 px-4`}
               onClick={() => {
-                handlerData([], 'linksToPreview', temporaryKey);
-                setLink('');
-                setShowLink(!showLink);
+                clearLinkPreviews();
+                clearInputLink();
               }}
             >
               <AnimationLoader play={loaderLink}>
                 <IoMdLink />
               </AnimationLoader>
-            </button>
-            <button
-              type="button"
-              className={`${showVideoYT &&
-                'bg-gray-300'} hover:bg-gray-400 py-2 px-4 rounded-r`}
-              onClick={() => {
-                setUrlYT('');
-                setVideoYT('');
-                handlerData({}, 'videoYT', temporaryKey);
-                setShowVideoYT(!showVideoYT);
-              }}
-            >
-              <FaYoutube />
             </button>
           </div>
         </div>
