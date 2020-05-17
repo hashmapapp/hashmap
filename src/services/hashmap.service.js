@@ -1,7 +1,8 @@
+import {
+  HASHMAPS_COLLECTION,
+  POSTS_COLLECTION,
+} from 'app/screens/lib/constants';
 import { HttpWrapperFirebase } from './http-wrapper';
-
-const HASHMAPS_COLLECTION = 'hashmaps';
-const POSTS_COLLECTION = 'posts';
 
 export class HashmapService {
   static saveHashmap = (hashmap, callback, userId) => {
@@ -132,5 +133,37 @@ export class HashmapService {
       if (!key.startsWith('_')) keys.push(key);
     });
     return { keys };
+  };
+
+  addHomeHashmap = hashmap => {
+    const fb = new HttpWrapperFirebase();
+    const { author, key } = hashmap;
+    const authorData = {
+      displayName: author.displayName,
+      imageUrl:
+        author.photoURL && author.photoURL.url ? author.photoURL.url : '',
+      username: author.username,
+    };
+    const hash = {
+      createdAt: hashmap.createdAt,
+      imageUrl: hashmap.imageUrl ? hashmap.imageUrl : '',
+      title: hashmap.title,
+      subtitle: hashmap.subtitle,
+      authorData,
+    };
+    fb.addHomeHashmap(hash, key)
+      .then(() => {
+        console.log('Adicionado à home page com sucesso');
+      })
+      .catch(error => console.error(error));
+  };
+
+  removeHomeHashmap = hashmapKey => {
+    const fb = new HttpWrapperFirebase();
+    fb.removeHomeHashmap(hashmapKey)
+      .then(() => {
+        console.log('Removido da home page com sucesso');
+      })
+      .catch(error => console.error(error));
   };
 }

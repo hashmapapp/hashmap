@@ -1,4 +1,8 @@
 import { loadFirebaseStore } from 'app/lib/db';
+import {
+  HOME_HASHMAP_COLLECTION,
+  HASHMAPS_COLLECTION,
+} from 'app/screens/lib/constants';
 
 export class HttpWrapperFirebase {
   constructor() {
@@ -68,6 +72,32 @@ export class HttpWrapperFirebase {
         .doc(key);
       batch.delete(ref);
     });
+    return batch.commit();
+  };
+
+  addHomeHashmap = (hashmap, key) => {
+    const batch = this.db().batch();
+    const refHashmaps = this.db()
+      .collection(HASHMAPS_COLLECTION)
+      .doc(key);
+    const refHomeHashmaps = this.db()
+      .collection(HOME_HASHMAP_COLLECTION)
+      .doc(key);
+    batch.update(refHashmaps, { homeHashmap: true });
+    batch.set(refHomeHashmaps, hashmap);
+    return batch.commit();
+  };
+
+  removeHomeHashmap = key => {
+    const batch = this.db().batch();
+    const refHashmaps = this.db()
+      .collection(HASHMAPS_COLLECTION)
+      .doc(key);
+    const refHomeHashmaps = this.db()
+      .collection(HOME_HASHMAP_COLLECTION)
+      .doc(key);
+    batch.update(refHashmaps, { homeHashmap: false });
+    batch.delete(refHomeHashmaps);
     return batch.commit();
   };
 }

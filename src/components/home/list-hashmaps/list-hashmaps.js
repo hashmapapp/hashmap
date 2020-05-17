@@ -58,13 +58,13 @@ const Item = ({ hashmap }) => {
                   <img
                     className="w-10 h-10 rounded-full mr-4"
                     src={hashmap.authorData.imageUrl}
-                    alt={`Avatar de ${hashmap.authorData.name}`}
+                    alt={`Avatar de ${hashmap.authorData.displayName}`}
                   />
                 ) : (
                   <img
                     className="w-10 h-10 rounded-full mr-4"
                     src="imgs/avatar/avatar.png"
-                    alt={`Avatar de ${hashmap.authorData.name}`}
+                    alt={`Avatar de ${hashmap.authorData.displayName}`}
                   />
                 )}
               </a>
@@ -73,7 +73,7 @@ const Item = ({ hashmap }) => {
               <Link href="/[profile]" as={`/${hashmap.authorData.username}`}>
                 <a>
                   <p className="text-gray-900 leading-none">
-                    {hashmap.authorData.name}
+                    {hashmap.authorData.displayName}
                   </p>
                 </a>
               </Link>

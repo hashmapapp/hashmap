@@ -1,6 +1,6 @@
 import React from 'react';
 import Item from 'app/components/home/list-hashmaps/list-hashmaps';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 const HomeComponent = ({ hashmaps }) => {
   return (
@@ -17,12 +17,12 @@ const HomeComponent = ({ hashmaps }) => {
 };
 
 HomeComponent.propTypes = {
-  hashmaps: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string,
-    })
-  ).isRequired,
+  // hashmaps: PropTypes.arrayOf(
+  //   PropTypes.shape({
+  //     title: PropTypes.string.isRequired,
+  //     description: PropTypes.string,
+  //   })
+  // ).isRequired,
 };
 
 export default HomeComponent;

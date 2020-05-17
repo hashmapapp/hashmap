@@ -1,34 +1,34 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
-import UINavBar from 'app/components/UI/navbar/navbar';
+// import styled, { keyframes } from 'styled-components';
+// import UINavBar from 'app/components/UI/navbar/navbar';
 import Footer from 'app/components/UI/footer/footer';
 
-const animate = keyframes`
-    0% {
-      transform: translate(0px, 0px);
-      animation-timing-function: ease-in-out;
-    }
+// const animate = keyframes`
+//     0% {
+//       transform: translate(0px, 0px);
+//       animation-timing-function: ease-in-out;
+//     }
 
-    50% {
-      transform: translate(0px, 12px);
-      animation-timing-function: ease-in-out;
-    }
+//     50% {
+//       transform: translate(0px, 12px);
+//       animation-timing-function: ease-in-out;
+//     }
 
-    100% {
-      transform: translate(0px, 0px);
-      animation-timing-function: ease-in-out;
-    }
-`;
+//     100% {
+//       transform: translate(0px, 0px);
+//       animation-timing-function: ease-in-out;
+//     }
+// `;
 
-const ImageAnimation = styled.div`
-  -webkit-animation: ${animate} 4s linear infinite;
-  animation: ${animate} 4s linear infinite;
-`;
+// const ImageAnimation = styled.div`
+//   -webkit-animation: ${animate} 4s linear infinite;
+//   animation: ${animate} 4s linear infinite;
+// `;
 
 const Banner = () => {
   return (
     <>
-      <UINavBar />
+      {/* <UINavBar />
       <div className="md:px-64 text-center pt-16 md:pt-16 md:pt-32">
         <ImageAnimation className="md:flex md:justify-center">
           <img
@@ -40,7 +40,7 @@ const Banner = () => {
         <p className="px-24 py-8 md:py-12 font-sans text-lg text-gray-600 text-center">
           Os melhores <strong>Hashmaps</strong> aqui, em breve.
         </p>
-      </div>
+      </div> */}
       <div className="pt-8 pb-12 bg-white">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:text-center">
