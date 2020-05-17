@@ -15,6 +15,9 @@ export const authorization = key => {
     case ACTIONS.EDIT_HASHMAP: {
       return role === 'admin' || role === 'productor';
     }
+    case ACTIONS.ADD_HOME_HASHMAP: {
+      return role === 'admin';
+    }
     default:
       return false;
   }

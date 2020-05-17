@@ -22,7 +22,7 @@ const LinkPreview = ({ data }) => {
 
   return (
     <div
-      className="md:flex px-8 md:px-16 py-2 md:justify-center"
+      className="md:flex px-8 md:px-16 py-3 md:justify-center"
       target="_blank"
     >
       {data.image && (
@@ -45,7 +45,7 @@ const LinkPreview = ({ data }) => {
           </Link>
         </div>
       )}
-      <div className="md:mx-2 py-2 rounded-lg">
+      <div className="md:mx-2 pt-2 rounded-lg">
         <div className="px-1 uppercase tracking-wide text-xs text-indigo-600 font-bold">
           {domain}
         </div>

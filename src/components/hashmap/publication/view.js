@@ -15,30 +15,28 @@ const Publication = ({ data }) => {
 
   return (
     <article className="my-4 bg-white md:rounded-lg overflow-hidden shadow-xl">
-      <div className="pt-4">
+      <div>
         {data.title && (
-          <div className="px-10 font-sans font-bold text-2xl text-gray-800">
+          <div className="py-4 px-10 font-sans font-bold text-2xl text-gray-800">
             {data.title}
           </div>
         )}
-        <div className="flex justify-center pb-2">
-          {data.imageUrl && (
-            <>
-              <img
-                className="md:hidden shadow"
-                src={data.imageUrl}
-                alt={data.title}
-                style={{ maxHeight: '14rem' }}
-              />
-              <img
-                className="hidden md:block shadow"
-                src={data.imageUrl}
-                alt={data.title}
-                style={{ maxHeight: '28rem' }}
-              />
-            </>
-          )}
-        </div>
+        {data.imageUrl && (
+          <div className="flex justify-center pt-3 pb-2">
+            <img
+              className="md:hidden shadow"
+              src={data.imageUrl}
+              alt={data.title}
+              style={{ maxHeight: '14rem' }}
+            />
+            <img
+              className="hidden md:block shadow"
+              src={data.imageUrl}
+              alt={data.title}
+              style={{ maxHeight: '28rem' }}
+            />
+          </div>
+        )}
 
         {data.instragramPostPreview && data.instragramPostPreview.value && (
           <div className="px-2 md:flex md:justify-center">

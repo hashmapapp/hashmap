@@ -11,6 +11,7 @@ const View = ({ hashmap, posts, hashmapKey, authorId }) => {
         typeNav="view"
         hashmapKey={hashmapKey}
         authorKey={authorId ? authorId.key : undefined}
+        hashmap={hashmap}
       />
       {hashmap ? (
         <>

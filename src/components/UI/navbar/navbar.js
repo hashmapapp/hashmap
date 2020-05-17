@@ -32,10 +32,12 @@ const NavBar = ({
   handlerReset,
   // hashmapRedux,
   authorKey,
+  hashmap,
 }) => {
   const [showNav, setShowNav] = useState(false);
   const [userData, setUserData] = useState();
   const [currentUser, setCurrentUser] = useState();
+  const [actionVisible, setActionVisible] = useState(true);
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowNav);
 
@@ -48,11 +50,17 @@ const NavBar = ({
     Router.push('/[profile]', `/${userData.username}`);
   };
 
-  // const handlerSave = evt => {
-  //   evt.preventDefault();
-  //   // console.log(hashmapRedux);
-  //   HashmapService.saveHashmap(hashmapRedux, callback, currentUser.uid);
-  // };
+  const handlerAddHashmapHome = () => {
+    const hs = new HashmapService();
+    hs.addHomeHashmap(hashmap);
+    setActionVisible(false);
+  };
+
+  const handlerRemoveHashmapHome = () => {
+    const hs = new HashmapService();
+    hs.removeHomeHashmap(hashmap.key);
+    setActionVisible(false);
+  };
 
   const handlerDelete = evt => {
     evt.preventDefault();
@@ -180,15 +188,28 @@ const NavBar = ({
                 </a>
               </Link>
             )}
-          {/* {currentUser && (typeNav === 'edit' || typeNav === 'create') && (
-            <button
-              onClick={handlerSave}
-              type="button"
-              className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-green-200 sm:mt-0 sm:ml-2"
-            >
-              Salvar
-            </button>
-          )} */}
+          {currentUser &&
+            typeNav === 'view' &&
+            authorization(ACTIONS_AUTH.ADD_HOME_HASHMAP) &&
+            hashmap &&
+            actionVisible &&
+            (hashmap.homeHashmap ? (
+              <button
+                type="button"
+                onClick={handlerRemoveHashmapHome}
+                className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-200 sm:mt-0 sm:ml-2"
+              >
+                Remover da Home
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={handlerAddHashmapHome}
+                className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-200 sm:mt-0 sm:ml-2"
+              >
+                Adicionar à Home
+              </button>
+            ))}
           {currentUser && typeNav === 'edit' && (
             <button
               type="button"
