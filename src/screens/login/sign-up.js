@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Loader from 'app/components/UI/loader/loader';
 import AuthenticationServiceFirebase from 'app/services/authentication.service';
-import Router from 'next/router';
+// import Router from 'next/router';
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
@@ -14,6 +14,7 @@ const SignUp = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [passwordConfirmError, setPasswordConfirmError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
 
   const onValidators = evt => {
     evt.preventDefault();
@@ -36,9 +37,22 @@ const SignUp = () => {
       passwordConfirmValid
     ) {
       setLoading(true);
-      auth.createAccount(name, email, password, () => {
-        Router.push('/settings');
-      });
+      setErrorMessage();
+      auth.createAccount(
+        name,
+        email,
+        password,
+        () => {
+          // Router.push(`/${username}`);
+        },
+        error => {
+          if (error && error.code === 'auth/email-already-in-use') {
+            setLoading(false);
+            console.log('E-mail já está sendo utilizado');
+            setErrorMessage('E-mail já está sendo utilizado');
+          }
+        }
+      );
     }
   };
 
@@ -146,6 +160,7 @@ const SignUp = () => {
             </div>
           </div>
         )}
+        {errorMessage && <p className="text-red-500 pt-4">{errorMessage}</p>}
         <div className="pt-12 flex justify-center">
           <Link href="/login">
             <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
