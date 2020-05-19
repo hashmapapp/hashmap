@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Loader from 'app/components/UI/loader/loader';
 import AuthenticationServiceFirebase from 'app/services/authentication.service';
-import Router from 'next/router';
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -12,7 +11,7 @@ const SignIn = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [invalid, setInvalid] = useState(false);
 
-  const onValidators = evt => {
+  const onValidators = async evt => {
     const auth = new AuthenticationServiceFirebase();
     evt.preventDefault();
     const emailIsValid = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email);
@@ -21,17 +20,10 @@ const SignIn = () => {
     setPasswordError(!passwordIsValid);
     if (emailIsValid && passwordIsValid) {
       setLoading(true);
-      auth.signIn(
-        email,
-        password,
-        () => {
-          Router.push('/');
-        },
-        () => {
-          setInvalid(true);
-          setLoading(false);
-        }
-      );
+      auth.signIn(email, password, () => {
+        setInvalid(true);
+        setLoading(false);
+      });
     } else {
       setInvalid(true);
     }

@@ -14,7 +14,7 @@ class AuthenticationServiceFirebase {
     email,
     password,
     callbackSuccess = () => {},
-    callbackError = error => console.log(error.code, error.message),
+    callbackError = error => console.log(error),
     role = 'productor'
   ) {
     const username = email.split('@')[0];
@@ -22,23 +22,25 @@ class AuthenticationServiceFirebase {
       .createUserWithEmailAndPassword(email, password)
       .then(resolve => {
         const { user } = resolve;
-        user
-          .updateProfile({ displayName })
-          .then(() => {
-            this.httpFirebase
-              .setNewItem(USERS_COLLECTION, user.uid, {
-                role,
-                displayName,
-                email,
-                username,
-              })
-              .then(() => {
-                localStorage.setItem('@hashmap/role', role);
-                callbackSuccess();
-              })
-              .catch(callbackError);
-          })
-          .catch(callbackError);
+        if (user) {
+          user
+            .updateProfile({ displayName })
+            .then(() => {
+              this.httpFirebase
+                .setNewItem(USERS_COLLECTION, user.uid, {
+                  role,
+                  displayName,
+                  email,
+                  username,
+                })
+                .then(() => {
+                  localStorage.setItem('@hashmap/role', role);
+                  callbackSuccess(username);
+                })
+                .catch(callbackError);
+            })
+            .catch(callbackError);
+        }
       })
       .catch(callbackError);
   }
@@ -46,7 +48,6 @@ class AuthenticationServiceFirebase {
   signIn(
     email,
     password,
-    callbackSuccess = () => {},
     callbackError = error => console.log(error.code, error.message)
   ) {
     this.fb
@@ -64,7 +65,6 @@ class AuthenticationServiceFirebase {
               localStorage.setItem('@hashmap/role', undefined);
             } else {
               localStorage.setItem('@hashmap/role', doc.data().role);
-              callbackSuccess();
             }
           })
           .catch(callbackError);

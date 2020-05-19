@@ -39,7 +39,7 @@ const Publication = ({ data }) => {
         )}
 
         {data.instragramPostPreview && data.instragramPostPreview.value && (
-          <div className="px-2 md:flex md:justify-center">
+          <div className="p-2 md:flex md:justify-center">
             <InstagramEmbed
               maxWidth={480}
               url={data.instragramPostPreview.value}
