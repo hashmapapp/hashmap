@@ -143,7 +143,7 @@ const Settings = () => {
     <>
       {currentUser && userFirestore && (
         <div className="container mx-auto md:px-64">
-          {userFirestore.role === 'default' && (
+          {/* {userFirestore.role === 'default' && (
             <div
               className={`mb-16 mx-4 ${
                 userFirestore.groupMember
@@ -241,7 +241,7 @@ const Settings = () => {
                 </div>
               </div>
             </div>
-          )}
+          )} */}
           <div className="rounded-lg">
             {!edit &&
               (userFirestore.photoURL && userFirestore.photoURL.url ? (

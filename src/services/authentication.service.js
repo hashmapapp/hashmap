@@ -17,6 +17,7 @@ class AuthenticationServiceFirebase {
         const { user } = resolve;
         if (user) {
           this.updateFirestore(user, displayName, email, username);
+          user.updateProfile({ displayName });
         }
         return resolve;
       })
@@ -24,22 +25,17 @@ class AuthenticationServiceFirebase {
   }
 
   updateFirestore = (user, displayName, email, username, callbackError) => {
-    user
-      .updateProfile({ displayName })
+    const role = 'productor';
+    this.httpFirebase
+      .setNewItem(USERS_COLLECTION, user.uid, {
+        displayName,
+        email,
+        username,
+        role: 'productor',
+      })
       .then(() => {
-        const role = 'productor';
-        this.httpFirebase
-          .setNewItem(USERS_COLLECTION, user.uid, {
-            displayName,
-            email,
-            username,
-            role: 'productor',
-          })
-          .then(() => {
-            console.log('user success');
-            localStorage.setItem('@hashmap/role', role);
-          })
-          .catch(callbackError);
+        console.log('user success');
+        localStorage.setItem('@hashmap/role', role);
       })
       .catch(callbackError);
   };
