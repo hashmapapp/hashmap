@@ -38,21 +38,13 @@ const SignUp = () => {
     ) {
       setLoading(true);
       setErrorMessage();
-      auth.createAccount(
-        name,
-        email,
-        password,
-        () => {
-          // Router.push(`/${username}`);
-        },
-        error => {
-          if (error && error.code === 'auth/email-already-in-use') {
-            setLoading(false);
-            console.log('E-mail já está sendo utilizado');
-            setErrorMessage('E-mail já está sendo utilizado');
-          }
+      auth.createAccount(name, email, password, error => {
+        if (error && error.code === 'auth/email-already-in-use') {
+          setLoading(false);
+          console.log('E-mail já está sendo utilizado');
+          setErrorMessage('E-mail já está sendo utilizado');
         }
-      );
+      });
     }
   };
 

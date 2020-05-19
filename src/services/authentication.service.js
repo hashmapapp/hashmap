@@ -9,41 +9,40 @@ class AuthenticationServiceFirebase {
     this.httpFirebase = new HttpWrapperFirebase();
   }
 
-  createAccount(
-    displayName,
-    email,
-    password,
-    callbackSuccess = () => {},
-    callbackError = error => console.log(error),
-    role = 'productor'
-  ) {
+  createAccount(displayName, email, password, callbackError) {
     const username = email.split('@')[0];
     this.fb
       .createUserWithEmailAndPassword(email, password)
       .then(resolve => {
         const { user } = resolve;
         if (user) {
-          user
-            .updateProfile({ displayName })
-            .then(() => {
-              this.httpFirebase
-                .setNewItem(USERS_COLLECTION, user.uid, {
-                  role,
-                  displayName,
-                  email,
-                  username,
-                })
-                .then(() => {
-                  localStorage.setItem('@hashmap/role', role);
-                  callbackSuccess(username);
-                })
-                .catch(callbackError);
-            })
-            .catch(callbackError);
+          this.updateFirestore(user, displayName, email, username);
         }
+        return resolve;
       })
       .catch(callbackError);
   }
+
+  updateFirestore = (user, displayName, email, username, callbackError) => {
+    user
+      .updateProfile({ displayName })
+      .then(() => {
+        const role = 'productor';
+        this.httpFirebase
+          .setNewItem(USERS_COLLECTION, user.uid, {
+            displayName,
+            email,
+            username,
+            role: 'productor',
+          })
+          .then(() => {
+            console.log('user success');
+            localStorage.setItem('@hashmap/role', role);
+          })
+          .catch(callbackError);
+      })
+      .catch(callbackError);
+  };
 
   signIn(
     email,
