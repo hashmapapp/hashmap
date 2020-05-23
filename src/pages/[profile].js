@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import UINavBar from 'app/components/UI/navbar/navbar';
 import Profile from 'app/screens/profile/profile';
 import { loadFirebaseStore } from 'app/lib/db';
@@ -10,6 +10,9 @@ import HourglasLoader from 'app/components/UI/loader/hourglass';
 import DynamicHead from 'app/components/UI/head/dynamic-head';
 
 export default ({ profile, hashmaps }) => {
+  useEffect(() => {
+    window.onbeforeunload = null;
+  }, []);
   return (
     <>
       <DynamicHead

@@ -1,2 +1,2 @@
-export const USER_SIGN_IN = '@user/SIGN_IN';
-export const USER_SIGN_UP = '@user/SIGN_UP';
+export const UPDATE_USER = '@user/UPDATE';
+export const RESET_USER = '@user/RESET';

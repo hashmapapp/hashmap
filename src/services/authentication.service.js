@@ -18,6 +18,7 @@ class AuthenticationServiceFirebase {
         if (user) {
           this.updateFirestore(user, displayName, email, username);
           user.updateProfile({ displayName });
+          user.sendEmailVerification();
         }
         return resolve;
       })
@@ -25,7 +26,6 @@ class AuthenticationServiceFirebase {
   }
 
   updateFirestore = (user, displayName, email, username, callbackError) => {
-    const role = 'productor';
     this.httpFirebase
       .setNewItem(USERS_COLLECTION, user.uid, {
         displayName,
@@ -35,7 +35,6 @@ class AuthenticationServiceFirebase {
       })
       .then(() => {
         console.log('user success');
-        localStorage.setItem('@hashmap/role', role);
       })
       .catch(callbackError);
   };
@@ -45,34 +44,13 @@ class AuthenticationServiceFirebase {
     password,
     callbackError = error => console.log(error.code, error.message)
   ) {
-    this.fb
-      .signInWithEmailAndPassword(email, password)
-      .then(response => {
-        const { user } = response;
-        const userRef = this.fbStore()
-          .collection(USERS_COLLECTION)
-          .doc(user.uid);
-        userRef
-          .get()
-          .then(doc => {
-            if (!doc.exists) {
-              console.error('User not found');
-              localStorage.setItem('@hashmap/role', undefined);
-            } else {
-              localStorage.setItem('@hashmap/role', doc.data().role);
-            }
-          })
-          .catch(callbackError);
-      })
-      .catch(callbackError);
+    this.fb.signInWithEmailAndPassword(email, password).catch(callbackError);
   }
 
   signOut(callback) {
     this.fb
       .signOut()
       .then(() => {
-        // console.log('Saiu com Sucesso');
-        localStorage.setItem('@hashmap/role', undefined);
         callback();
       })
       .catch(error => console.log(error.code, error.message));
@@ -121,15 +99,28 @@ class AuthenticationServiceFirebase {
       .catch(callbackError);
   }
 
-  requesterGroup(
+  sendEmailVerification(
     callbackSuccess = () => {
-      console.log('Requester Success');
+      console.log('Success');
     },
     callbackError = error => console.log(error.code, error.message)
   ) {
     const user = this.fb.currentUser;
-    this.httpFirebase
-      .updateItem(USERS_COLLECTION, user.uid, { groupMember: true })
+    user
+      .sendEmailVerification()
+      .then(callbackSuccess)
+      .catch(callbackError);
+  }
+
+  sendPasswordResetEmail(
+    email,
+    callbackSuccess = () => {
+      console.log('Send Reset Success');
+    },
+    callbackError = error => console.log(error.code, error.message)
+  ) {
+    this.fb
+      .sendPasswordResetEmail(email)
       .then(callbackSuccess)
       .catch(callbackError);
   }
