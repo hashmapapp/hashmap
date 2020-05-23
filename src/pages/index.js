@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ScreenHome from 'app/screens/home/home';
 import DynamicHead from 'app/components/UI/head/dynamic-head';
 import Banner from 'app/components/home/banner/banner';
@@ -6,6 +6,9 @@ import { loadFirebaseStore } from 'app/lib/db';
 import { HOME_HASHMAP_COLLECTION } from 'app/screens/lib/constants';
 
 export default ({ hashmaps }) => {
+  useEffect(() => {
+    window.onbeforeunload = null;
+  }, []);
   return (
     <>
       <DynamicHead />

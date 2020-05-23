@@ -12,6 +12,7 @@ export default () => {
         Router.push('/');
       }
     });
+    window.onbeforeunload = null;
   }, []);
   return (
     <>

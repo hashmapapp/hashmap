@@ -6,7 +6,14 @@ const UIModal = ({ children }) => {
       <div className="fixed inset-0 transition-opacity">
         <div className="absolute inset-0 bg-gray-500 opacity-75" />
       </div>
-      {children}
+      <div
+        className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-headline"
+      >
+        {children}
+      </div>
     </div>
   );
 };

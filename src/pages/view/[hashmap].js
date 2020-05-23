@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ScreenHashmapView from 'app/screens/hashmap/view';
 import DynamicHead from 'app/components/UI/head/dynamic-head';
-// import { getAllHashmapsKeys } from 'app/lib/hashmaps';
 import {
   HASHMAPS_COLLECTION,
   USERS_COLLECTION,
@@ -10,6 +9,9 @@ import {
 import { loadFirebaseStore } from 'app/lib/db';
 
 export default ({ hashmap, posts, hashmapKey, authorId }) => {
+  useEffect(() => {
+    window.onbeforeunload = null;
+  }, []);
   return (
     <>
       <DynamicHead

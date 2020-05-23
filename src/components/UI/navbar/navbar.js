@@ -14,6 +14,7 @@ import { authorization } from 'app/screens/lib/authorization';
 import { hashmapReset } from 'app/redux/actions/hashmapActions';
 import { HashmapService } from 'app/services/hashmap.service';
 import { UserService } from 'app/services/user.service';
+import { updateUserData, resetUser } from 'app/redux/actions/userActions';
 import AccountDropdown from './account-dropdown';
 import { useOutsideAlerter } from '../lib/use-outside-alerter';
 
@@ -30,12 +31,13 @@ const NavBar = ({
   typeNav,
   hashmapKey,
   handlerReset,
-  // hashmapRedux,
   authorKey,
   hashmap,
+  handlerUpdateUserData,
+  userData,
+  handlerResetUser,
 }) => {
   const [showNav, setShowNav] = useState(false);
-  const [userData, setUserData] = useState();
   const [currentUser, setCurrentUser] = useState();
   const [actionVisible, setActionVisible] = useState(true);
   const wrapperRef = useRef(null);
@@ -43,7 +45,10 @@ const NavBar = ({
 
   const signOut = () => {
     const auth = new AuthenticationServiceFirebase();
-    auth.signOut(() => Router.push('/login'));
+    auth.signOut(() => {
+      handlerResetUser();
+      Router.push('/login');
+    });
   };
 
   const callback = () => {
@@ -71,17 +76,17 @@ const NavBar = ({
     let mounted = true;
     loadFirebaseAuth().onAuthStateChanged(user => {
       if (user) {
-        if (mounted) {
+        if (mounted && !currentUser) {
           setCurrentUser(user);
         }
-        if (typeNav === 'edit' || typeNav === 'create') {
+        if (!userData.uid) {
           const { uid } = user;
           const userService = new UserService();
           userService
             .getUserById(uid)
             .then(resolve => {
               if (resolve && mounted) {
-                setUserData(resolve.data());
+                handlerUpdateUserData({ ...resolve.data(), uid });
               }
             })
             .catch(error => console.error(error));
@@ -164,7 +169,8 @@ const NavBar = ({
           ref={wrapperRef}
         >
           {currentUser &&
-            authorization(ACTIONS_AUTH.CREATE_HASHMAP_BUTTON) &&
+            userData.uid &&
+            authorization(ACTIONS_AUTH.CREATE_HASHMAP_BUTTON, userData.role) &&
             (typeNav === 'home' || typeNav === 'profile') && (
               <button
                 onClick={() => {
@@ -178,8 +184,9 @@ const NavBar = ({
               </button>
             )}
           {currentUser &&
+            userData.uid &&
             typeNav === 'view' &&
-            authorization(ACTIONS_AUTH.EDIT_HASHMAP_BUTTON) &&
+            authorization(ACTIONS_AUTH.EDIT_HASHMAP_BUTTON, userData.role) &&
             authorKey &&
             authorKey === currentUser.uid && (
               <Link href={`/edit?key=${hashmapKey}`}>
@@ -189,8 +196,9 @@ const NavBar = ({
               </Link>
             )}
           {currentUser &&
+            userData.uid &&
             typeNav === 'view' &&
-            authorization(ACTIONS_AUTH.ADD_HOME_HASHMAP) &&
+            authorization(ACTIONS_AUTH.ADD_HOME_HASHMAP, userData.role) &&
             hashmap &&
             actionVisible &&
             (hashmap.homeHashmap ? (
@@ -260,7 +268,6 @@ const NavBar = ({
 NavBar.propTypes = {
   typeNav: PropTypes.string,
   hashmapKey: PropTypes.string,
-  // hashmapRedux: PropTypes.shape().isRequired,
   handlerReset: PropTypes.func.isRequired,
 };
 
@@ -269,11 +276,18 @@ NavBar.defaultProps = {
   hashmapKey: undefined,
 };
 
-// const mapStateToProps = state => ({
-//   hashmapRedux: state.hashmap,
-// });
+const mapStateToProps = state => ({
+  userData: state.user,
+});
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ handlerReset: hashmapReset }, dispatch);
+  bindActionCreators(
+    {
+      handlerReset: hashmapReset,
+      handlerUpdateUserData: updateUserData,
+      handlerResetUser: resetUser,
+    },
+    dispatch
+  );
 
-export default connect(null, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
