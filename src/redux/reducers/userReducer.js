@@ -13,7 +13,6 @@ const UserReducer = (state = {}, action) => {
       });
     }
     case ACTIONS.RESET_USER: {
-      console.log('RESET_USER');
       return {};
     }
     default:
