@@ -11,9 +11,10 @@ import {
   FaMediumM,
 } from 'react-icons/fa';
 import CircleLoader from 'app/components/UI/loader/circle';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { replaceLink } from '../lib/replaceLinks';
 
-const Profile = ({ profile, hashmaps }) => {
+const Profile = ({ profile, hashmaps, fetchMoreData, hasMoreData }) => {
   const [socialLinks, setSocialLinks] = useState({});
 
   useMemo(() => {
@@ -131,13 +132,19 @@ const Profile = ({ profile, hashmaps }) => {
 
       {hashmaps &&
         (hashmaps.length > 0 ? (
-          <div className="m-1 md:m-16 grid grid-cols-6 gap-4 ">
-            {hashmaps.map(hashmap => (
-              <div key={hashmap.key} className="col-span-6 xl:col-span-3">
-                <Item hashmap={hashmap} />
-              </div>
-            ))}
-          </div>
+          <InfiniteScroll
+            dataLength={hashmaps.length}
+            next={fetchMoreData}
+            hasMore={hasMoreData}
+          >
+            <div className="m-1 md:m-16 grid grid-cols-6 gap-4 ">
+              {hashmaps.map(hashmap => (
+                <div key={hashmap.key} className="col-span-6 xl:col-span-3">
+                  <Item hashmap={hashmap} />
+                </div>
+              ))}
+            </div>
+          </InfiniteScroll>
         ) : (
           <div className="md:px-64 text-center">
             <img
