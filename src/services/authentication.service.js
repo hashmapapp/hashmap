@@ -9,23 +9,35 @@ class AuthenticationServiceFirebase {
     this.httpFirebase = new HttpWrapperFirebase();
   }
 
-  createAccount(displayName, email, password, callbackError) {
+  createAccount(displayName, email, password, callbackSuccess, callbackError) {
     const username = email.split('@')[0];
     this.fb
       .createUserWithEmailAndPassword(email, password)
       .then(resolve => {
         const { user } = resolve;
         if (user) {
-          this.updateFirestore(user, displayName, email, username);
-          user.updateProfile({ displayName });
-          user.sendEmailVerification();
+          this.updateFirestore(
+            user,
+            displayName,
+            email,
+            username,
+            callbackSuccess,
+            callbackError
+          );
         }
         return resolve;
       })
       .catch(callbackError);
   }
 
-  updateFirestore = (user, displayName, email, username, callbackError) => {
+  updateFirestore = (
+    user,
+    displayName,
+    email,
+    username,
+    callbackSuccess,
+    callbackError
+  ) => {
     this.httpFirebase
       .setNewItem(USERS_COLLECTION, user.uid, {
         displayName,
@@ -34,7 +46,10 @@ class AuthenticationServiceFirebase {
         role: 'productor',
       })
       .then(() => {
-        console.log('user success');
+        user
+          .sendEmailVerification()
+          .then(callbackSuccess)
+          .catch(callbackError);
       })
       .catch(callbackError);
   };
@@ -42,9 +57,13 @@ class AuthenticationServiceFirebase {
   signIn(
     email,
     password,
+    callbackSuccess,
     callbackError = error => console.log(error.code, error.message)
   ) {
-    this.fb.signInWithEmailAndPassword(email, password).catch(callbackError);
+    this.fb
+      .signInWithEmailAndPassword(email, password)
+      .then(callbackSuccess)
+      .catch(callbackError);
   }
 
   signOut(callback) {

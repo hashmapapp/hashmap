@@ -22,7 +22,7 @@ const Publication = ({ data }) => {
           </div>
         )}
         {data.imageUrl && (
-          <div className="flex justify-center pt-3 pb-2">
+          <div className="flex justify-center pt-2">
             <img
               className="md:hidden shadow"
               src={data.imageUrl}

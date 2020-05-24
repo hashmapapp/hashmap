@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Loader from 'app/components/UI/loader/loader';
 import AuthenticationServiceFirebase from 'app/services/authentication.service';
-// import Router from 'next/router';
+import Router from 'next/router';
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
@@ -38,13 +38,21 @@ const SignUp = () => {
     ) {
       setLoading(true);
       setErrorMessage();
-      auth.createAccount(name, email, password, error => {
-        if (error && error.code === 'auth/email-already-in-use') {
-          setLoading(false);
-          console.log('E-mail já está sendo utilizado');
-          setErrorMessage('E-mail já está sendo utilizado');
+      auth.createAccount(
+        name,
+        email,
+        password,
+        () => {
+          Router.push('/');
+        },
+        error => {
+          if (error && error.code === 'auth/email-already-in-use') {
+            setLoading(false);
+            console.log('E-mail já está sendo utilizado');
+            setErrorMessage('E-mail já está sendo utilizado');
+          }
         }
-      });
+      );
     }
   };
 

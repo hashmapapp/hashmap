@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Loader from 'app/components/UI/loader/loader';
 import UIModal from 'app/components/UI/modal/modal';
 import AuthenticationServiceFirebase from 'app/services/authentication.service';
+import Router from 'next/router';
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -24,10 +25,17 @@ const SignIn = () => {
     setPasswordError(!passwordIsValid);
     if (emailIsValid && passwordIsValid) {
       setLoading(true);
-      auth.signIn(email, password, () => {
-        setInvalid(true);
-        setLoading(false);
-      });
+      auth.signIn(
+        email,
+        password,
+        () => {
+          Router.push('/');
+        },
+        () => {
+          setInvalid(true);
+          setLoading(false);
+        }
+      );
     } else {
       setInvalid(true);
     }
