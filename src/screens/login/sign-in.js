@@ -191,13 +191,13 @@ const SignIn = () => {
               type="button"
               onClick={() => setShowModal(true)}
               className="inline-block align-baseline font-bold text-sm 
-                text-blue-500 hover:text-blue-800"
+                text-black hover:text-gray-800"
             >
               Esqueceu a senha?
             </button>
             {!loading && (
               <button
-                className="w-24 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 
+                className="w-24 bg-black hover:bg-gray-800 text-white font-bold py-2 
                 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
               >
@@ -205,14 +205,14 @@ const SignIn = () => {
               </button>
             )}
             {loading && (
-              <div className="cursor-wait w-24 bg-blue-700 py-2 px-4 rounded flex justify-center">
-                <Loader />
+              <div className="cursor-wait w-24 bg-black py-2 px-4 rounded flex justify-center">
+                <Loader color="black" />
               </div>
             )}
           </div>
           <div className="pt-12 flex justify-center">
             <Link href="/sign-up">
-              <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+              <a className="inline-block align-baseline font-bold text-sm text-black hover:text-gray-800">
                 Não tem uma conta ainda?
               </a>
             </Link>

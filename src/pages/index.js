@@ -29,7 +29,7 @@ export default () => {
       setLastVisible(data.docs[data.docs.length - 1]);
       setHashmaps([...currentData, ...map]);
     } else {
-      console.log('Finish Data');
+      // console.log('Finish Data');
       setHasMoreData(false);
     }
   };
