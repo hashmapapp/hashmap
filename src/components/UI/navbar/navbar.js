@@ -166,7 +166,6 @@ const NavBar = ({
           className={`px-2 pt-2 pb-4 sm:flex sm:p-0 ${
             showNav ? 'block' : 'hidden'
           }`}
-          ref={wrapperRef}
         >
           {currentUser &&
             userData.uid &&
@@ -178,7 +177,7 @@ const NavBar = ({
                   Router.push('/edit');
                 }}
                 type="button"
-                className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2"
+                className="text-left w-full uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2"
               >
                 Criar
               </button>

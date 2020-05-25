@@ -450,58 +450,53 @@ const Settings = () => {
                   </label>
                 </div>
                 <div className="mb-6">
-                  <label
-                    className="block text-gray-500 font-bold pr-4"
-                    htmlFor="facebook"
-                  >
-                    Social
-                    <input
-                      className="my-1 bg-gray-100 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                      id="facebook"
-                      type="text"
-                      placeholder="Facebook"
-                      value={userFirestore.facebook || ''}
-                      onChange={evt => {
-                        handlerChangeForm('facebook', evt.target.value);
-                      }}
-                    />
-                    <input
-                      className="my-1 bg-gray-100 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                      id="instagram"
-                      type="text"
-                      placeholder="Instagram"
-                      value={userFirestore.instagram || ''}
-                      onChange={evt => {
-                        handlerChangeForm('instagram', evt.target.value);
-                      }}
-                    />
-                    <input
-                      className="my-1 bg-gray-100 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                      id="twitter"
-                      type="text"
-                      placeholder="Twitter"
-                      value={userFirestore.twitter || ''}
-                      onChange={evt => {
-                        handlerChangeForm('twitter', evt.target.value);
-                      }}
-                    />
-                    <input
-                      className="my-1 bg-gray-100 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                      id="linkedin"
-                      type="text"
-                      value={userFirestore.linkedin || ''}
-                      onChange={evt => {
-                        handlerChangeForm('linkedin', evt.target.value);
-                      }}
-                      placeholder="LinkedIn"
-                    />
-                  </label>
+                  <p className="block text-gray-500 font-bold pr-4">Social</p>
+                  <input
+                    className="my-1 bg-gray-100 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                    id="facebook"
+                    type="text"
+                    placeholder="Facebook"
+                    value={userFirestore.facebook || ''}
+                    onChange={evt => {
+                      handlerChangeForm('facebook', evt.target.value);
+                    }}
+                  />
+                  <input
+                    className="my-1 bg-gray-100 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                    id="instagram"
+                    type="text"
+                    placeholder="Instagram"
+                    value={userFirestore.instagram || ''}
+                    onChange={evt => {
+                      handlerChangeForm('instagram', evt.target.value);
+                    }}
+                  />
+                  <input
+                    className="my-1 bg-gray-100 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                    id="twitter"
+                    type="text"
+                    placeholder="Twitter"
+                    value={userFirestore.twitter || ''}
+                    onChange={evt => {
+                      handlerChangeForm('twitter', evt.target.value);
+                    }}
+                  />
+                  <input
+                    className="my-1 bg-gray-100 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                    id="linkedin"
+                    type="text"
+                    value={userFirestore.linkedin || ''}
+                    onChange={evt => {
+                      handlerChangeForm('linkedin', evt.target.value);
+                    }}
+                    placeholder="LinkedIn"
+                  />
                 </div>
                 {!loading && (
                   <div className="flex justify-end">
                     <button
-                      className="w-24 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 
-                px-4 mr-4 rounded focus:outline-none focus:shadow-outline"
+                      className="w-32 bg-black hover:bg-gray-800 text-white font-bold py-2 
+                 rounded focus:outline-none focus:shadow-outline"
                       type="submit"
                     >
                       Salvar
@@ -510,8 +505,8 @@ const Settings = () => {
                 )}
                 {loading && (
                   <div className="flex justify-end">
-                    <div className="mr-4 cursor-wait w-24 bg-blue-700 py-2 px-4 rounded flex justify-center">
-                      <Loader />
+                    <div className=" cursor-wait w-32 bg-black py-2 rounded flex justify-center">
+                      <Loader color="black" />
                     </div>
                   </div>
                 )}
