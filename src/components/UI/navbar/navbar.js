@@ -217,6 +217,16 @@ const NavBar = ({
                 Adicionar à Home
               </button>
             ))}
+          {currentUser &&
+            userData.uid &&
+            typeNav !== 'hashdash' &&
+            authorization(ACTIONS_AUTH.ADD_HOME_HASHMAP, userData.role) && (
+              <Link href="/hashdash">
+                <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
+                  Hashdash
+                </a>
+              </Link>
+            )}
           {currentUser && typeNav === 'edit' && (
             <button
               type="button"
