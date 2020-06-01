@@ -50,6 +50,8 @@ const SignUp = () => {
             setLoading(false);
             console.log('E-mail já está sendo utilizado');
             setErrorMessage('E-mail já está sendo utilizado');
+          } else {
+            console.error(error);
           }
         }
       );

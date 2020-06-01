@@ -38,6 +38,7 @@ class AuthenticationServiceFirebase {
     callbackSuccess,
     callbackError
   ) => {
+    user.sendEmailVerification();
     this.httpFirebase
       .setNewItem(USERS_COLLECTION, user.uid, {
         displayName,
@@ -45,12 +46,7 @@ class AuthenticationServiceFirebase {
         username,
         role: 'productor',
       })
-      .then(() => {
-        user
-          .sendEmailVerification()
-          .then(callbackSuccess)
-          .catch(callbackError);
-      })
+      .then(callbackSuccess)
       .catch(callbackError);
   };
 
