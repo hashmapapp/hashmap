@@ -18,6 +18,9 @@ export const authorization = (key, roleStorage) => {
     case ACTIONS.ADD_HOME_HASHMAP: {
       return role === 'admin';
     }
+    case ACTIONS.HASHDASH: {
+      return role === 'admin';
+    }
     default:
       return false;
   }
