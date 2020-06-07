@@ -87,16 +87,12 @@ const hashdash = () => {
   return (
     <>
       <DynamicHead titleText="Hashdash" />
-      <div className="h-screen">
-        <UINavBar typeNav="hashdash" />
-        <div className="py-4 md:py-16 px-2 md:px-24">
-          <HashmapList
-            hashmaps={hashmaps}
-            handlerNext={handlerNext}
-            handlerPrevious={handlerPrevious}
-          />
-        </div>
-      </div>
+      <UINavBar typeNav="hashdash" />
+      <HashmapList
+        hashmaps={hashmaps}
+        handlerNext={handlerNext}
+        handlerPrevious={handlerPrevious}
+      />
     </>
   );
 };
