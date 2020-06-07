@@ -9,19 +9,19 @@ const withAuthorization = (WrappedComponent, key) => {
     const { userData } = props;
     useEffect(() => {
       loadFirebaseAuth().onAuthStateChanged(user => {
-        const auth = authorization(key, userData.role);
-        if (!user || !auth) {
-          console.log(
-            'Usuário não logado ou não tem permissão para esta acessar esta página'
-          );
+        if (!user) {
+          console.log('Usuário não logado');
           Router.push('/login');
+        } else {
+          const auth = authorization(key, userData.role);
+          if (!auth) {
+            console.log(
+              'Usuário não tem permissão para esta acessar esta página'
+            );
+            Router.push('/');
+          }
         }
       });
-      window.onbeforeunload = e => {
-        e = e || window.event;
-        if (e) e.returnValue = 'Sure?';
-        return 'Sure?';
-      };
     }, []);
 
     return <WrappedComponent {...props} />;
