@@ -120,6 +120,9 @@ const Settings = () => {
   useMemo(() => {
     if (userFirestore) {
       switch (userFirestore.role) {
+        case 'default':
+          setRole('iniciante');
+          break;
         case 'productor':
           setRole('criador');
           break;
@@ -127,7 +130,7 @@ const Settings = () => {
           setRole('administrador');
           break;
         default:
-          setRole('principiante');
+          setRole();
           break;
       }
 
@@ -142,7 +145,7 @@ const Settings = () => {
 
   return (
     <>
-      {currentUser && userFirestore && (
+      {currentUser && role ? (
         <div className="container mx-auto md:px-64">
           {!currentUser.emailVerified && (
             <div
@@ -512,6 +515,18 @@ const Settings = () => {
                 )}
               </form>
             )}
+          </div>
+        </div>
+      ) : (
+        <div className="container mx-auto md:px-64">
+          <div className="py-12 bg-white">
+            <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center">
+                <p className="text-base leading-6 text-indigo-600 font-semibold tracking-wide uppercase">
+                  Só mais um pouquinho...
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}

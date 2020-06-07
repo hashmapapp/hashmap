@@ -46,10 +46,14 @@ const SignUp = () => {
           Router.push('/');
         },
         error => {
-          if (error && error.code === 'auth/email-already-in-use') {
-            setLoading(false);
-            console.log('E-mail já está sendo utilizado');
-            setErrorMessage('E-mail já está sendo utilizado');
+          setLoading(false);
+          if (error) {
+            console.error(error);
+            if (error.code === 'auth/email-already-exists') {
+              setErrorMessage('E-mail já está sendo utilizado');
+            } else if (error.message) {
+              setErrorMessage(error.message);
+            }
           }
         }
       );
