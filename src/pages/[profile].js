@@ -43,12 +43,20 @@ export default ({ profile }) => {
 
   useEffect(() => {
     window.onbeforeunload = null;
+    let mounted = true;
     if (profile) {
       getQueryFb()
         .limit(LIMIT_ITEMS)
         .get()
-        .then(refreshData);
+        .then(data => {
+          if (mounted) {
+            refreshData(data);
+          }
+        });
     }
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const fetchMoreData = () => {

@@ -1,54 +1,30 @@
-import { loadFirebaseAuth, loadFirebaseStore } from 'app/lib/db';
+import axios from 'axios';
+import { loadFirebaseAuth } from 'app/lib/db';
 import { USERS_COLLECTION } from 'app/screens/lib/constants';
 import { HttpWrapperFirebase } from './http-wrapper';
 
 class AuthenticationServiceFirebase {
   constructor() {
     this.fb = loadFirebaseAuth();
-    this.fbStore = loadFirebaseStore();
     this.httpFirebase = new HttpWrapperFirebase();
   }
 
   createAccount(displayName, email, password, callbackSuccess, callbackError) {
-    const username = email.split('@')[0];
-    this.fb
-      .createUserWithEmailAndPassword(email, password)
-      .then(resolve => {
-        const { user } = resolve;
-        if (user) {
-          this.updateFirestore(
-            user,
-            displayName,
-            email,
-            username,
-            callbackSuccess,
-            callbackError
-          );
+    axios
+      .post(
+        'https://us-central1-hashmap-prod.cloudfunctions.net/createUserByRequest',
+        { displayName, email, password }
+      )
+      .then(res => {
+        if (res.status === 201) {
+          console.log(res.data);
+          this.signIn(email, password, callbackSuccess, callbackError);
+        } else {
+          callbackError(new Error('Failed in create new user'));
         }
-        return resolve;
       })
       .catch(callbackError);
   }
-
-  updateFirestore = (
-    user,
-    displayName,
-    email,
-    username,
-    callbackSuccess,
-    callbackError
-  ) => {
-    user.sendEmailVerification();
-    this.httpFirebase
-      .setNewItem(USERS_COLLECTION, user.uid, {
-        displayName,
-        email,
-        username,
-        role: 'productor',
-      })
-      .then(callbackSuccess)
-      .catch(callbackError);
-  };
 
   signIn(
     email,

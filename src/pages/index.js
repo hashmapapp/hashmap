@@ -36,10 +36,18 @@ export default () => {
 
   useEffect(() => {
     window.onbeforeunload = null;
+    let mounted = true;
     getQueryFb()
       .limit(LIMIT_ITEMS)
       .get()
-      .then(refreshData);
+      .then(data => {
+        if (mounted) {
+          refreshData(data);
+        }
+      });
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const fetchMoreData = () => {
