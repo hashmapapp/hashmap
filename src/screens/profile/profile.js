@@ -11,6 +11,7 @@ import {
   FaMediumM,
 } from 'react-icons/fa';
 import CircleLoader from 'app/components/UI/loader/circle';
+import CreateHashmapButton from 'app/components/UI/buttons/create-hashmap';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { replaceLink } from '../lib/replaceLinks';
 
@@ -122,6 +123,10 @@ const Profile = ({ profile, hashmaps, fetchMoreData, hasMoreData }) => {
             )}
           </div>
         </div>
+      </div>
+
+      <div className="flex justify-center">
+        <CreateHashmapButton />
       </div>
 
       {!hashmaps && (

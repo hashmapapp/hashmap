@@ -167,7 +167,7 @@ const NavBar = ({
             showNav ? 'block' : 'hidden'
           }`}
         >
-          {currentUser &&
+          {/* {currentUser &&
             userData.uid &&
             authorization(ACTIONS_AUTH.CREATE_HASHMAP_BUTTON, userData.role) &&
             (typeNav === 'home' || typeNav === 'profile') && (
@@ -181,7 +181,14 @@ const NavBar = ({
               >
                 Criar
               </button>
-            )}
+            )} */}
+          {currentUser && typeNav === 'profile' && (
+            <Link href="/settings">
+              <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
+                Editar Perfil
+              </a>
+            </Link>
+          )}
           {currentUser &&
             userData.uid &&
             typeNav === 'view' &&
@@ -236,8 +243,8 @@ const NavBar = ({
               Deletar
             </button>
           )}
-          {currentUser && (
-            <Link href="/settings">
+          {currentUser && userData && typeNav !== 'profile' && (
+            <Link href="/[profile]" as={`/${userData.username}`}>
               <a className="md:hidden uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
                 Perfil
               </a>
@@ -266,7 +273,12 @@ const NavBar = ({
             </Link>
           )}
           {currentUser && (
-            <AccountDropdown user={currentUser} signOut={signOut} />
+            <AccountDropdown
+              user={currentUser}
+              signOut={signOut}
+              userData={userData}
+              typeNav={typeNav}
+            />
           )}
         </nav>
       </div>

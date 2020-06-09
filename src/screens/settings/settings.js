@@ -16,6 +16,7 @@ import { IoMdLink } from 'react-icons/io';
 import Loader from 'app/components/UI/loader/loader';
 import ProfileImageUpload from 'app/components/UI/image/profile-upload';
 import AuthenticationServiceFirebase from 'app/services/authentication.service';
+import HourglasLoader from 'app/components/UI/loader/hourglass';
 import { replaceLink } from '../lib/replaceLinks';
 
 const Settings = () => {
@@ -522,9 +523,7 @@ const Settings = () => {
           <div className="py-12 bg-white">
             <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center">
-                <p className="text-base leading-6 text-indigo-600 font-semibold tracking-wide uppercase">
-                  Só mais um pouquinho...
-                </p>
+                <HourglasLoader />
               </div>
             </div>
           </div>
