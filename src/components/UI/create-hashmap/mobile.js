@@ -1,19 +1,12 @@
 import React from 'react';
-import Router from 'next/router';
 import { FaEdit } from 'react-icons/fa';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { hashmapReset } from 'app/redux/actions/hashmapActions';
 
-const CreateHashmapButton = ({ handlerReset }) => {
+const CreateHashmapMobile = ({ handlerCreate }) => {
   return (
     <button
       type="button"
       className="border my-6 mx-4 max-w-sm rounded-lg overflow-hidden shadow-lg"
-      onClick={() => {
-        handlerReset();
-        Router.push('/edit');
-      }}
+      onClick={handlerCreate}
     >
       <img
         className="w-full px-6 p-4"
@@ -32,12 +25,4 @@ const CreateHashmapButton = ({ handlerReset }) => {
   );
 };
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      handlerReset: hashmapReset,
-    },
-    dispatch
-  );
-
-export default connect(null, mapDispatchToProps)(CreateHashmapButton);
+export default CreateHashmapMobile;

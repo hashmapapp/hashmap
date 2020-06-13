@@ -7,7 +7,7 @@ const ItemDrop = styled.div`
   cursor: pointer;
 `;
 
-const AccountDropdown = ({ user, signOut, userData, typeNav }) => {
+const AccountDropdown = ({ user, signOut, userData, typeNav, myProfile }) => {
   const [showNav, setShowNav] = useState(false);
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowNav);
@@ -40,10 +40,10 @@ const AccountDropdown = ({ user, signOut, userData, typeNav }) => {
             showNav ? 'block' : 'hidden'
           }`}
         >
-          {userData && typeNav !== 'profile' && (
+          {userData && !myProfile && (
             <Link href="/[profile]" as={`/${userData.username}`}>
               <a className="block px-4 py-2 text-gray-800 hover:bg-gray-600 hover:text-white">
-                Perfil
+                Meu Perfil
               </a>
             </Link>
           )}

@@ -48,13 +48,7 @@ class AuthenticationServiceFirebase {
   }
 
   updateProfile(
-    displayName,
-    photoURL,
-    bio,
-    facebook,
-    instagram,
-    twitter,
-    linkedin,
+    userFirestore,
     callbackSuccess = () => {
       console.log('Profile Update');
     },
@@ -62,28 +56,20 @@ class AuthenticationServiceFirebase {
   ) {
     const user = this.fb.currentUser;
     const profileData = {};
-    const profileCloud = {};
-    if (displayName) {
-      profileData.displayName = displayName;
-      profileCloud.displayName = displayName;
+    if (userFirestore.displayName) {
+      profileData.displayName = userFirestore.displayName;
     }
-    if (photoURL && photoURL.path && photoURL.url) {
-      profileData.photoURL = photoURL.url;
-      profileCloud.photoURL = { path: photoURL.path, url: photoURL.url };
+    if (userFirestore.photoURL && userFirestore.photoURL.url) {
+      profileData.photoURL = userFirestore.photoURL.url;
     } else {
       profileData.photoURL = '';
-      profileCloud.photoURL = {};
+      userFirestore.photoURL = {};
     }
-    if (bio) profileCloud.bio = bio;
-    if (facebook) profileCloud.facebook = facebook;
-    if (instagram) profileCloud.instagram = instagram;
-    if (twitter) profileCloud.twitter = twitter;
-    if (linkedin) profileCloud.linkedin = linkedin;
     user
       .updateProfile(profileData)
       .then(() => {
         this.httpFirebase
-          .updateItem(USERS_COLLECTION, user.uid, profileCloud)
+          .updateItem(USERS_COLLECTION, user.uid, userFirestore)
           .then(callbackSuccess)
           .catch(callbackError);
       })

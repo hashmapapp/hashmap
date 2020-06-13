@@ -3,6 +3,8 @@ const url = {
   facebook: 'facebook.com',
   twitter: 'twitter.com',
   linkedin: 'linkedin.com/in',
+  link: '',
+  youtube: '',
 };
 
 export const replaceLink = (link, social) => {

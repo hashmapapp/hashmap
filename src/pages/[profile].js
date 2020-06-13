@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import UINavBar from 'app/components/UI/navbar/navbar';
 import Profile from 'app/screens/profile/profile';
-import { loadFirebaseStore } from 'app/lib/db';
+import Router from 'next/router';
+import { loadFirebaseStore, loadFirebaseAuth } from 'app/lib/db';
 import {
   USERS_COLLECTION,
   HASHMAPS_COLLECTION,
 } from 'app/screens/lib/constants';
 import HourglasLoader from 'app/components/UI/loader/hourglass';
 import DynamicHead from 'app/components/UI/head/dynamic-head';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { hashmapReset } from 'app/redux/actions/hashmapActions';
 
-export default ({ profile }) => {
+const proflie = ({ profile, handlerReset }) => {
   const [hashmaps, setHashmaps] = useState();
   const [lastVisible, setLastVisible] = useState();
   const [hasMoreData, setHasMoreData] = useState(true);
+  const [currentUser, setCurrentUser] = useState();
   const LIMIT_ITEMS = 25;
 
   const refreshData = (data, currentData = []) => {
@@ -59,6 +64,29 @@ export default ({ profile }) => {
     };
   }, []);
 
+  useEffect(() => {
+    let mounted = true;
+    loadFirebaseAuth().onAuthStateChanged(user => {
+      if (user) {
+        if (mounted) {
+          setCurrentUser(user);
+        }
+      }
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const handlerCreate = () => {
+    if (currentUser) {
+      handlerReset();
+      Router.push('/edit');
+    } else {
+      Router.push('/login?create=true');
+    }
+  };
+
   const fetchMoreData = () => {
     if (lastVisible) {
       // console.log('fetchMoreData');
@@ -83,7 +111,12 @@ export default ({ profile }) => {
       />
       {profile ? (
         <div className="h-screen">
-          <UINavBar typeNav="profile" />
+          <UINavBar
+            typeNav="profile"
+            myProfile={
+              currentUser && profile && currentUser.uid === profile.key
+            }
+          />
           <div className="flex justify-center items-center">
             {profile ? (
               <Profile
@@ -91,6 +124,8 @@ export default ({ profile }) => {
                 hashmaps={hashmaps}
                 fetchMoreData={fetchMoreData}
                 hasMoreData={hasMoreData}
+                handlerCreate={handlerCreate}
+                myProfile={currentUser && currentUser.uid === profile.key}
               />
             ) : (
               <div className="w-full justify-center h-64 flex items-end">
@@ -137,3 +172,13 @@ export async function getServerSideProps({ params }) {
   }
   return { props: { profile } };
 }
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      handlerReset: hashmapReset,
+    },
+    dispatch
+  );
+
+export default connect(null, mapDispatchToProps)(proflie);
