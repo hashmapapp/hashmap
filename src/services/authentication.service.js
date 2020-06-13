@@ -17,8 +17,14 @@ class AuthenticationServiceFirebase {
       )
       .then(res => {
         if (res.status === 201) {
-          console.log(res.data);
-          this.signIn(email, password, callbackSuccess, callbackError);
+          this.signIn(
+            email,
+            password,
+            () => {
+              this.sendEmailVerification(callbackSuccess, callbackError);
+            },
+            callbackError
+          );
         } else {
           callbackError(new Error('Failed in create new user'));
         }
