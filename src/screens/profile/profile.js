@@ -11,10 +11,19 @@ import {
   FaMediumM,
 } from 'react-icons/fa';
 import CircleLoader from 'app/components/UI/loader/circle';
+import CreateHashmapMobile from 'app/components/UI/create-hashmap/mobile';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { replaceLink } from '../lib/replaceLinks';
+import { FiExternalLink } from 'react-icons/fi';
 
-const Profile = ({ profile, hashmaps, fetchMoreData, hasMoreData }) => {
+const Profile = ({
+  profile,
+  hashmaps,
+  fetchMoreData,
+  hasMoreData,
+  handlerCreate,
+  myProfile,
+}) => {
   const [socialLinks, setSocialLinks] = useState({});
 
   useMemo(() => {
@@ -23,6 +32,8 @@ const Profile = ({ profile, hashmaps, fetchMoreData, hasMoreData }) => {
     links.twitter = replaceLink(profile.twitter, 'twitter');
     links.linkedin = replaceLink(profile.linkedin, 'linkedin');
     links.facebook = replaceLink(profile.facebook, 'facebook');
+    links.youtube = replaceLink(profile.youtube, 'youtube');
+    links.link = replaceLink(profile.link, 'link');
     setSocialLinks(links);
   }, [profile]);
 
@@ -42,7 +53,7 @@ const Profile = ({ profile, hashmaps, fetchMoreData, hasMoreData }) => {
             alt="Perfil"
           />
         )}
-        <div className="text-center p-4">
+        <div className="text-center py-4 px-16">
           <h2 className="font-bold text-lg">{profile.displayName}</h2>
           <div className="font-bold text-purple-500 text-xs">
             @{profile.username}
@@ -73,12 +84,16 @@ const Profile = ({ profile, hashmaps, fetchMoreData, hasMoreData }) => {
               </Link>
             )}
             {profile.youtube && (
-              <button
-                type="button"
-                className="m-1 bg-gray-100 border hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center"
-              >
-                <FaYoutube size={22} />
-              </button>
+              <Link href={`${socialLinks.youtube}`}>
+                <a target="_blank">
+                  <button
+                    type="button"
+                    className="m-1 bg-gray-100 border hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center"
+                  >
+                    <FaYoutube size={22} />
+                  </button>
+                </a>
+              </Link>
             )}
             {profile.facebook && (
               <Link href={`${socialLinks.facebook}`}>
@@ -104,6 +119,18 @@ const Profile = ({ profile, hashmaps, fetchMoreData, hasMoreData }) => {
                 </a>
               </Link>
             )}
+            {profile.link && (
+              <Link href={`${socialLinks.link}`}>
+                <a target="_blank">
+                  <button
+                    type="button"
+                    className="m-1 bg-gray-100 border hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center"
+                  >
+                    <FiExternalLink size={22} />
+                  </button>
+                </a>
+              </Link>
+            )}
             {profile.github && (
               <button
                 type="button"
@@ -123,46 +150,49 @@ const Profile = ({ profile, hashmaps, fetchMoreData, hasMoreData }) => {
           </div>
         </div>
       </div>
-
+      {myProfile && (
+        <div className="md:hidden block flex justify-center">
+          <CreateHashmapMobile handlerCreate={handlerCreate} />
+        </div>
+      )}
       {!hashmaps && (
         <div className="w-full justify-center h-64 flex items-end">
           <CircleLoader className="flex-1" />
         </div>
       )}
-
-      {hashmaps &&
-        (hashmaps.length > 0 ? (
-          <InfiniteScroll
-            dataLength={hashmaps.length}
-            next={fetchMoreData}
-            hasMore={hasMoreData}
-          >
-            <div className="m-1 md:m-16 grid grid-cols-6 gap-4 ">
-              {hashmaps.map(hashmap => (
-                <div key={hashmap.key} className="col-span-6 xl:col-span-3">
-                  <Item hashmap={hashmap} />
-                </div>
-              ))}
-            </div>
-          </InfiniteScroll>
-        ) : (
-          <div className="md:px-64 text-center">
-            <img
-              className="md:hidden px-24 pt-8"
-              src="imgs/icons/empty.svg"
-              alt="authentication"
-            />
-            <img
-              className="hidden md:block px-24 pt-16 w-full"
-              src="imgs/icons/empty.svg"
-              alt="authentication"
-              style={{ height: 300 }}
-            />
-            <p className="pt-4 md:pb-12 md:pt-12 font-sans text-lg text-gray-600 text-center">
-              Hashmaps incríveis em breve!
-            </p>
+      {hashmaps && hashmaps.length === 0 && !myProfile && (
+        <div className="md:px-64 text-center">
+          <img
+            className="md:hidden px-24 pt-8"
+            src="imgs/icons/empty.svg"
+            alt="authentication"
+          />
+          <img
+            className="hidden md:block px-24 pt-16 w-full"
+            src="imgs/icons/empty.svg"
+            alt="authentication"
+            style={{ height: 300 }}
+          />
+          <p className="pt-4 md:pb-12 md:pt-12 font-sans text-lg text-gray-600 text-center">
+            Hashmaps incríveis em breve!
+          </p>
+        </div>
+      )}
+      {hashmaps && hashmaps.length > 0 && (
+        <InfiniteScroll
+          dataLength={hashmaps.length}
+          next={fetchMoreData}
+          hasMore={hasMoreData}
+        >
+          <div className="m-1 md:m-16 grid grid-cols-6 gap-4 ">
+            {hashmaps.map(hashmap => (
+              <div key={hashmap.key} className="col-span-6 xl:col-span-3">
+                <Item hashmap={hashmap} />
+              </div>
+            ))}
           </div>
-        ))}
+        </InfiniteScroll>
+      )}
     </div>
   );
 };

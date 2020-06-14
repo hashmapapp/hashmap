@@ -12,10 +12,12 @@ import {
   FaGithubAlt,
   FaMediumM,
 } from 'react-icons/fa';
+import { FiExternalLink } from 'react-icons/fi';
 import { IoMdLink } from 'react-icons/io';
 import Loader from 'app/components/UI/loader/loader';
 import ProfileImageUpload from 'app/components/UI/image/profile-upload';
 import AuthenticationServiceFirebase from 'app/services/authentication.service';
+import HourglasLoader from 'app/components/UI/loader/hourglass';
 import { replaceLink } from '../lib/replaceLinks';
 
 const Settings = () => {
@@ -61,17 +63,7 @@ const Settings = () => {
   const onSubmit = () => {
     const auth = new AuthenticationServiceFirebase();
     setLoading(true);
-    auth.updateProfile(
-      userFirestore.displayName,
-      userFirestore.photoURL,
-      userFirestore.bio,
-      userFirestore.facebook,
-      userFirestore.instagram,
-      userFirestore.twitter,
-      userFirestore.linkedin,
-      updateSuccess,
-      updateError
-    );
+    auth.updateProfile(userFirestore, updateSuccess, updateError);
   };
 
   const handlerSendEmail = () => {
@@ -139,6 +131,8 @@ const Settings = () => {
       links.twitter = replaceLink(userFirestore.twitter, 'twitter');
       links.linkedin = replaceLink(userFirestore.linkedin, 'linkedin');
       links.facebook = replaceLink(userFirestore.facebook, 'facebook');
+      links.youtube = replaceLink(userFirestore.youtube, 'youtube');
+      links.link = replaceLink(userFirestore.link, 'link');
       setSocialLinks(links);
     }
   }, [userFirestore]);
@@ -278,13 +272,17 @@ const Settings = () => {
                     </Link>
                   )}
                   {userFirestore.youtube && (
-                    <button
-                      type="button"
-                      className="m-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-                    >
-                      <FaYoutube className="fill-current w-4 h-4 mr-2" />
-                      <span>YouTube</span>
-                    </button>
+                    <Link href={`${socialLinks.youtube}`}>
+                      <a target="_blank">
+                        <button
+                          type="button"
+                          className="m-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                        >
+                          <FaYoutube className="fill-current w-4 h-4 mr-2" />
+                          <span>YouTube</span>
+                        </button>
+                      </a>
+                    </Link>
                   )}
                   {userFirestore.facebook && (
                     <Link href={`${socialLinks.facebook}`}>
@@ -329,6 +327,19 @@ const Settings = () => {
                       <FaMediumM className="fill-current w-4 h-4 mr-2" />
                       <span>Medium</span>
                     </button>
+                  )}
+                  {userFirestore.link && (
+                    <Link href={`${socialLinks.link}`}>
+                      <a target="_blank">
+                        <button
+                          type="button"
+                          className="m-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                        >
+                          <FiExternalLink className="w-4 h-4 mr-2" />
+                          <span>Site</span>
+                        </button>
+                      </a>
+                    </Link>
                   )}
                 </div>
               </div>
@@ -458,7 +469,7 @@ const Settings = () => {
                     className="my-1 bg-gray-100 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                     id="facebook"
                     type="text"
-                    placeholder="Facebook"
+                    placeholder="Facebook (nome de usuário ou url)"
                     value={userFirestore.facebook || ''}
                     onChange={evt => {
                       handlerChangeForm('facebook', evt.target.value);
@@ -468,7 +479,7 @@ const Settings = () => {
                     className="my-1 bg-gray-100 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                     id="instagram"
                     type="text"
-                    placeholder="Instagram"
+                    placeholder="Instagram (nome de usuário ou url)"
                     value={userFirestore.instagram || ''}
                     onChange={evt => {
                       handlerChangeForm('instagram', evt.target.value);
@@ -478,7 +489,7 @@ const Settings = () => {
                     className="my-1 bg-gray-100 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                     id="twitter"
                     type="text"
-                    placeholder="Twitter"
+                    placeholder="Twitter (nome de usuário ou url)"
                     value={userFirestore.twitter || ''}
                     onChange={evt => {
                       handlerChangeForm('twitter', evt.target.value);
@@ -492,7 +503,27 @@ const Settings = () => {
                     onChange={evt => {
                       handlerChangeForm('linkedin', evt.target.value);
                     }}
-                    placeholder="LinkedIn"
+                    placeholder="LinkedIn (nome de usuário ou url)"
+                  />
+                  <input
+                    className="my-1 bg-gray-100 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                    id="youtube"
+                    type="text"
+                    value={userFirestore.youtube || ''}
+                    onChange={evt => {
+                      handlerChangeForm('youtube', evt.target.value);
+                    }}
+                    placeholder="YouTube (url)"
+                  />
+                  <input
+                    className="my-1 bg-gray-100 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                    id="link"
+                    type="text"
+                    value={userFirestore.link || ''}
+                    onChange={evt => {
+                      handlerChangeForm('link', evt.target.value);
+                    }}
+                    placeholder="Site (url)"
                   />
                 </div>
                 {!loading && (
@@ -522,9 +553,7 @@ const Settings = () => {
           <div className="py-12 bg-white">
             <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center">
-                <p className="text-base leading-6 text-indigo-600 font-semibold tracking-wide uppercase">
-                  Só mais um pouquinho...
-                </p>
+                <HourglasLoader />
               </div>
             </div>
           </div>

@@ -36,6 +36,7 @@ const NavBar = ({
   handlerUpdateUserData,
   userData,
   handlerResetUser,
+  myProfile,
 }) => {
   const [showNav, setShowNav] = useState(false);
   const [currentUser, setCurrentUser] = useState();
@@ -97,6 +98,15 @@ const NavBar = ({
       mounted = false;
     };
   }, []);
+
+  const handlerCreate = () => {
+    if (currentUser) {
+      handlerReset();
+      Router.push('/edit');
+    } else {
+      Router.push('/login?create=true');
+    }
+  };
 
   return (
     <header className="shadow-lg">
@@ -163,31 +173,35 @@ const NavBar = ({
           )}
         </div>
         <nav
-          className={`px-2 pt-2 pb-4 sm:flex sm:p-0 ${
+          className={`px-2 pt-2 pb-4 sm:flex sm:flex-row sm:p-0 ${
             showNav ? 'block' : 'hidden'
           }`}
         >
-          {currentUser &&
-            userData.uid &&
-            authorization(ACTIONS_AUTH.CREATE_HASHMAP_BUTTON, userData.role) &&
-            (typeNav === 'home' || typeNav === 'profile') && (
-              <button
-                onClick={() => {
-                  handlerReset();
-                  Router.push('/edit');
-                }}
-                type="button"
-                className="text-left w-full uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2"
-              >
-                Criar
-              </button>
-            )}
+          {(typeNav === 'home' ||
+            typeNav === 'profile' ||
+            typeNav === 'view') && (
+            <button
+              onClick={handlerCreate}
+              type="button"
+              className="text-left w-full sm:w-auto uppercase mt-1 block px-2 py-1 font-semibold rounded bg-gray-200 
+                hover:bg-gray-400 sm:mt-0 sm:ml-2"
+            >
+              Criar Publicação
+            </button>
+          )}
+          {currentUser && myProfile && (
+            <Link href="/settings">
+              <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
+                Editar Perfil
+              </a>
+            </Link>
+          )}
           {currentUser &&
             userData.uid &&
             typeNav === 'view' &&
             authorization(ACTIONS_AUTH.EDIT_HASHMAP_BUTTON, userData.role) &&
             authorKey &&
-            authorKey === currentUser.uid && (
+            (authorKey === currentUser.uid || userData.role === 'admin') && (
               <Link href={`/edit?key=${hashmapKey}`}>
                 <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
                   Editar
@@ -236,10 +250,10 @@ const NavBar = ({
               Deletar
             </button>
           )}
-          {currentUser && (
-            <Link href="/settings">
+          {currentUser && userData && !myProfile && (
+            <Link href="/[profile]" as={`/${userData.username}`}>
               <a className="md:hidden uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
-                Perfil
+                Meu Perfil
               </a>
             </Link>
           )}
@@ -266,7 +280,13 @@ const NavBar = ({
             </Link>
           )}
           {currentUser && (
-            <AccountDropdown user={currentUser} signOut={signOut} />
+            <AccountDropdown
+              user={currentUser}
+              signOut={signOut}
+              userData={userData}
+              typeNav={typeNav}
+              myProfile={myProfile}
+            />
           )}
         </nav>
       </div>
@@ -277,12 +297,13 @@ const NavBar = ({
 NavBar.propTypes = {
   typeNav: PropTypes.string,
   hashmapKey: PropTypes.string,
-  handlerReset: PropTypes.func.isRequired,
+  myProfile: PropTypes.bool,
 };
 
 NavBar.defaultProps = {
   typeNav: 'home',
   hashmapKey: undefined,
+  myProfile: false,
 };
 
 const mapStateToProps = state => ({

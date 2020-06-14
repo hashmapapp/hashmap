@@ -9,7 +9,7 @@ export default () => {
   const [hashmaps, setHashmaps] = useState();
   const [lastVisible, setLastVisible] = useState();
   const [hasMoreData, setHasMoreData] = useState(true);
-  const LIMIT_ITEMS = 25;
+  const LIMIT_ITEMS = 24;
 
   const getQueryFb = () => {
     const fb = loadFirebaseStore();
