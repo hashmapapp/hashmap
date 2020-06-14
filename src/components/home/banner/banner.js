@@ -41,7 +41,7 @@ const Banner = () => {
           Os melhores <strong>Hashmaps</strong> aqui, em breve.
         </p>
       </div> */}
-      <div className="pt-8 pb-12 bg-white">
+      {/* <div className="pt-8 pb-12 bg-white">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:text-center">
             <p className="text-base leading-6 text-indigo-600 font-semibold tracking-wide uppercase">
@@ -146,7 +146,7 @@ const Banner = () => {
             </ul>
           </div>
         </div>
-      </div>
+      </div> */}
       <Footer />
     </>
   );
