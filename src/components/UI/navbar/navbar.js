@@ -201,7 +201,7 @@ const NavBar = ({
             typeNav === 'view' &&
             authorization(ACTIONS_AUTH.EDIT_HASHMAP_BUTTON, userData.role) &&
             authorKey &&
-            authorKey === currentUser.uid && (
+            (authorKey === currentUser.uid || userData.role === 'admin') && (
               <Link href={`/edit?key=${hashmapKey}`}>
                 <a className="uppercase mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-400 sm:mt-0 sm:ml-2">
                   Editar
