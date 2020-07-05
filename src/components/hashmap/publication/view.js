@@ -5,6 +5,7 @@ import InstagramEmbed from 'react-instagram-embed';
 import Iframe from 'react-iframe';
 import InstagramProfilePreview from 'app/components/UI/link-preview/instagram-profile-preview';
 import { loadLink } from 'app/components/hashmap/publication/lib/loadLink';
+import { FacebookProvider, Comments } from 'react-facebook';
 
 const Publication = ({ data }) => {
   const [pDescription, setPDescription] = useState([]);
@@ -102,6 +103,16 @@ const Publication = ({ data }) => {
             </div>
           </>
         )}
+      </div>
+      <div className="px-5 md:px-10" >
+        <FacebookProvider appId="893785861117597" language="pt_BR" >
+          <Comments
+            href={`http://hashmap.app/view/${data.key}`}
+            width="100%"
+            numPosts="3"
+            handleParse={(e) => console.log(e)}
+          />
+        </FacebookProvider>
       </div>
     </article>
   );
