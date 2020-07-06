@@ -13,13 +13,13 @@ const withAuthorization = (WrappedComponent, key) => {
           console.log('Usuário não logado');
           Router.push('/login');
         } else {
-          const auth = authorization(key, userData.role);
-          if (!auth) {
-            console.log(
-              'Usuário não tem permissão para esta acessar esta página'
-            );
-            Router.push('/');
-          }
+          // const auth = authorization(key, userData.role);
+          // if (!auth) {
+          //   console.log(
+          //     'Usuário não tem permissão para esta acessar esta página'
+          //   );
+          //   Router.push('/');
+          // }
         }
       });
     }, []);

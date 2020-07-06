@@ -12,6 +12,9 @@ import {
 } from 'app/redux/actions/hashmapActions';
 import ImageUpload from 'app/components/UI/image/upload';
 import { TextArea } from 'app/components/UI/styles/styles';
+import EditorBlock from 'app/components/UI/editor/editor-block';
+import PublicationEditor from 'app/components/UI/editor/publication';
+import DynamicLoadedPublication from 'app/components/UI/editor/dynamic-loader-publication';
 
 const article = ({
   posts,
@@ -42,8 +45,8 @@ const article = ({
   }, [imagePath]);
   return (
     <>
-      <article className="container mx-auto px-4 md:px-64 md:py-8">
-        <h6 className="px-2 font-sans text-lg text-gray-500">Capa *</h6>
+      <article className="container mx-auto px-4 md:px-64 md:py-8 bg-gray-100">
+        {/* <h6 className="px-2 font-sans text-lg text-gray-500">Capa *</h6>
         {!loadImage && (
           <ImageUpload
             onRequestSave={(path, url) => {
@@ -87,8 +90,8 @@ const article = ({
           }}
           value={description}
           maxLength="500"
-        />
-        {posts
+        /> */}
+        {/* {posts
           .filter(post => !post.key.startsWith('DELETE'))
           .map((post, index) => (
             <div key={post.key} className="mt-4">
@@ -100,7 +103,10 @@ const article = ({
                 index={index}
               />
             </div>
-          ))}
+          ))} */}
+        {/* <PublicationEditor /> */}
+        <DynamicLoadedPublication />
+        {/* <EditorBlock /> */}
         <NewPublicationButton onAction={handlerNewPost} />
       </article>
       <ButtonBar />

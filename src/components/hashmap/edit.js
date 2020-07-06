@@ -5,7 +5,7 @@ import ArticleEdit from 'app/components/hashmap/article/edit';
 const SectionHashmapEdit = () => {
   return (
     <>
-      <HeaderEdit />
+      {/* <HeaderEdit /> */}
       <ArticleEdit />
     </>
   );
