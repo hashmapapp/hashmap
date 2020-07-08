@@ -1,24 +1,32 @@
 import React from 'react';
 import InstagramEmbed from 'react-instagram-embed';
+import InstagramProfilePreview from '../../link-preview/instagram-profile-preview';
 
 const InstagramElement = ({ attributes, children, element }) => {
-  const { url } = element;
+  const { url, data } = element;
+  // console.log(url, data);
+
   return (
     <div {...attributes}>
       <div contentEditable={false}>
-        <div className="my-4 flex justify-center">
-          <InstagramEmbed
-            url={url}
-            hideCaption={false}
-            containerTagName="div"
-            protocol=""
-            injectScript
-            // onLoading={() => {}}
-            // onSuccess={() => {}}
-            // onAfterRender={() => {}}
-            // onFailure={() => {}}
-          />
-        </div>
+        {data.type === 'instragramPostPreview' && (
+          <div className="my-4 justify-center">
+            <InstagramEmbed
+              url={url}
+              hideCaption={false}
+              containerTagName="div"
+              protocol=""
+              injectScript
+              // onLoading={() => {}}
+              // onSuccess={() => {}}
+              // onAfterRender={() => {}}
+              // onFailure={() => {}}
+            />
+          </div>
+        )}
+        {data.type === 'instragramProfilePreview' && (
+          <InstagramProfilePreview data={data.preview} />
+        )}
       </div>
       {children}
     </div>

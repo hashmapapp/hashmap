@@ -2,6 +2,8 @@ import React from 'react';
 import { Blockquote } from '../style';
 import VideoElement from './video-element';
 import InstagramElement from './instagram-element';
+import LinkPreviewElement from './link-preview-element';
+import InputLinkElement from './input-link-element';
 
 const GlobalElement = props => {
   const { attributes, children, element } = props;
@@ -40,10 +42,14 @@ const GlobalElement = props => {
           {children}
         </div>
       );
+    case 'link-preview':
+      return <LinkPreviewElement {...props} />;
     case 'video':
       return <VideoElement {...props} />;
     case 'instagram':
       return <InstagramElement {...props} />;
+    case 'input-link':
+      return <InputLinkElement {...props} />;
     default:
       return <p {...attributes}>{children}</p>;
   }

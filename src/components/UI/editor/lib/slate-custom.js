@@ -1,5 +1,5 @@
 import { Transforms, Editor } from 'slate';
-import { LIST_TYPES } from './constants';
+import { LIST_TYPES, LINK_TYPES } from './constants';
 
 export const isBlockActive = (editor, format) => {
   const [match] = Editor.nodes(editor, {
@@ -33,8 +33,35 @@ export const toggleBlock = (editor, format) => {
   }
 };
 
+export const toggleEmbed = (editor, format, url, data) => {
+  Transforms.unwrapNodes(editor, {
+    match: n => LINK_TYPES.includes(n.type),
+    split: true,
+  });
+
+  if (LINK_TYPES.includes(format)) {
+    const block = {
+      type: format,
+      url,
+      data,
+      children: [{ text: '' }],
+    };
+    const paragraphNode = {
+      type: 'paragraph',
+      children: [{ text: '' }],
+    };
+    Transforms.wrapNodes(editor, block);
+    Transforms.insertNodes(editor, paragraphNode);
+  }
+};
+
 export const isMarkActive = (editor, format) => {
-  const marks = Editor.marks(editor);
+  let marks = false;
+  try {
+    marks = Editor.marks(editor);
+  } catch (err) {
+    return false;
+  }
   return marks ? marks[format] === true : false;
 };
 
@@ -49,7 +76,7 @@ export const toggleMark = (editor, format) => {
 };
 
 export const withEmbeds = editor => {
-  const voidEmbeds = ['video', 'instagram'];
+  const voidEmbeds = [...LINK_TYPES, 'input-link'];
   const { isVoid } = editor;
   editor.isVoid = element =>
     voidEmbeds.includes(element.type) ? true : isVoid(element);

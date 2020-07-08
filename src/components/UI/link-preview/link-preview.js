@@ -22,11 +22,12 @@ const LinkPreview = ({ data }) => {
 
   return (
     <div
-      className="md:flex px-8 md:px-16 py-3 md:justify-center"
+      className="md:flex mx-8 md:mx-8 my-3 md:justify-center rounded-lg"
       target="_blank"
+      style={{ border: '1px solid #e1e4e8' }}
     >
       {data.image && (
-        <div className="flex md:flex-shrink-0  items-center justify-center ">
+        <div className="flex md:flex-shrink-0 md:m-2 items-center justify-center ">
           <Link href={shortLink}>
             <a target="_blank">
               <img

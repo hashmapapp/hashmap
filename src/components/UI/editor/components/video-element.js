@@ -29,7 +29,7 @@ const VideoElement = ({ attributes, children, element }) => {
       <div contentEditable={false}>
         <div
           style={{
-            padding: '75% 0 0 0',
+            padding: '60% 0 0 0',
             position: 'relative',
           }}
         >
