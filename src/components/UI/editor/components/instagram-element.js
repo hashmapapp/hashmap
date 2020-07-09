@@ -1,14 +1,20 @@
 import React from 'react';
 import InstagramEmbed from 'react-instagram-embed';
+import { useSelected, useFocused } from 'slate-react';
 import InstagramProfilePreview from '../../link-preview/instagram-profile-preview';
 
 const InstagramElement = ({ attributes, children, element }) => {
   const { url, data } = element;
-  // console.log(url, data);
-
+  const selected = useSelected();
+  const focused = useFocused();
   return (
     <div {...attributes}>
-      <div contentEditable={false}>
+      <div
+        contentEditable={false}
+        className={
+          selected && focused ? 'border-solid border-indigo-500 border-2' : ''
+        }
+      >
         {data.type === 'instragramPostPreview' && (
           <div className="my-4 justify-center">
             <InstagramEmbed

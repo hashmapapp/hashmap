@@ -8,8 +8,12 @@ import NewChildren from './components/new-children';
 import { HOTKEYS } from './lib/constants';
 import GlobalElement from './components/global-element';
 import Leaf from './components/leaf';
-import { MarkButton, BlockButton } from './components/toolbar-buttons';
-import { withEmbeds } from './lib/slate-custom';
+import {
+  MarkButton,
+  BlockButton,
+  LinkButton,
+} from './components/toolbar-buttons';
+import { withEmbeds, withLinks } from './lib/slate-custom';
 
 const initialValue = [
   { type: 'paragraph', children: [{ text: '' }] },
@@ -111,7 +115,7 @@ const PublicationEditor = () => {
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
 
   const editor = useMemo(
-    () => withHistory(withEmbeds(withReact(createEditor()))),
+    () => withLinks(withHistory(withEmbeds(withReact(createEditor())))),
     []
   );
   return (
@@ -138,6 +142,7 @@ const PublicationEditor = () => {
           <BlockButton format="block-quote" icon="format_quote" />
           <BlockButton format="numbered-list" icon="format_list_numbered" />
           <BlockButton format="bulleted-list" icon="format_list_bulleted" />
+          <LinkButton />
         </Toolbar>
         <div className="pb-2">
           <Editable

@@ -42,6 +42,16 @@ const GlobalElement = props => {
           {children}
         </div>
       );
+    case 'link':
+      return (
+        <a
+          {...attributes}
+          href={element.url}
+          style={{ textDecoration: 'underline', color: 'blue' }}
+        >
+          {children}
+        </a>
+      );
     case 'link-preview':
       return <LinkPreviewElement {...props} />;
     case 'video':
