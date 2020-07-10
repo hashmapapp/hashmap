@@ -4,6 +4,7 @@ import VideoElement from './video-element';
 import InstagramElement from './instagram-element';
 import LinkPreviewElement from './link-preview-element';
 import InputLinkElement from './input-link-element';
+import { ImageElement } from './image-element';
 
 const GlobalElement = props => {
   const { attributes, children, element } = props;
@@ -42,6 +43,8 @@ const GlobalElement = props => {
           {children}
         </div>
       );
+    case 'image':
+      return <ImageElement {...props} />;
     case 'link':
       return (
         <a

@@ -12,11 +12,17 @@ import {
   MarkButton,
   BlockButton,
   LinkButton,
+  ImageButton,
 } from './components/toolbar-buttons';
-import { withEmbeds, withLinks } from './lib/slate-custom';
+import { withEmbeds, withLinks, withImages } from './lib/slate-custom';
 
 const initialValue = [
   { type: 'paragraph', children: [{ text: '' }] },
+  {
+    type: 'image',
+    url: 'https://source.unsplash.com/kFrdX5IeQzI',
+    children: [{ text: '' }],
+  },
   // { type: 'input-link', children: [{ text: '' }] },
   // { type: 'paragraph', children: [{ text: 'Underline', underline: true }] },
   // { type: 'paragraph', children: [{ text: 'Code', code: true }] },
@@ -115,7 +121,8 @@ const PublicationEditor = () => {
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
 
   const editor = useMemo(
-    () => withLinks(withHistory(withEmbeds(withReact(createEditor())))),
+    () =>
+      withHistory(withImages(withLinks(withEmbeds(withReact(createEditor()))))),
     []
   );
   return (
@@ -143,6 +150,7 @@ const PublicationEditor = () => {
           <BlockButton format="numbered-list" icon="format_list_numbered" />
           <BlockButton format="bulleted-list" icon="format_list_bulleted" />
           <LinkButton />
+          <ImageButton />
         </Toolbar>
         <div className="pb-2">
           <Editable

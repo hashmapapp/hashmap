@@ -1,5 +1,6 @@
 import { Transforms, Editor, Range } from 'slate';
 import isUrl from 'is-url';
+import imageExtensions from 'image-extensions';
 import { LIST_TYPES, LINK_TYPES } from './constants';
 
 export const isBlockActive = (editor, format) => {
@@ -77,7 +78,7 @@ export const toggleMark = (editor, format) => {
 };
 
 export const withEmbeds = editor => {
-  const voidEmbeds = [...LINK_TYPES, 'input-link'];
+  const voidEmbeds = [...LINK_TYPES, 'input-link', 'image'];
   const { isVoid } = editor;
   editor.isVoid = element =>
     voidEmbeds.includes(element.type) ? true : isVoid(element);
@@ -120,6 +121,19 @@ export const insertLink = (editor, url) => {
   }
 };
 
+export const insertImage = (editor, url) => {
+  const text = { text: '' };
+  const image = { type: 'image', url, children: [text] };
+  Transforms.insertNodes(editor, image);
+};
+
+const isImageUrl = url => {
+  if (!url) return false;
+  if (!isUrl(url)) return false;
+  const ext = new URL(url).pathname.split('.').pop();
+  return imageExtensions.includes(ext);
+};
+
 export const withLinks = editor => {
   const { insertData, insertText, isInline } = editor;
 
@@ -139,6 +153,35 @@ export const withLinks = editor => {
     const text = data.getData('text/plain');
     if (text && isUrl(text)) {
       wrapLink(editor, text);
+    } else {
+      insertData(data);
+    }
+  };
+
+  return editor;
+};
+
+export const withImages = editor => {
+  const { insertData } = editor;
+
+  editor.insertData = data => {
+    const text = data.getData('text/plain');
+    const { files } = data;
+
+    if (files && files.length > 0) {
+      for (const file of files) {
+        const reader = new FileReader();
+        const [mime] = file.type.split('/');
+        if (mime === 'image') {
+          reader.addEventListener('load', () => {
+            const url = reader.result;
+            insertImage(editor, url);
+          });
+          reader.readAsDataURL(file);
+        }
+      }
+    } else if (isImageUrl(text)) {
+      insertImage(editor, text);
     } else {
       insertData(data);
     }

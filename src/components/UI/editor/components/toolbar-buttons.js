@@ -11,7 +11,7 @@ import {
 } from 'react-icons/go';
 import { BsTypeUnderline } from 'react-icons/bs';
 import { MdLooksOne, MdLooksTwo } from 'react-icons/md';
-import { FiLink2 } from 'react-icons/fi';
+import { FiLink2, FiImage } from 'react-icons/fi';
 import {
   toggleBlock,
   isBlockActive,
@@ -19,6 +19,7 @@ import {
   toggleMark,
   isLinkActive,
   insertLink,
+  insertImage,
 } from '../lib/slate-custom';
 
 const Button = React.forwardRef(
@@ -58,6 +59,22 @@ export const BlockButton = ({ format, icon }) => {
       {icon === 'format_quote' && <GoQuote />}
       {icon === 'format_list_numbered' && <GoListOrdered />}
       {icon === 'format_list_bulleted' && <GoListUnordered />}
+    </Button>
+  );
+};
+
+export const ImageButton = () => {
+  const editor = useSlate();
+  return (
+    <Button
+      onMouseDown={event => {
+        event.preventDefault();
+        const url = window.prompt('Enter the URL of the image:');
+        if (!url) return;
+        insertImage(editor, url);
+      }}
+    >
+      <FiImage />
     </Button>
   );
 };
