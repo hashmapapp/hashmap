@@ -4,6 +4,7 @@ import LinkPreview from 'app/components/UI/link-preview/link-preview';
 import InstagramEmbed from 'react-instagram-embed';
 import Iframe from 'react-iframe';
 import InstagramProfilePreview from 'app/components/UI/link-preview/instagram-profile-preview';
+import PublicationEditor from 'app/components/UI/editor/publication';
 
 const Publication = ({ data }) => {
   const [pDescription, setPDescription] = useState([]);
@@ -12,6 +13,14 @@ const Publication = ({ data }) => {
       setPDescription(data.textDescription.split('\n'));
     }
   }, [data]);
+
+  if (data.content) {
+    return (
+      <article className="my-8">
+        <PublicationEditor data={data} editable={false} />
+      </article>
+    );
+  }
 
   return (
     <article className="my-4 bg-white md:rounded-lg overflow-hidden shadow-xl">

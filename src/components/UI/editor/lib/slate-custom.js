@@ -3,6 +3,11 @@ import isUrl from 'is-url';
 import imageExtensions from 'image-extensions';
 import { LIST_TYPES, LINK_TYPES } from './constants';
 
+const paragraphNode = {
+  type: 'paragraph',
+  children: [{ text: '' }],
+};
+
 export const isBlockActive = (editor, format) => {
   const [match] = Editor.nodes(editor, {
     match: n => n.type === format,
@@ -48,10 +53,6 @@ export const toggleEmbed = (editor, format, url, data) => {
       data,
       children: [{ text: '' }],
     };
-    const paragraphNode = {
-      type: 'paragraph',
-      children: [{ text: '' }],
-    };
     Transforms.wrapNodes(editor, block);
     Transforms.insertNodes(editor, paragraphNode);
   }
@@ -78,7 +79,13 @@ export const toggleMark = (editor, format) => {
 };
 
 export const withEmbeds = editor => {
-  const voidEmbeds = [...LINK_TYPES, 'input-link', 'image'];
+  const voidEmbeds = [
+    ...LINK_TYPES,
+    'input-link',
+    'image',
+    'input-image',
+    'divider',
+  ];
   const { isVoid } = editor;
   editor.isVoid = element =>
     voidEmbeds.includes(element.type) ? true : isVoid(element);
@@ -119,6 +126,12 @@ export const insertLink = (editor, url) => {
   if (editor.selection) {
     wrapLink(editor, url);
   }
+};
+
+export const insertDivider = editor => {
+  const text = { text: '' };
+  const divider = { type: 'divider', children: [text] };
+  Transforms.insertNodes(editor, divider);
 };
 
 export const insertImage = (editor, url) => {

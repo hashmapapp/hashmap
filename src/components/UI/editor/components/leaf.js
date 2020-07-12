@@ -6,7 +6,9 @@ const Leaf = ({ attributes, children, leaf }) => {
   }
 
   if (leaf.code) {
-    children = <code style={{ backgroundColor: '#f4f4f4' }}>{children}</code>;
+    children = (
+      <code style={{ backgroundColor: '#f4f4f4', padding: 4 }}>{children}</code>
+    );
   }
 
   if (leaf.italic) {

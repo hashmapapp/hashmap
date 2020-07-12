@@ -36,12 +36,7 @@ const SectionHashmapView = ({ hashmap, posts }) => {
 
 SectionHashmapView.propTypes = {
   hashmap: PropTypes.shape().isRequired,
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string,
-    })
-  ).isRequired,
+  posts: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default SectionHashmapView;

@@ -10,6 +10,7 @@ import {
   GoListUnordered,
 } from 'react-icons/go';
 import { BsTypeUnderline } from 'react-icons/bs';
+import { FaRegWindowMinimize } from 'react-icons/fa';
 import { MdLooksOne, MdLooksTwo } from 'react-icons/md';
 import { FiLink2, FiImage } from 'react-icons/fi';
 import {
@@ -19,7 +20,7 @@ import {
   toggleMark,
   isLinkActive,
   insertLink,
-  insertImage,
+  insertDivider,
 } from '../lib/slate-custom';
 
 const Button = React.forwardRef(
@@ -63,15 +64,31 @@ export const BlockButton = ({ format, icon }) => {
   );
 };
 
-export const ImageButton = () => {
+export const DividerButton = () => {
   const editor = useSlate();
+  const format = 'divider';
   return (
     <Button
+      active={isBlockActive(editor, format)}
       onMouseDown={event => {
         event.preventDefault();
-        const url = window.prompt('Enter the URL of the image:');
-        if (!url) return;
-        insertImage(editor, url);
+        insertDivider(editor);
+      }}
+    >
+      <FaRegWindowMinimize />
+    </Button>
+  );
+};
+
+export const ImageButton = () => {
+  const editor = useSlate();
+  const format = 'input-image';
+  return (
+    <Button
+      active={isBlockActive(editor, format)}
+      onMouseDown={event => {
+        event.preventDefault();
+        toggleBlock(editor, format);
       }}
     >
       <FiImage />
@@ -89,6 +106,22 @@ export const LinkButton = () => {
         const url = window.prompt('Enter the URL of the link:');
         if (!url) return;
         insertLink(editor, url);
+      }}
+    >
+      <FiLink2 />
+    </Button>
+  );
+};
+
+export const EmbedButton = () => {
+  const editor = useSlate();
+  const format = 'input-link';
+  return (
+    <Button
+      active={isBlockActive(editor, format)}
+      onMouseDown={event => {
+        event.preventDefault();
+        toggleBlock(editor, format);
       }}
     >
       <FiLink2 />

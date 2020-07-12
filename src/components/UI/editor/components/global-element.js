@@ -4,42 +4,54 @@ import VideoElement from './video-element';
 import InstagramElement from './instagram-element';
 import LinkPreviewElement from './link-preview-element';
 import InputLinkElement from './input-link-element';
+import InputImageElement from './input-image-element';
 import { ImageElement } from './image-element';
 
 const GlobalElement = props => {
   const { attributes, children, element } = props;
   switch (element.type) {
     case 'block-quote':
-      return <Blockquote {...attributes}>{children}</Blockquote>;
+      return (
+        <Blockquote className="text-lg" {...attributes}>
+          {children}
+        </Blockquote>
+      );
     case 'bulleted-list':
       return (
-        <ul style={{ listStyle: 'inside' }} {...attributes}>
+        <ul className="list-disc list-inside" {...attributes}>
           {children}
         </ul>
       );
     case 'heading-one':
       return (
-        <h1 className="text-5xl" {...attributes}>
+        <h1 className="text-4xl text-gray-800" {...attributes}>
           {children}
         </h1>
       );
     case 'heading-two':
       return (
-        <h2 className="text-3xl" {...attributes}>
+        <h2 className="text-2xl text-gray-800" {...attributes}>
           {children}
         </h2>
       );
     case 'list-item':
-      return <li {...attributes}>{children}</li>;
+      return (
+        <li className="text-lg text-gray-800" {...attributes}>
+          {children}
+        </li>
+      );
     case 'numbered-list':
       return (
-        <ol style={{ listStyle: 'decimal' }} className="pl-4" {...attributes}>
+        <ol className="list-decimal list-inside" {...attributes}>
           {children}
         </ol>
       );
-    case 'delimiter':
+    case 'divider':
       return (
-        <div {...attributes} className="text-center text-2xl">
+        <div
+          {...attributes}
+          className="border-solid border-2 border-gray-300 my-4"
+        >
           {children}
         </div>
       );
@@ -63,8 +75,14 @@ const GlobalElement = props => {
       return <InstagramElement {...props} />;
     case 'input-link':
       return <InputLinkElement {...props} />;
+    case 'input-image':
+      return <InputImageElement {...props} />;
     default:
-      return <p {...attributes}>{children}</p>;
+      return (
+        <p className="text-lg text-gray-800" {...attributes}>
+          {children}
+        </p>
+      );
   }
 };
 

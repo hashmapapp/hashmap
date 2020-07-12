@@ -1,28 +1,33 @@
 import React, { useMemo, useState, useCallback, useEffect } from 'react';
+import { dataPostUpdate } from 'app/redux/actions/hashmapActions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 import isHotkey from 'is-hotkey';
 import { Slate, Editable, withReact } from 'slate-react';
 import { Toolbar } from './components/custom';
-import NewChildren from './components/new-children';
 import { HOTKEYS } from './lib/constants';
 import GlobalElement from './components/global-element';
 import Leaf from './components/leaf';
 import {
   MarkButton,
   BlockButton,
-  LinkButton,
   ImageButton,
+  EmbedButton,
+  DividerButton,
 } from './components/toolbar-buttons';
-import { withEmbeds, withLinks, withImages } from './lib/slate-custom';
+import {
+  withEmbeds,
+  withLinks,
+  withImages,
+  toggleMark,
+} from './lib/slate-custom';
 
 const initialValue = [
   { type: 'paragraph', children: [{ text: '' }] },
-  {
-    type: 'image',
-    url: 'https://source.unsplash.com/kFrdX5IeQzI',
-    children: [{ text: '' }],
-  },
+  // { type: 'input-image', children: [{ text: '' }] },
   // { type: 'input-link', children: [{ text: '' }] },
   // { type: 'paragraph', children: [{ text: 'Underline', underline: true }] },
   // { type: 'paragraph', children: [{ text: 'Code', code: true }] },
@@ -112,11 +117,26 @@ const initialValue = [
   // { type: 'paragraph', children: [{ text: '' }] },
 ];
 
-const PublicationEditor = () => {
+const PublicationEditor = ({
+  data,
+  temporaryKey,
+  index,
+  handlerData,
+  editable,
+}) => {
   const [value, setValue] = useState([]);
   useEffect(() => {
-    setValue(initialValue);
+    if (data.content) {
+      setValue(JSON.parse(data.content));
+    } else {
+      setValue(initialValue);
+    }
   }, []);
+
+  useEffect(() => {
+    handlerData(index, 'index', temporaryKey);
+  }, [index]);
+
   const renderElement = useCallback(props => <GlobalElement {...props} />, []);
   const renderLeaf = useCallback(props => <Leaf {...props} />, []);
 
@@ -127,7 +147,7 @@ const PublicationEditor = () => {
   );
   return (
     <div
-      className="px-8 py-2 rounded-lg bg-white"
+      className="px-8 py-4 rounded-lg bg-white"
       style={{ border: '1px solid #e1e4e8' }}
     >
       <Slate
@@ -136,24 +156,28 @@ const PublicationEditor = () => {
         onChange={v => {
           setValue(v);
           const content = JSON.stringify(value);
-          localStorage.setItem('content', content);
+          handlerData(content, 'content', temporaryKey);
         }}
       >
-        <Toolbar>
-          <MarkButton format="bold" icon="format_bold" />
-          <MarkButton format="italic" icon="format_italic" />
-          <MarkButton format="underline" icon="format_underlined" />
-          <MarkButton format="code" icon="code" />
-          <BlockButton format="heading-one" icon="looks_one" />
-          <BlockButton format="heading-two" icon="looks_two" />
-          <BlockButton format="block-quote" icon="format_quote" />
-          <BlockButton format="numbered-list" icon="format_list_numbered" />
-          <BlockButton format="bulleted-list" icon="format_list_bulleted" />
-          <LinkButton />
-          <ImageButton />
-        </Toolbar>
+        {editable && (
+          <Toolbar>
+            <MarkButton format="bold" icon="format_bold" />
+            <MarkButton format="italic" icon="format_italic" />
+            <MarkButton format="underline" icon="format_underlined" />
+            <MarkButton format="code" icon="code" />
+            <BlockButton format="heading-one" icon="looks_one" />
+            <BlockButton format="heading-two" icon="looks_two" />
+            <BlockButton format="block-quote" icon="format_quote" />
+            <BlockButton format="numbered-list" icon="format_list_numbered" />
+            <BlockButton format="bulleted-list" icon="format_list_bulleted" />
+            <EmbedButton />
+            <ImageButton />
+            <DividerButton />
+          </Toolbar>
+        )}
         <div className="pb-2">
           <Editable
+            readOnly={!editable}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             placeholder="Entre com algum texto..."
@@ -170,10 +194,30 @@ const PublicationEditor = () => {
             }}
           />
         </div>
-        <NewChildren />
       </Slate>
     </div>
   );
 };
 
-export default PublicationEditor;
+PublicationEditor.propTypes = {
+  data: PropTypes.shape(),
+  temporaryKey: PropTypes.string,
+  handlerData: PropTypes.func.isRequired,
+  editable: PropTypes.bool,
+};
+
+PublicationEditor.defaultProps = {
+  data: undefined,
+  editable: true,
+  temporaryKey: undefined,
+};
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      handlerData: dataPostUpdate,
+    },
+    dispatch
+  );
+
+export default connect(null, mapDispatchToProps)(PublicationEditor);

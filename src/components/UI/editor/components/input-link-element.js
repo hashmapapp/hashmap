@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useEditor, ReactEditor } from 'slate-react';
 import { Transforms } from 'slate';
 import { loadLink } from 'app/components/hashmap/publication/lib/loadLink';
-import { toggleEmbed, addParagraph } from '../lib/slate-custom';
+import { toggleEmbed } from '../lib/slate-custom';
 
 const InputLinkElement = ({ attributes, children, element }) => {
   const editor = useEditor();
   const [link, setLink] = useState('');
+  const [loadingLink, setLoadingLink] = useState(false);
   const onChange = val => {
     const path = ReactEditor.findPath(editor, element);
     Transforms.setNodes(editor, { url: val }, { at: path });
@@ -14,6 +15,7 @@ const InputLinkElement = ({ attributes, children, element }) => {
 
   const handleKeyDown = e => {
     if (e.key === 'Enter' && link.length) {
+      setLoadingLink(true);
       loadLink(link).then(loadData => {
         if (loadData) {
           let typeEmbed;
@@ -39,6 +41,7 @@ const InputLinkElement = ({ attributes, children, element }) => {
               data = loadData;
               break;
           }
+          setLoadingLink(false);
           toggleEmbed(editor, typeEmbed, url, data);
         }
       });
@@ -46,23 +49,30 @@ const InputLinkElement = ({ attributes, children, element }) => {
   };
 
   return (
-    <div {...attributes}>
+    <div
+      {...attributes}
+      className={`my-2 border-dashed border-2 border-gray-600 ${loadingLink &&
+        'bg-gray-200'}`}
+    >
       <div contentEditable={false}>
         <input
           value={link}
           onClick={e => e.stopPropagation()}
-          placeholder="Cole um link e pressione enter"
+          placeholder="Cole um link e pressione ENTER"
           style={{
-            padding: '5px',
-            width: '100%',
-            backgroundColor: '#f4f4f4',
+            width: '98%',
+            outline: 'none',
           }}
           onChange={e => {
             const newUrl = e.target.value;
-            setLink(newUrl);
-            onChange(newUrl);
+            if (!loadingLink) {
+              setLink(newUrl);
+              onChange(newUrl);
+            }
           }}
           onKeyDown={handleKeyDown}
+          className={`m-2 p-2 font-sans text-lg text-gray-800 text-center ${loadingLink &&
+            'bg-gray-200 text-opacity-25'}`}
         />
         {children}
       </div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { FiUploadCloud } from 'react-icons/fi';
 import SaveModal from '../save-modal';
 
 const ButtonBar = () => {
@@ -23,8 +22,8 @@ const ButtonBar = () => {
           onClick={openModal}
           type="button"
           className="my-2 mr-4 p-2 border rounded-lg hover:bg-gray-200 shadow-xl"
+          style={{ outline: 'none' }}
         >
-          {/* <FiUploadCloud size={32} /> */}
           <img width={32} src="imgs/icons/enviar.svg" alt="send" />
         </button>
       </div>

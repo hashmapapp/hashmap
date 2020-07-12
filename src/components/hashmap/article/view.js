@@ -48,7 +48,7 @@ const article = ({ data }) => {
         </div>
       </article>
       <article>
-        <div className="container mx-auto md:px-64 py-2">
+        <div className="container mx-auto md:px-48 py-2">
           {data.posts.map(post => (
             <PublicationView key={post.key} data={post} />
           ))}
