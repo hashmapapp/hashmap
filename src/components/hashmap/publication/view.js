@@ -11,11 +11,15 @@ const Publication = ({ data }) => {
   const [pDescription, setPDescription] = useState([]);
   const [instaProfile, setInstaProfile] = useState({});
   useMemo(() => {
-    if (data.instragramProfilePreview.value) {
-      let profile = data.instragramProfilePreview;
+    if (data.instragramProfilePreview && data.instragramProfilePreview.value) {
+      const profile = data.instragramProfilePreview;
       loadLink(profile.profileUrl)
-        .then(loadData => { setInstaProfile(loadData.preview) })
-        .catch(error => { });
+        .then(loadData => {
+          setInstaProfile(loadData.preview);
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
     if (data.textDescription) {
       setPDescription(data.textDescription.split('\n'));
@@ -60,9 +64,7 @@ const Publication = ({ data }) => {
           </div>
         )}
 
-        {instaProfile.value && (
-          <InstagramProfilePreview data={instaProfile} />
-        )}
+        {instaProfile.value && <InstagramProfilePreview data={instaProfile} />}
 
         {pDescription.map((p, index) => (
           <p
@@ -104,13 +106,16 @@ const Publication = ({ data }) => {
           </>
         )}
       </div>
-      <div className="px-5 md:px-10" >
-        <FacebookProvider appId="893785861117597" language="pt_BR" >
+      <div className="px-5 md:px-10">
+        <FacebookProvider
+          appId={process.env.FACEBOOK_APP_ID_COMMENT}
+          language="pt_BR"
+        >
           <Comments
-            href={`http://hashmap.app/view/${data.key}`}
+            href={`https://hashmap.app/view/${data.key}`}
             width="100%"
             numPosts="3"
-            handleParse={(e) => console.log(e)}
+            handleParse={e => console.log(e)}
           />
         </FacebookProvider>
       </div>
