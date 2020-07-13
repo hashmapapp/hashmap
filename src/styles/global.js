@@ -42,6 +42,7 @@ export default createGlobalStyle`
   body, input, button {
     /* color: ${DARK};
     font-size: 14px; */
+    outline: none;
   }
   
   button {

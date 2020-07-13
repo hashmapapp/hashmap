@@ -26,6 +26,16 @@ export const loadLink = link => {
       return;
     }
 
+    if (link.includes('vimeo')) {
+      const url = link.replace('https://', '').replace('http://', '');
+      const videoId = url.split('/')[1];
+      const embed = `https://player.vimeo.com/video/${videoId}`;
+      loadData.type = 'videoVM';
+      loadData.preview = { value: link, embed };
+      resolve(loadData);
+      return;
+    }
+
     if (link.includes('instagr.am') || link.includes('instagram')) {
       if (link.includes('/p/') || link.includes('/tv/')) {
         loadData.type = 'instragramPostPreview';
@@ -69,7 +79,11 @@ export const loadLink = link => {
         })
         .then(response => {
           loadData.type = 'linksToPreview';
-          loadData.preview = response.data;
+          if (response.data && response.data.length) {
+            [loadData.preview] = response.data;
+          } else {
+            loadData.preview = {};
+          }
           resolve(loadData);
         })
         .catch(error => {

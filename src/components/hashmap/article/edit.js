@@ -12,6 +12,7 @@ import {
 } from 'app/redux/actions/hashmapActions';
 import ImageUpload from 'app/components/UI/image/upload';
 import { TextArea } from 'app/components/UI/styles/styles';
+import DynamicLoadedPublication from 'app/components/UI/editor/dynamic-loader-publication';
 
 const article = ({
   posts,
@@ -42,7 +43,7 @@ const article = ({
   }, [imagePath]);
   return (
     <>
-      <article className="container mx-auto px-4 md:px-64 md:py-8">
+      <article className="container mx-auto px-4 md:px-48 md:py-8">
         <h6 className="px-2 font-sans text-lg text-gray-500">Capa *</h6>
         {!loadImage && (
           <ImageUpload
@@ -88,13 +89,26 @@ const article = ({
           value={description}
           maxLength="500"
         />
-        {posts
+        {/* {posts
           .filter(post => !post.key.startsWith('DELETE'))
           .map((post, index) => (
             <div key={post.key} className="mt-4">
               <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">{`#${index +
                 1}`}</h6>
               <PublicationEdit
+                data={post}
+                temporaryKey={post.key}
+                index={index}
+              />
+            </div>
+          ))} */}
+        {posts
+          .filter(post => !post.key.startsWith('DELETE'))
+          .map((post, index) => (
+            <div key={post.key} className="mt-4">
+              <h6 className="py-2 px-2 font-sans text-lg text-gray-500">{`#Map - ${index +
+                1}`}</h6>
+              <DynamicLoadedPublication
                 data={post}
                 temporaryKey={post.key}
                 index={index}
@@ -109,12 +123,7 @@ const article = ({
 };
 
 article.propTypes = {
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string,
-    })
-  ).isRequired,
+  posts: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   handlerDescription: PropTypes.func.isRequired,
   handlerCrete: PropTypes.func.isRequired,
   handlerImage: PropTypes.func.isRequired,

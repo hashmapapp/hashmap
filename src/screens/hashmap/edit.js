@@ -11,11 +11,13 @@ import { CREATE_HASHMAP } from 'app/screens/lib/constants';
 
 const Edit = ({ hashmap, posts, handlerHashmap, hashmapKey }) => {
   useEffect(() => {
-    window.onbeforeunload = e => {
-      e = e || window.event;
-      if (e) e.returnValue = 'Sure?';
-      return 'Sure?';
-    };
+    if (process.env.NODE_ENV !== 'development') {
+      window.onbeforeunload = e => {
+        e = e || window.event;
+        if (e) e.returnValue = 'Sure?';
+        return 'Sure?';
+      };
+    }
     if (hashmap) handlerHashmap({ hashmap, posts });
   }, [hashmap, posts]);
 

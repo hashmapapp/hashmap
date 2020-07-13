@@ -9,9 +9,14 @@ const InstagramProfilePreview = ({ data }) => {
       setBio(data.biography.split('\n'));
     }
   }, [data]);
+  // className="px-8 py-2 rounded-lg bg-white"
+  //     style={{ border: '1px solid #e1e4e8' }}
   return (
     <div className="container mx-auto sm:py-2 md:px-24">
-      <div className="md:flex p-6">
+      <div
+        className="md:flex p-6 rounded-lg"
+        style={{ border: '1px solid #e1e4e8' }}
+      >
         <Link href={data.profileUrl}>
           <a
             className="h-16 w-16 md:h-24 md:w-24 rounded-full mx-auto md:mx-0 md:mr-4"

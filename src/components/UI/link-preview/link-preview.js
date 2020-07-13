@@ -21,44 +21,50 @@ const LinkPreview = ({ data }) => {
   }, [data]);
 
   return (
-    <div
-      className="md:flex px-8 md:px-16 py-3 md:justify-center"
-      target="_blank"
-    >
-      {data.image && (
-        <div className="flex md:flex-shrink-0  items-center justify-center ">
+    <div className="mx-8 md:mx-8 my-3 md:justify-center" target="_blank">
+      <div
+        style={{ border: '1px solid #e1e4e8' }}
+        className="rounded-lg md:flex "
+      >
+        {data.image && (
+          <div className="flex md:flex-shrink-0 md:m-2 items-center justify-center ">
+            <Link href={shortLink}>
+              <a target="_blank">
+                <img
+                  className="hidden md:block rounded-lg "
+                  src={data.image}
+                  alt={data.title}
+                  style={{ maxHeight: '10rem', maxWidth: '14rem' }}
+                />
+                <img
+                  className="block md:hidden rounded-lg pb-1"
+                  src={data.image}
+                  alt={data.title}
+                  style={{ maxHeight: '10rem' }}
+                />
+              </a>
+            </Link>
+          </div>
+        )}
+        <div className="md:mx-2 pt-2 rounded-lg">
           <Link href={shortLink}>
             <a target="_blank">
-              <img
-                className="hidden md:block rounded-lg "
-                src={data.image}
-                alt={data.title}
-                style={{ maxHeight: '10rem', maxWidth: '14rem' }}
-              />
-              <img
-                className="block md:hidden rounded-lg pb-1"
-                src={data.image}
-                alt={data.title}
-                style={{ maxHeight: '10rem' }}
-              />
+              <div className="px-1 uppercase tracking-wide text-xs text-indigo-600 font-bold">
+                {domain}
+              </div>
             </a>
           </Link>
+          <Link href={shortLink}>
+            <a target="_blank">
+              <p className="block mt-1 px-1 text-xs md:text-sm leading-tight font-semibold text-gray-900 hover:underline">
+                {data.title}
+              </p>
+            </a>
+          </Link>
+          <p className="md:mt-1 p-1 text-xs md:text-sm text-gray-600">
+            {data.description}
+          </p>
         </div>
-      )}
-      <div className="md:mx-2 pt-2 rounded-lg">
-        <div className="px-1 uppercase tracking-wide text-xs text-indigo-600 font-bold">
-          {domain}
-        </div>
-        <Link href={shortLink}>
-          <a target="_blank">
-            <p className="block mt-1 px-1 text-xs md:text-sm leading-tight font-semibold text-gray-900 hover:underline">
-              {data.title}
-            </p>
-          </a>
-        </Link>
-        <p className="md:mt-1 p-1 text-xs md:text-sm text-gray-600">
-          {data.description}
-        </p>
       </div>
     </div>
   );

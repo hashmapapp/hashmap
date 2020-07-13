@@ -32,7 +32,7 @@ export const imgHashmapUpdate = (path, url) => ({
 
 export const postCreate = () => ({
   type: ACTIONS.HASHMAP_CREATE_POST,
-  post: { title: '', key: '' },
+  post: { key: '' },
 });
 
 export const postDelete = key => ({
