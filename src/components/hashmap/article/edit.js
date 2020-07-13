@@ -105,14 +105,19 @@ const article = ({
         {posts
           .filter(post => !post.key.startsWith('DELETE'))
           .map((post, index) => (
-            <div key={post.key} className="mt-4">
-              <h6 className="py-2 px-2 font-sans text-lg text-gray-500">{`#Map - ${index +
+            <div key={post.key}>
+              <h6 className="pt-6 px-2 font-sans text-lg text-gray-500">{`#Map - ${index +
                 1}`}</h6>
-              <DynamicLoadedPublication
-                data={post}
-                temporaryKey={post.key}
-                index={index}
-              />
+              <div
+                className="px-8 pb-4 rounded-lg bg-white"
+                style={{ border: '1px solid #e1e4e8' }}
+              >
+                <DynamicLoadedPublication
+                  data={post}
+                  temporaryKey={post.key}
+                  index={index}
+                />
+              </div>
             </div>
           ))}
         <NewPublicationButton onAction={handlerNewPost} />

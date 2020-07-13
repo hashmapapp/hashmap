@@ -2,7 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 const DynamicLoadedPublication = dynamic(import('./publication'), {
-  loading: () => <p>loading...</p>,
+  loading: () => <p>Carregando recomendação...</p>,
   ssr: false,
 });
 

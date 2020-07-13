@@ -147,8 +147,8 @@ const PublicationEditor = ({
   );
   return (
     <div
-      className="px-8 py-4 rounded-lg bg-white"
-      style={{ border: '1px solid #e1e4e8' }}
+    // className="px-8 py-4 rounded-lg bg-white"
+    // style={{ border: '1px solid #e1e4e8' }}
     >
       <Slate
         editor={editor}

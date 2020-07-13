@@ -7,6 +7,7 @@ import InstagramProfilePreview from 'app/components/UI/link-preview/instagram-pr
 import { FacebookProvider, Comments } from 'react-facebook';
 import { loadLink } from 'app/components/hashmap/publication/lib/loadLink';
 import PublicationEditor from 'app/components/UI/editor/publication';
+import DynamicLoadedPublication from 'app/components/UI/editor/dynamic-loader-publication';
 
 const Publication = ({ data }) => {
   const [pDescription, setPDescription] = useState([]);
@@ -29,8 +30,25 @@ const Publication = ({ data }) => {
 
   if (data.content) {
     return (
-      <article className="my-8">
-        <PublicationEditor data={data} editable={false} />
+      <article
+        className="my-8 px-8 py-4 rounded-lg bg-white divide-y divide-gray-400"
+        style={{ border: '1px solid #e1e4e8' }}
+      >
+        {/* <PublicationEditor data={data} editable={false} /> */}
+        <DynamicLoadedPublication editable={false} data={data} />
+        <div className="pt-8">
+          <FacebookProvider
+            appId={process.env.FACEBOOK_APP_ID_COMMENT}
+            language="pt_BR"
+          >
+            <Comments
+              href={`https://hashmap.app/view/${data.key}`}
+              width="100%"
+              numPosts="3"
+              handleParse={e => console.log(e)}
+            />
+          </FacebookProvider>
+        </div>
       </article>
     );
   }
