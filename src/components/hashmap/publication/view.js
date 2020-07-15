@@ -6,6 +6,7 @@ import Iframe from 'react-iframe';
 import InstagramProfilePreview from 'app/components/UI/link-preview/instagram-profile-preview';
 import { loadLink } from 'app/components/hashmap/publication/lib/loadLink';
 import { FacebookProvider, Comments } from 'react-facebook';
+import Facebook from './components/Facebook';
 
 const Publication = ({ data }) => {
   const [pDescription, setPDescription] = useState([]);
@@ -103,6 +104,10 @@ const Publication = ({ data }) => {
             </div>
           </>
         )}
+      </div>
+
+      <div className="px-5 my-4 mx-4 md:px-10 my-4 mx-4" >
+        <Facebook />
       </div>
       <div className="px-5 md:px-10" >
         <FacebookProvider appId="893785861117597" language="pt_BR" >
