@@ -30,6 +30,11 @@ const DynamicHead = ({ titleText, description, imageUrl }) => {
       <meta property="twitter:title" content={titleText} />
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={imageUrl} />
+
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+      />
     </Head>
   );
 };

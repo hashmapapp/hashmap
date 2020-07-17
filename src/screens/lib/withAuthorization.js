@@ -12,7 +12,7 @@ const withAuthorization = (WrappedComponent, key) => {
         if (!user) {
           console.log('Usuário não logado');
           Router.push('/login');
-        } else {
+        } else if (process.env.NODE_ENV !== 'development') {
           const auth = authorization(key, userData.role);
           if (!auth) {
             console.log(

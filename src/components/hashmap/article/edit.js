@@ -101,9 +101,9 @@ const article = ({
               />
             </div>
           ))}
-        <NewPublicationButton onAction={handlerNewPost} />
+        {/* <NewPublicationButton onAction={handlerNewPost} /> */}
       </article>
-      <ButtonBar />
+      {/* <ButtonBar /> */}
     </>
   );
 };
