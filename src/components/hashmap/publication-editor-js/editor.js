@@ -25,12 +25,12 @@ const PublicationEditor = ({
         postKey: key || newKey,
         content: content || {},
       },
-      'http://localhost:1234'
+      process.env.EDITOR_FRAME_URL
     );
   };
 
   const receiveMessage = event => {
-    if (event.origin.startsWith('http://localhost:1234')) {
+    if (event.origin.startsWith(process.env.EDITOR_FRAME_URL)) {
       if (event.data && event.data.type) {
         if (event.data.type === 'save') {
           saveAction(event.data);
