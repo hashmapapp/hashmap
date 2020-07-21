@@ -1,9 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import PublicationView from 'app/components/hashmap/publication/view';
+import NewPublicationView from 'app/components/hashmap/publication-editor-js/view';
 import PropTypes from 'prop-types';
 
 const article = ({ data }) => {
   const [pDescription, setPDescription] = useState([]);
+  // console.log(data);
   useMemo(() => {
     if (data.description) {
       setPDescription(data.description.split('\n'));
@@ -48,10 +50,25 @@ const article = ({ data }) => {
         </div>
       </article>
       <article>
-        <div className="container mx-auto md:px-64 py-2">
-          {data.posts.map(post => (
-            <PublicationView key={post.key} data={post} />
-          ))}
+        <div className="container mx-auto px-1 md:px-32 py-2">
+          {data.posts.map(post => {
+            if (post.content) {
+              return (
+                <div key={post.key}>
+                  <NewPublicationView
+                    postKey={post.key}
+                    content={post.content}
+                    comments
+                  />
+                </div>
+              );
+            }
+            return (
+              <div key={post.key}>
+                <PublicationView key={post.key} data={post} />
+              </div>
+            );
+          })}
         </div>
       </article>
     </>

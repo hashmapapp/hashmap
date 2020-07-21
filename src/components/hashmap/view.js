@@ -18,6 +18,7 @@ const SectionHashmapView = ({ hashmap, posts }) => {
     urlImage: hashmap.imageUrl,
     textImage: hashmap.textImage,
   };
+  console.log(articleData);
   const authorData = {
     displayName: hashmap.author.displayName,
     photoURL: hashmap.author.photoURL,
@@ -36,12 +37,7 @@ const SectionHashmapView = ({ hashmap, posts }) => {
 
 SectionHashmapView.propTypes = {
   hashmap: PropTypes.shape().isRequired,
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string,
-    })
-  ).isRequired,
+  posts: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default SectionHashmapView;

@@ -36,7 +36,7 @@ class AuthenticationServiceFirebase {
     email,
     password,
     callbackSuccess,
-    callbackError = error => console.log(error.code, error.message)
+    callbackError = error => console.error(error.code, error.message)
   ) {
     this.fb
       .signInWithEmailAndPassword(email, password)
@@ -50,15 +50,15 @@ class AuthenticationServiceFirebase {
       .then(() => {
         callback();
       })
-      .catch(error => console.log(error.code, error.message));
+      .catch(error => console.error(error.code, error.message));
   }
 
   updateProfile(
     userFirestore,
     callbackSuccess = () => {
-      console.log('Profile Update');
+      // console.log('Profile Update');
     },
-    callbackError = error => console.log(error.code, error.message)
+    callbackError = error => console.error(error.code, error.message)
   ) {
     const user = this.fb.currentUser;
     const profileData = {};
@@ -84,9 +84,9 @@ class AuthenticationServiceFirebase {
 
   sendEmailVerification(
     callbackSuccess = () => {
-      console.log('Success');
+      // console.log('Success');
     },
-    callbackError = error => console.log(error.code, error.message)
+    callbackError = error => console.error(error.code, error.message)
   ) {
     const user = this.fb.currentUser;
     user
@@ -98,9 +98,9 @@ class AuthenticationServiceFirebase {
   sendPasswordResetEmail(
     email,
     callbackSuccess = () => {
-      console.log('Send Reset Success');
+      // console.log('Send Reset Success');
     },
-    callbackError = error => console.log(error.code, error.message)
+    callbackError = error => console.error(error.code, error.message)
   ) {
     this.fb
       .sendPasswordResetEmail(email)

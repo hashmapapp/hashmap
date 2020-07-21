@@ -103,7 +103,7 @@ export class HashmapService {
       delete updatePost.key;
       delete updatePost.createdAt;
       delete updatePost.react;
-      delete updatePost.status;
+      // delete updatePost.status;
       updatePost.updatedAt = fb.db.FieldValue.serverTimestamp();
       keys.push(post.key);
       return updatePost;
@@ -112,15 +112,13 @@ export class HashmapService {
   };
 
   static getDataCreatePosts = (fb, posts, userId) => {
-    const items = posts.map(post => {
-      const newPost = { ...post };
-      delete newPost.key;
+    const items = posts.map((post, index) => {
       return {
-        ...newPost,
+        content: post.content,
         author: userId,
         createdAt: fb.db.FieldValue.serverTimestamp(),
         updatedAt: fb.db.FieldValue.serverTimestamp(),
-        status: 'VISIBLE',
+        index,
       };
     });
     return { items };
@@ -153,7 +151,7 @@ export class HashmapService {
     };
     fb.addHomeHashmap(hash, key)
       .then(() => {
-        console.log('Adicionado à home page com sucesso');
+        // console.log('Adicionado à home page com sucesso');
       })
       .catch(error => console.error(error));
   };
@@ -162,7 +160,7 @@ export class HashmapService {
     const fb = new HttpWrapperFirebase();
     fb.removeHomeHashmap(hashmapKey)
       .then(() => {
-        console.log('Removido da home page com sucesso');
+        // console.log('Removido da home page com sucesso');
       })
       .catch(error => console.error(error));
   };

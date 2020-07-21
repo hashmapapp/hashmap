@@ -116,7 +116,7 @@ const Publication = ({ data }) => {
             href={`https://hashmap.app/view/${data.key}`}
             width="100%"
             numPosts="3"
-            handleParse={e => console.log(e)}
+            // handleParse={e => console.log(e)}
           />
         </FacebookProvider>
       </div>

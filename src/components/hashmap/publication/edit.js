@@ -72,7 +72,7 @@ const Publication = ({
       .catch(error => {
         setLoaderLink(false);
         setLoadLinkError(true);
-        console.log(error);
+        console.error(error);
       });
   };
 

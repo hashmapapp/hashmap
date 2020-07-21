@@ -42,7 +42,7 @@ const SignIn = () => {
   };
 
   const handlerSendPasswordResetEmail = () => {
-    console.log('handlerSendPasswordResetEmail');
+    // console.log('handlerSendPasswordResetEmail');
     setLoadingSendReset(true);
     const auth = new AuthenticationServiceFirebase();
     auth.sendPasswordResetEmail(email, () => {

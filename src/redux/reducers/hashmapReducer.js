@@ -1,6 +1,6 @@
 import * as ACTIONS from 'app/redux/constants/hashmapConstants';
 import produce from 'immer';
-import shortid from 'shortid';
+// import shortid from 'shortid';
 
 const STATE_CLEAN = {
   key: '',
@@ -55,8 +55,9 @@ const HashmapReducer = (state = STATE_CLEAN, action) => {
       });
     }
     case ACTIONS.HASHMAP_CREATE_POST: {
+      // console.log('HASHMAP_CREATE_POST');
       return produce(state, draft => {
-        action.post.key = '_'.concat(shortid.generate());
+        // action.post.key = '_'.concat(shortid.generate());
         draft.posts.push(action.post);
       });
     }
@@ -79,11 +80,15 @@ const HashmapReducer = (state = STATE_CLEAN, action) => {
       });
     }
     case ACTIONS.HASHMAP_POST_DATA_UPDATE: {
+      // console.log('HASHMAP_POST_DATA_UPDATE');
       return produce(state, draft => {
         const post = draft.posts.find(p => p.key === action.key);
         if (post) {
           const index = draft.posts.indexOf(post);
-          draft.posts[index][action.attribute] = action.data;
+          draft.posts[index].content = action.data;
+        } else {
+          console.error('post não encontrado');
+          draft.posts.push({ key: action.key, content: action.data });
         }
       });
     }

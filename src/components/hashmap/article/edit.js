@@ -1,124 +1,77 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import PublicationEdit from 'app/components/hashmap/publication/edit';
-import NewPublicationButton from 'app/components/hashmap/publication/components/new-button';
-import ButtonBar from 'app/components/hashmap/publication/components/button-bar';
-import {
-  postCreate,
-  descriptionUpdate,
-  imgHashmapUpdate,
-} from 'app/redux/actions/hashmapActions';
-import ImageUpload from 'app/components/UI/image/upload';
-import { TextArea } from 'app/components/UI/styles/styles';
+import { postDelete } from 'app/redux/actions/hashmapActions';
+import ModalConfirm from 'app/components/UI/modal/confirm';
+import PublicationView from '../publication-editor-js/view';
 
-const article = ({
-  posts,
-  description,
-  handlerDescription,
-  handlerCrete,
-  handlerImage,
-  imagePath,
-}) => {
-  const handlerNewPost = evt => {
-    evt.preventDefault();
-    handlerCrete();
+const article = ({ posts, handlerDelete, onActionEditPost }) => {
+  const [showModalComfirm, setShowModalConfirm] = useState({
+    show: false,
+    post: undefined,
+  });
+
+  const handleRemovePost = () => {
+    // console.log('remove post', showModalComfirm.post);
+    handlerDelete(showModalComfirm.post);
+    setShowModalConfirm({
+      show: false,
+      post: undefined,
+    });
   };
-  const [defaultFiles, setDefaultFiles] = useState([]);
-  const [loadImage, setLoadImage] = useState(false);
-  useEffect(() => {
-    if (imagePath && imagePath !== '') {
-      setDefaultFiles([
-        {
-          source: imagePath,
-          options: {
-            type: 'local',
-          },
-        },
-      ]);
-      setLoadImage(true);
-    }
-  }, [imagePath]);
+
+  const handleEditPost = post => {
+    // console.log('edit ', post.key);
+    onActionEditPost(post);
+  };
+
   return (
     <>
-      <article className="container mx-auto px-4 md:px-64 md:py-8">
-        <h6 className="px-2 font-sans text-lg text-gray-500">Capa *</h6>
-        {!loadImage && (
-          <ImageUpload
-            onRequestSave={(path, url) => {
-              handlerImage(path, url);
-            }}
-            onRequestClear={() => {
-              handlerImage('', '');
-              console.log('Clear');
-              setDefaultFiles([]);
-            }}
-            storageName="hashmaps"
-          />
-        )}
-        {loadImage && (
-          <ImageUpload
-            onRequestSave={(path, url) => {
-              handlerImage(path, url);
-            }}
-            onRequestClear={() => {
-              handlerImage('', '');
-              console.log('Clear');
-              setDefaultFiles([]);
-            }}
-            storageName="hashmaps"
-            defaultFiles={defaultFiles}
-          />
-        )}
-        <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">
-          Descrição (Opcional)
-        </h6>
-        <TextArea
-          className="Text"
-          rows="5"
-          type="text"
-          id="description"
-          name="description"
-          placeholder="Aqui você pode descrever com mais detalhes sobre o que é o
-        seu hashmap, falando por exemplo, o motivo da criação dele."
-          onChange={e => {
-            handlerDescription(e.target.value);
-          }}
-          value={description}
-          maxLength="500"
-        />
-        {posts
-          .filter(post => !post.key.startsWith('DELETE'))
-          .map((post, index) => (
-            <div key={post.key} className="mt-4">
-              <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">{`#${index +
-                1}`}</h6>
-              <PublicationEdit
-                data={post}
-                temporaryKey={post.key}
-                index={index}
-              />
+      {posts
+        .filter(post => !post.key.startsWith('DELETE'))
+        .map(post => (
+          <div key={post.key} className="mt-4">
+            <div className="flex justify-between py-2">
+              <button
+                type="button"
+                className="bg-transparent border border-red-200 text-red-500 font-bold 
+                py-2 px-4 rounded inline-flex items-center hover:bg-red-400 hover:text-white"
+                onClick={() => {
+                  setShowModalConfirm({
+                    show: true,
+                    post: post.key,
+                  });
+                }}
+              >
+                <span>Remover</span>
+              </button>
+              <button
+                type="button"
+                className="border border-indigo-200 hover:bg-indigo-400 text-indigo-800 font-bold 
+                py-2 px-4 rounded inline-flex items-center hover:text-white"
+                onClick={() => {
+                  handleEditPost(post);
+                }}
+              >
+                <span>Editar</span>
+              </button>
             </div>
-          ))}
-        {/* <NewPublicationButton onAction={handlerNewPost} /> */}
-      </article>
-      {/* <ButtonBar /> */}
+            <PublicationView key={post.key} content={post.content} />
+          </div>
+        ))}
+      {showModalComfirm.show && (
+        <ModalConfirm
+          closeModal={() => {
+            setShowModalConfirm({
+              show: false,
+              post: undefined,
+            });
+          }}
+          actionConfirm={handleRemovePost}
+        />
+      )}
     </>
   );
-};
-
-article.propTypes = {
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string,
-    })
-  ).isRequired,
-  handlerDescription: PropTypes.func.isRequired,
-  handlerCrete: PropTypes.func.isRequired,
-  handlerImage: PropTypes.func.isRequired,
-  description: PropTypes.string,
 };
 
 article.defaultProps = {
@@ -128,16 +81,12 @@ article.defaultProps = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      handlerCrete: postCreate,
-      handlerDescription: descriptionUpdate,
-      handlerImage: imgHashmapUpdate,
+      handlerDelete: postDelete,
     },
     dispatch
   );
 
 const mapStateToProps = state => ({
-  description: state.hashmap.description,
-  imagePath: state.hashmap.imagePath,
   posts: state.hashmap.posts,
 });
 

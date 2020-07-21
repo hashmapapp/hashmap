@@ -73,7 +73,7 @@ const withSubscriptionHashmapData = WrappedComponent => {
           }
         })
         .catch(err => {
-          console.log('Error getting posts', err);
+          console.error('Error getting posts', err);
         });
     };
 

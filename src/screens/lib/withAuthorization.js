@@ -10,14 +10,14 @@ const withAuthorization = (WrappedComponent, key) => {
     useEffect(() => {
       loadFirebaseAuth().onAuthStateChanged(user => {
         if (!user) {
-          console.log('Usuário não logado');
+          // console.log('Usuário não logado');
           Router.push('/login');
         } else if (process.env.NODE_ENV !== 'development') {
           const auth = authorization(key, userData.role);
           if (!auth) {
-            console.log(
-              'Usuário não tem permissão para esta acessar esta página'
-            );
+            // console.log(
+            //   'Usuário não tem permissão para esta acessar esta página'
+            // );
             Router.push('/');
           }
         }

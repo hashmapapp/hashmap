@@ -34,12 +34,7 @@ const Edit = ({ hashmap, posts, handlerHashmap, hashmapKey }) => {
 
 Edit.propTypes = {
   hashmap: PropTypes.shape(),
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string,
-    })
-  ).isRequired,
+  posts: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   handlerHashmap: PropTypes.func.isRequired,
   hashmapKey: PropTypes.string,
 };

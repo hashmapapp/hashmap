@@ -34,16 +34,9 @@ const SaveModal = ({ closeModal, hashmapRedux }) => {
       if (list.length) {
         list.forEach(post => {
           if (
-            !(
-              (post.instragramPostPreview &&
-                post.instragramPostPreview.value) ||
-              (post.instragramProfilePreview &&
-                post.instragramProfilePreview.value) ||
-              (post.linksToPreview && post.linksToPreview.length) ||
-              post.textDescription ||
-              post.title ||
-              (post.videoYT && post.videoYT.value)
-            )
+            post.content &&
+            post.content.blocks &&
+            post.content.blocks.length === 0
           ) {
             validInput.posts = false;
           }

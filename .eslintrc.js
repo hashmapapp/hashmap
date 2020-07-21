@@ -16,7 +16,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: ['react', 'prettier'],
+  plugins: ['react', 'prettier', 'jam3'],
   rules: {
     'prettier/prettier': [
       'error',
@@ -44,6 +44,12 @@ module.exports = {
         html: 'ignore',
         custom: 'ignore',
         exceptions: [],
+      },
+    ],
+    'jam3/no-sanitizer-with-danger': [
+      2,
+      {
+        wrapperName: ['sanitizer'],
       },
     ],
   },
