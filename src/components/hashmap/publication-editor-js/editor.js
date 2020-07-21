@@ -57,7 +57,7 @@ const PublicationEditor = ({
           ref={editorFrame}
           width="100%"
           height="100%"
-          src="http://localhost:1234"
+          src={process.env.EDITOR_FRAME_URL}
           onLoad={() => {
             loadNewEditor(editorFrame);
           }}
