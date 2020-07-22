@@ -4,18 +4,13 @@ import moment from 'moment';
 
 // Components
 import CollaborateModal from './components/collaborate-modal';
+import CopyModal from './components/copy-modal';
 
 const header = ({ data }) => {
   const [info, setInfo] = useState('');
-  const [modalIsOpen, setIsOpen] = useState(false);
-
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
+  const [hasSolicitation, setHasSolicitation] = useState(true);
+  const [modalCollaborateIsOpen, setModalCollaborateIsOpen] = useState(false);
+  const [modalCopyIsOpen, setModalCopyIsOpen] = useState(false);
 
   useMemo(() => {
     moment.locale('pt-br');
@@ -28,6 +23,15 @@ const header = ({ data }) => {
 
   return (
     <header>
+      {hasSolicitation &&
+        <div class="bg-orange-100 border border-orange-400 text-orange-700 px-4 py-3 rounded relative" role="alert">
+          <strong class="font-bold">Solicitação Pendete!!</strong>
+          <span class="absolute top-0 bottom-0 right-0 px-4 py-3" onClick={() => setHasSolicitation(false)}>
+            <svg class="fill-current h-6 w-6 text-orange-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" /></svg>
+          </span>
+        </div>
+      }
+
       <div className="container mx-auto px-10 md:px-8 py-8">
         <h1 className="font-sans leading-tight text-3xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-black">
           {data.title}
@@ -44,6 +48,7 @@ const header = ({ data }) => {
             text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center
             md:w-auto
             hover:bg-gray-400"
+            onClick={() => setModalCopyIsOpen(true)}
           >
             <span>Copiar hashmap</span>
           </button>
@@ -52,14 +57,15 @@ const header = ({ data }) => {
             text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center
             md:w-auto
             hover:bg-gray-400"
-            onClick={openModal}
+            onClick={() => setModalCollaborateIsOpen(true)}
           >
             <span>Colaborar</span>
           </button>
         </div>
       </div>
 
-      {modalIsOpen && <CollaborateModal closeModal={closeModal} />}
+      {modalCollaborateIsOpen && <CollaborateModal closeModal={() => setModalCollaborateIsOpen(false)} />}
+      {modalCopyIsOpen && <CopyModal closeModal={() => setModalCopyIsOpen(false)} />}
     </header>
   );
 };

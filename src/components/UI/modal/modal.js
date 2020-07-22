@@ -1,10 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 const UIModal = ({ children, center }) => {
-  console.log('UIModal')
-  console.log(center)
+
   return (
-    <div className="fixed bottom-0 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center">
+    <div
+      className={cx("fixed inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center",
+        {
+          'bottom-0': !center,
+        })}
+    >
       <div className="fixed inset-0 transition-opacity">
         <div className="absolute inset-0 bg-gray-500 opacity-75" />
       </div>
@@ -18,6 +24,14 @@ const UIModal = ({ children, center }) => {
       </div>
     </div>
   );
+};
+
+UIModal.propTypes = {
+  center: PropTypes.bool,
+};
+
+UIModal.defaultProps = {
+  center: false,
 };
 
 export default UIModal;
