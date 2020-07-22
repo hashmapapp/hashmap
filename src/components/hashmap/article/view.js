@@ -14,7 +14,7 @@ const article = ({ data }) => {
     <>
       <article>
         <div className="container mx-auto pt-4 pb-2">
-          <div className="px-2 md:px-24 flex justify-center">
+          <div className="px-2 md:px-8 flex justify-center">
             <img
               className="md:hidden shadow"
               src={data.urlImage}
@@ -34,7 +34,7 @@ const article = ({ data }) => {
             )}
           </div>
           {pDescription.length > 0 && (
-            <div className="py-8 px-10 md:px-24">
+            <div className="py-8 px-10 md:px-8">
               {pDescription.map((p, index) => (
                 <p
                   key={index.toString()}
@@ -48,7 +48,7 @@ const article = ({ data }) => {
         </div>
       </article>
       <article>
-        <div className="container mx-auto md:px-24 py-2">
+        <div className="container mx-auto md:px-8 py-2">
           {data.posts.map(post => (
             <PublicationView key={post.key} data={post} />
           ))}

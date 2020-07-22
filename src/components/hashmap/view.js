@@ -28,15 +28,15 @@ const SectionHashmapView = ({ hashmap, posts }) => {
   return (
     <>
       <div className="container mx-auto lg:hidden">
-        <CollaboratorsView data={authorData} />
         <HeaderView data={headerData} />
         <ArticleView data={articleData} />
         <ShareButtons title={hashmap.title} summary={hashmap.subtitle} />
+        <CollaboratorsView data={authorData} />
         {/* <Footer data={authorData} /> */}
       </div>
 
-      <div className="container mx-auto hidden lg:flex">
-        <div>
+      <div className="container mx-auto px-24 hidden lg:flex">
+        <div className="w-3/4 h-12">
           <HeaderView data={headerData} />
           <ArticleView data={articleData} />
           <ShareButtons title={hashmap.title} summary={hashmap.subtitle} />
