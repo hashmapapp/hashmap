@@ -2,8 +2,21 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
+// Components
+import CollaborateModal from './components/collaborate-modal';
+
 const header = ({ data }) => {
   const [info, setInfo] = useState('');
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   useMemo(() => {
     moment.locale('pt-br');
     if (data.createdAt < data.updatedAt) {
@@ -39,11 +52,14 @@ const header = ({ data }) => {
             text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center
             md:w-auto
             hover:bg-gray-400"
+            onClick={openModal}
           >
             <span>Colaborar</span>
           </button>
         </div>
       </div>
+
+      {modalIsOpen && <CollaborateModal closeModal={closeModal} />}
     </header>
   );
 };

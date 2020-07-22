@@ -31,7 +31,7 @@ const Publication = ({ data }) => {
   if (data.content) {
     return (
       <article
-        className="my-8 px-8 py-4 rounded-lg bg-white divide-y divide-gray-400"
+        className="my-8 px-5 py-4 rounded-lg bg-white divide-y divide-gray-400"
         style={{ border: '1px solid #e1e4e8' }}
       >
         {/* <PublicationEditor data={data} editable={false} /> */}
