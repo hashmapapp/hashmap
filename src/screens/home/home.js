@@ -44,6 +44,10 @@ const home = ({ handlerReset, hashmaps, fetchMoreData, hasMoreData }) => {
       <div className="md:hidden block flex justify-center">
         <CreateHashmapMobile handlerCreate={handlerCreate} />
       </div>
+      <hr className="md:pt-12 md:hidden" />
+      <h3 className="text-3xl tracking-tight font-extrabold pt-4 md:pt-8 md:text-5xl text-center text-indigo-600">
+        Melhores Curadorias
+      </h3>
       {!hashmaps ? (
         <div className="w-full justify-center h-64 flex items-end">
           <HourglasLoader className="flex-1" />

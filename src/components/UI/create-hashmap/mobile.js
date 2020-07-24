@@ -17,7 +17,7 @@ const CreateHashmapMobile = ({ handlerCreate }) => {
         <div className="flex justify-center">
           <FaEdit size={22} className="mx-2" color="#4a5568" />
           <span className="font-bold text-lg text-gray-700">
-            Crie uma Publicação
+            Iniciar uma Curadoria
           </span>
         </div>
       </div>

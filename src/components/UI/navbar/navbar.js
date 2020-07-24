@@ -186,7 +186,7 @@ const NavBar = ({
               className="text-left w-full sm:w-auto uppercase mt-1 block px-2 py-1 font-semibold rounded bg-gray-200 
                 hover:bg-gray-400 sm:mt-0 sm:ml-2"
             >
-              Criar Publicação
+              Iniciar Curadoria
             </button>
           )}
           {currentUser && myProfile && (

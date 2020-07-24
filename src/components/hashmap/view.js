@@ -18,7 +18,6 @@ const SectionHashmapView = ({ hashmap, posts }) => {
     urlImage: hashmap.imageUrl,
     textImage: hashmap.textImage,
   };
-  console.log(articleData);
   const authorData = {
     displayName: hashmap.author.displayName,
     photoURL: hashmap.author.photoURL,
