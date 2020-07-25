@@ -26,15 +26,15 @@ const article = ({ posts, handlerDelete, onActionEditPost }) => {
   };
 
   return (
-    <>
+    <div className="md:px-32">
       {posts
         .filter(post => !post.key.startsWith('DELETE'))
         .map(post => (
           <div key={post.key} className="mt-4">
-            <div className="flex justify-between py-2">
+            <div className="flex justify-between pt-3 pb-1">
               <button
                 type="button"
-                className="bg-transparent border border-red-200 text-red-500 font-bold 
+                className="bg-transparent border border-red-200 text-red-500 font-bold bg-white
                 py-2 px-4 rounded inline-flex items-center hover:bg-red-400 hover:text-white"
                 onClick={() => {
                   setShowModalConfirm({
@@ -47,7 +47,7 @@ const article = ({ posts, handlerDelete, onActionEditPost }) => {
               </button>
               <button
                 type="button"
-                className="border border-indigo-200 hover:bg-indigo-400 text-indigo-800 font-bold 
+                className="border border-indigo-200 hover:bg-indigo-400 text-indigo-800 font-bold bg-white
                 py-2 px-4 rounded inline-flex items-center hover:text-white"
                 onClick={() => {
                   handleEditPost(post);
@@ -70,7 +70,7 @@ const article = ({ posts, handlerDelete, onActionEditPost }) => {
           actionConfirm={handleRemovePost}
         />
       )}
-    </>
+    </div>
   );
 };
 

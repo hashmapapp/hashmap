@@ -37,31 +37,31 @@ const header = ({
     }
   }, [imagePath]);
   return (
-    <>
+    <div className="md:px-64">
       <header>
-        <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">Título *</h6>
+        {/* <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">Título *</h6> */}
         <TextArea
-          className="Title"
+          className="font-sans leading-tight text-3xl sm:text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-black"
           rows="2"
           id="title"
           name="title"
-          placeholder="Um título bem legal aqui!"
+          placeholder="Título do Hashmap"
           onChange={evt => {
             handlerTitle(evt.target.value);
           }}
           value={title}
           maxLength="100"
         />
-        <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">
+        {/* <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">
           Subtítulo (Opcional)
-        </h6>
+        </h6> */}
         <TextArea
-          className="Text"
+          className="font-sans text-gray-700 leading-normal"
           rows="2"
           type="text"
           id="subtitle"
           name="subtitle"
-          placeholder="Aqui você pode colocar algo que complete o título, este texto aparecerá na sua home, junto com o título e a capa do seu hashmap."
+          placeholder="Subtítulo"
           onChange={evt => {
             handlerSubtitle(evt.target.value);
           }}
@@ -70,7 +70,7 @@ const header = ({
         />
       </header>
       <article>
-        <h6 className="px-2 font-sans text-lg text-gray-500">Capa *</h6>
+        {/* <h6 className="px-2 font-sans text-lg text-gray-500">Capa</h6> */}
         {!loadImage && (
           <ImageUpload
             onRequestSave={(path, url) => {
@@ -98,17 +98,16 @@ const header = ({
             defaultFiles={defaultFiles}
           />
         )}
-        <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">
+        {/* <h6 className="pt-2 px-2 font-sans text-lg text-gray-500">
           Descrição (Opcional)
-        </h6>
+        </h6> */}
         <TextArea
-          className="Text"
+          className="font-sans text-lg md:text-xl text-gray-800 pt-2"
           rows="5"
           type="text"
           id="description"
           name="description"
-          placeholder="Aqui você pode descrever com mais detalhes sobre o que é o
-    seu hashmap, falando por exemplo, o motivo da criação dele."
+          placeholder="Descrição"
           onChange={e => {
             handlerDescription(e.target.value);
           }}
@@ -116,7 +115,7 @@ const header = ({
           maxLength="500"
         />
       </article>
-    </>
+    </div>
   );
 };
 

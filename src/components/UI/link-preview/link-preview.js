@@ -23,7 +23,7 @@ const LinkPreview = ({ data }) => {
 
   return (
     <div className="px-8 md:px-16 py-3 md:justify-center" target="_blank">
-      <div className="md:flex rounded-md border">
+      <div className="md:flex rounded-md ">
         {!errorLoadImage && data.image && (
           <div className="flex md:flex-shrink-0 items-center justify-center pl-1 pt-1 md:pt-0">
             <Link href={shortLink}>
@@ -52,12 +52,12 @@ const LinkPreview = ({ data }) => {
           </div>
           <Link href={shortLink}>
             <a target="_blank">
-              <p className="block mt-1 px-1 text-xs md:text-sm leading-tight font-semibold text-gray-900 hover:underline">
+              <p className="block mt-1 px-1 text-sm leading-tight font-semibold text-gray-900 hover:underline">
                 {data.title}
               </p>
             </a>
           </Link>
-          <p className="md:mt-1 p-1 text-xs md:text-sm text-gray-600">
+          <p className="md:mt-1 p-1 text-sm text-gray-600">
             {data.description}
           </p>
         </div>

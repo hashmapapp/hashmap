@@ -34,7 +34,7 @@ const SectionHashmapEdit = ({ handlerData }) => {
   };
 
   return (
-    <>
+    <div className="bg-gray-100" style={{ minHeight: '93vh' }}>
       {editorVisible ? (
         <PublicationEditor
           saveAction={handlerSave}
@@ -42,14 +42,14 @@ const SectionHashmapEdit = ({ handlerData }) => {
           post={post}
         />
       ) : (
-        <article className="container mx-auto px-4 md:px-64 md:py-8">
+        <article className="container mx-auto px-4 md:py-8 ">
           <HeaderEdit />
           <ArticleEdit onActionEditPost={handlerEditPost} />
           <NewPublicationButton onAction={handlerNewPost} />
           <ButtonBar />
         </article>
       )}
-    </>
+    </div>
   );
 };
 

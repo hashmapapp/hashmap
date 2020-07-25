@@ -11,7 +11,7 @@ const DynamicFacebookCommentsComponent = dynamic(
   { ssr: false }
 );
 
-const StyleParagraph = styled.div`
+const DefaultStyle = styled.div`
   code {
     background: rgba(250, 239, 240, 0.78);
     color: #b44437;
@@ -78,32 +78,51 @@ const Blockquote = styled.blockquote`
 const PublicationView = ({ content, comments, postKey }) => {
   // console.log(content);
 
-  const paragraph = data => {
+  const sanitizerHTML = data => {
     const sanitizer = DOMPurify.sanitize;
     return (
-      <StyleParagraph
+      <DefaultStyle
+        className="break-words"
         dangerouslySetInnerHTML={{ __html: sanitizer(data.text) }}
       />
     );
   };
 
+  const paragraph = data => {
+    return (
+      <div className="font-sans text-lg md:text-xl text-gray-700 md:px-8 px-4">
+        {sanitizerHTML(data)}
+      </div>
+    );
+  };
+
   const header = data => {
-    return paragraph({
-      text: `<h${data.level}>${data.text}</h${data.level}>`,
-    });
+    return (
+      <div className="font-sans leading-none font-black text-gray-800 md:px-8 px-4">
+        {sanitizerHTML({
+          text: `<h${data.level}>${data.text}</h${data.level}>`,
+        })}
+      </div>
+    );
   };
 
   const list = data => {
     if (data.style === 'unordered') {
       return (
-        <ul className="list-disc list-inside">
-          {data.items.map(item => paragraph({ text: `<li>${item}</li>` }))}
+        <ul
+          className="list-disc list-inside md:px-8 px-4 font-sans text-lg 
+        md:text-xl text-gray-700"
+        >
+          {data.items.map(item => sanitizerHTML({ text: `<li>${item}</li>` }))}
         </ul>
       );
     }
     return (
-      <ol className="list-decimal list-inside">
-        {data.items.map(item => paragraph({ text: `<li>${item}</li>` }))}
+      <ol
+        className="list-decimal list-inside md:px-8 px-4 font-sans text-lg 
+      md:text-xl text-gray-700"
+      >
+        {data.items.map(item => sanitizerHTML({ text: `<li>${item}</li>` }))}
       </ol>
     );
   };
@@ -143,12 +162,17 @@ const PublicationView = ({ content, comments, postKey }) => {
 
   const quote = data => {
     return (
-      <Blockquote>
-        {paragraph({
-          text: `${data.text}${data.caption &&
-            ` - <strong>${data.caption}</strong>`}`,
-        })}
-      </Blockquote>
+      <div
+        className="md:px-8 px-4 font-sans text-lg 
+      md:text-xl"
+      >
+        <Blockquote>
+          {sanitizerHTML({
+            text: `${data.text}${data.caption &&
+              ` - <strong>${data.caption}</strong>`}`,
+          })}
+        </Blockquote>
+      </div>
     );
   };
 
@@ -226,16 +250,18 @@ const PublicationView = ({ content, comments, postKey }) => {
   return (
     <div
       // style={{ border: '1px solid #e1e4e8' }}
-      className="mb-8 px-4 bg-white md:rounded-lg md:px-8 py-4 rounded-lg bg-white shadow-xl"
+      className="mb-8 bg-white md:rounded-lg py-4 rounded-lg bg-white shadow-xl"
     >
       {content && content.blocks && content.blocks.length ? (
         content.blocks.map((block, index) => (
-          <div key={index.toString()}>{blocks[block.type](block.data)}</div>
+          <div key={index.toString()} className="py-2 md:py-3">
+            {blocks[block.type](block.data)}
+          </div>
         ))
       ) : (
         <div className="text-center">{`<<Vazio>>`}</div>
       )}
-      {comments && (
+      {process.env.NODE_ENV !== 'development' && comments && (
         <div className="pt-8">
           <DynamicFacebookCommentsComponent postKey={postKey} />
         </div>

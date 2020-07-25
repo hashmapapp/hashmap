@@ -14,8 +14,9 @@ export const TextArea = styled.textarea`
   margin: 4px 0;
   box-sizing: border-box;
   outline: none !important;
-  box-shadow: 0 0 10px #d4d4d4;
+  /* box-shadow: 0 0 10px #d4d4d4; */
   color: black;
+  background-color: #f7fafc;
   padding: 8px;
   border-radius: 10px;
 
