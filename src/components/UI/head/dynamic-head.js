@@ -30,6 +30,11 @@ const DynamicHead = ({ titleText, description, imageUrl }) => {
       <meta property="twitter:title" content={titleText} />
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={imageUrl} />
+
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+      />
     </Head>
   );
 };
@@ -44,7 +49,7 @@ DynamicHead.defaultProps = {
   titleText: 'Hashmap',
   description:
     'O Hashmap reúne uma comunidade de pessoas focadas em descobrir, compartilhar e criar as melhores recomendações baseadas em suas próprias experiências.',
-  imageUrl: 'https://hashmap-nx3c6ypit.now.sh/imgs/logo/H.png',
+  imageUrl: 'https://hashmap.app/imgs/logo/H.png',
 };
 
 export default DynamicHead;

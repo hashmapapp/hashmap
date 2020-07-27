@@ -26,7 +26,7 @@ const CreateHashmapDesktop = ({ handlerCreate }) => {
                 focus:border-gray-800 focus:shadow-outline-black transition duration-150 ease-in-out md:py-4 md:text-lg md:px-4"
               >
                 <FaEdit size={22} className="mx-2" color="#fff" />
-                Crie uma Publicação
+                Iniciar uma Curadoria
               </button>
             </div>
             {/* <div className="mt-3 sm:mt-0 sm:ml-3">

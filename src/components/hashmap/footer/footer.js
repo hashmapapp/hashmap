@@ -27,7 +27,7 @@ const footer = ({ data }) => (
           <Link href="/[profile]" as={`/${data.username}`}>
             <a>
               <h2 className="font-bold text-lg w-auto inline-block">
-                {data.displayName}
+                Curado por {data.displayName}
               </h2>
             </a>
           </Link>

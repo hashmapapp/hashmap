@@ -4,10 +4,24 @@ import LinkPreview from 'app/components/UI/link-preview/link-preview';
 import InstagramEmbed from 'react-instagram-embed';
 import Iframe from 'react-iframe';
 import InstagramProfilePreview from 'app/components/UI/link-preview/instagram-profile-preview';
+import { loadLink } from 'app/components/hashmap/publication/lib/loadLink';
+import { FacebookProvider, Comments } from 'react-facebook';
+import Facebook from './components/Facebook';
 
 const Publication = ({ data }) => {
   const [pDescription, setPDescription] = useState([]);
+  const [instaProfile, setInstaProfile] = useState({});
   useMemo(() => {
+    if (data.instragramProfilePreview && data.instragramProfilePreview.value) {
+      const profile = data.instragramProfilePreview;
+      loadLink(profile.profileUrl)
+        .then(loadData => {
+          setInstaProfile(loadData.preview);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
     if (data.textDescription) {
       setPDescription(data.textDescription.split('\n'));
     }
@@ -51,10 +65,7 @@ const Publication = ({ data }) => {
           </div>
         )}
 
-        {data.instragramProfilePreview &&
-          data.instragramProfilePreview.value && (
-            <InstagramProfilePreview data={data.instragramProfilePreview} />
-          )}
+        {instaProfile.value && <InstagramProfilePreview data={instaProfile} />}
 
         {pDescription.map((p, index) => (
           <p
@@ -95,6 +106,19 @@ const Publication = ({ data }) => {
             </div>
           </>
         )}
+      </div>
+      <div className="px-5 md:px-10">
+        <FacebookProvider
+          appId={process.env.FACEBOOK_APP_ID_COMMENT}
+          language="pt_BR"
+        >
+          <Comments
+            href={`https://hashmap.app/view/${data.key}`}
+            width="100%"
+            numPosts="3"
+            // handleParse={e => console.log(e)}
+          />
+        </FacebookProvider>
       </div>
     </article>
   );

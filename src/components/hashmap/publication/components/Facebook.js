@@ -63,7 +63,7 @@ export class Facebook extends React.Component {
           user={this.state.user}
           onClick={this.handleAdd}
           bg="#fafafa"
-          important={['Henry Boldizsar', 'Rob Sandberg']}
+          // important={['Henry Boldizsar', 'Rob Sandberg']}
         />
 
         {this.state.showSelector ? (

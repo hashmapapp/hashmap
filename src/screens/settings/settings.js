@@ -99,7 +99,7 @@ const Settings = () => {
             }
           })
           .catch(err => {
-            console.log('Error getting document', err);
+            console.error('Error getting document', err);
           });
       }
     });

@@ -61,7 +61,7 @@ export const loadLink = link => {
         .catch(error => {
           reject(error);
         });
-      console.log(username);
+      // console.log(username);
     } else if (link.includes('http://') || link.includes('https://')) {
       axios
         .post('https://us-central1-hashmap-6d623.cloudfunctions.net/scraper', {

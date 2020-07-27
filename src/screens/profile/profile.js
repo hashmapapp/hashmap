@@ -179,19 +179,24 @@ const Profile = ({
         </div>
       )}
       {hashmaps && hashmaps.length > 0 && (
-        <InfiniteScroll
-          dataLength={hashmaps.length}
-          next={fetchMoreData}
-          hasMore={hasMoreData}
-        >
-          <div className="m-1 md:m-16 grid grid-cols-6 gap-4 ">
-            {hashmaps.map(hashmap => (
-              <div key={hashmap.key} className="col-span-6 xl:col-span-3">
-                <Item hashmap={hashmap} />
-              </div>
-            ))}
-          </div>
-        </InfiniteScroll>
+        <>
+          <h3 className="text-xl md:text-3xl tracking-tight font-extrabold pt-4 ml-5 md:mx-20 md:pt-8 text-indigo-600">
+            Curadorias Realizadas:
+          </h3>
+          <InfiniteScroll
+            dataLength={hashmaps.length}
+            next={fetchMoreData}
+            hasMore={hasMoreData}
+          >
+            <div className="m-1 md:mx-16 md:mb-16 grid grid-cols-6 gap-4 ">
+              {hashmaps.map(hashmap => (
+                <div key={hashmap.key} className="col-span-6 xl:col-span-3">
+                  <Item hashmap={hashmap} />
+                </div>
+              ))}
+            </div>
+          </InfiniteScroll>
+        </>
       )}
     </div>
   );
