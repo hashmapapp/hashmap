@@ -6,5 +6,6 @@ export const USERS_COLLECTION = 'users';
 export const HOME_HASHMAP_COLLECTION = 'home_hashmap';
 export const HASHMAPS_COLLECTION = 'hashmaps';
 export const POSTS_COLLECTION = 'posts';
+export const NOTIFICATIONS_COLLECTION = 'notifications';
 export const ADD_HOME_HASHMAP = 'posts';
 export const HASHDASH = 'hashdash';

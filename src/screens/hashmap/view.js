@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import ProgressBar from 'react-scroll-progress-bar';
 import { animateScroll as scroll } from 'react-scroll';
 
-const View = ({ hashmap, posts, hashmapKey, authorId }) => {
+const View = ({ hashmap, posts, hashmapKey, authorId, notifications }) => {
   const scrollToTop = () => {
     scroll.scrollToTop();
   };
@@ -26,20 +26,20 @@ const View = ({ hashmap, posts, hashmapKey, authorId }) => {
       />
       {hashmap ? (
         <>
-          <SectionHashmapView hashmap={hashmap} posts={posts} />
+          <SectionHashmapView hashmap={hashmap} posts={posts} notifications={notifications} />
         </>
       ) : (
-        <div className="md:px-64 text-center pt-16 md:pt-32">
-          <img
-            className="px-24 pt-8"
-            src="../imgs/icons/page_not_found.svg"
-            alt="not found page"
-          />
-          <p className="pt-8 md:pb-12 md:pt-12 font-sans text-lg text-gray-600 text-center">
-            Página não encontrada :(
+          <div className="md:px-64 text-center pt-16 md:pt-32">
+            <img
+              className="px-24 pt-8"
+              src="../imgs/icons/page_not_found.svg"
+              alt="not found page"
+            />
+            <p className="pt-8 md:pb-12 md:pt-12 font-sans text-lg text-gray-600 text-center">
+              Página não encontrada :(
           </p>
-        </div>
-      )}
+          </div>
+        )}
       <Footer />
     </>
   );

@@ -1,10 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+
+// Services
+import { loadFirebaseAuth } from 'app/lib/db';
+import { UserService } from 'app/services/user.service';
+import { HashmapService } from 'app/services/hashmap.service';
 
 // Components
 import UIModal from 'app/components/UI/modal/modal';
 
-const CollaborateModal = ({ closeModal }) => {
+const CollaborateModal = ({ closeModal, hashmapKey }) => {
+  const [loading, setLoading] = useState(false);
+
+  const submitCollaboration = () => {
+    setLoading(true);
+    loadFirebaseAuth().onAuthStateChanged(user => {
+      if (user) {
+        const { uid } = user;
+        const userService = new UserService();
+        userService
+          .getUserById(uid)
+          .then(resolve => {
+            if (resolve) {
+              HashmapService.saveNotification(
+                {
+                  creatorId: uid,
+                  hashmapId: hashmapKey,
+                  notificationType: 'SOLICITACAO_COLABORAR'
+                },
+                () => {
+                  closeModal()
+                },
+              );
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            setLoading(false);
+          });
+      }
+    });
+  };
 
   return (
     <>
@@ -19,6 +55,7 @@ const CollaborateModal = ({ closeModal }) => {
               className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-black 
                   text-base leading-6 font-medium text-white shadow-sm hover:bg-gray-500 focus:outline-none focus:border-gray-700 
                   focus:shadow-outline-gray transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+              onClick={submitCollaboration}
             >
               Solicitar
             </button>

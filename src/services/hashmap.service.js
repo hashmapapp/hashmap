@@ -1,10 +1,18 @@
 import {
+  NOTIFICATIONS_COLLECTION,
   HASHMAPS_COLLECTION,
   POSTS_COLLECTION,
 } from 'app/screens/lib/constants';
 import { HttpWrapperFirebase } from './http-wrapper';
 
 export class HashmapService {
+
+  static saveNotification = (notificationData, callback) => {
+    console.log('saveNotification')
+    const fb = new HttpWrapperFirebase();
+    HashmapService.createCollaboreNotification(fb, notificationData, callback);
+  };
+
   static saveHashmap = (hashmap, callback, userId) => {
     const fb = new HttpWrapperFirebase();
     if (hashmap.key) {
@@ -91,6 +99,21 @@ export class HashmapService {
     fb.createItems(`${path}/${POSTS_COLLECTION}`, dataCreate).then(() => {
       // console.log('Posts criados com sucesso!');
       callback();
+    });
+  };
+
+  // ======================================================================= //
+  // Notifications
+
+  static createCollaboreNotification = (fb, notificationData, callback) => {
+    const dataCreate = {
+      ...notificationData,
+      status: 'PENDENTE'
+    }
+
+    fb.createItem(NOTIFICATIONS_COLLECTION, dataCreate).then(notificationSuccess => {
+      // console.log('Solicitação de Colaboração ao hashmap criado com sucesso!');
+      callback()
     });
   };
 
